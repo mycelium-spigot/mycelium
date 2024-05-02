@@ -1,6 +1,4 @@
-
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -15,31 +13,27 @@
     <packaging>jar</packaging>
 
     <name>PaperSpigot-API</name>
-    <url>https://hub.spigotmc.org/stash/projects/PAPER/</url>
     <description>An enhanced plugin API for Minecraft servers.</description>
 
     <properties>
-        <!--PaperSpigot - Bump to 1.8 - This will haunt me -->
-        <additionalparam>-Xdoclint:none</additionalparam>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <!-- required until fixed plexus-compiler-eclipse is deployed -->
-    <pluginRepositories>
-        <pluginRepository>
-            <id>spigotmc-public</id>
-            <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
-        </pluginRepository>
-    </pluginRepositories>
+    <repositories>
+        <repository>
+            <id>elmakers-repository</id>
+            <url>https://maven.elmakers.com/repository/</url>
+        </repository>
+    </repositories>
 
     <dependencies>
+        <!-- Trove Provided by CraftBukkit -->
         <dependency>
             <groupId>net.sf.trove4j</groupId>
             <artifactId>trove4j</artifactId>
             <version>3.0.3</version>
-            <!-- Trove Provided by CraftBukkit -->
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -55,14 +49,14 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
-        <!-- bundled with Minecraft, should be kept in sync -->
+        <!-- Bundled with Minecraft, should be kept in sync -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>17.0</version>
             <scope>compile</scope>
         </dependency>
-        <!-- bundled with Minecraft, should be kept in sync -->
+        <!-- Bundled with Minecraft, should be kept in sync -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
@@ -94,23 +88,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <!-- versions after this appear to be broken -->
                 <version>3.1</version>
-                <configuration>
-                    <!-- we use the Eclipse compiler as it doesn't need a JDK -->
-                    <compilerId>eclipse</compilerId>
-                    <!-- source and target are ignored if this isn't true -->
-                    <optimize>true</optimize>
-                </configuration>
-                <dependencies>
-                    <!-- we need our custom version as it fixes some bugs on case sensitive file systems -->
-                    <dependency>
-                        <groupId>org.codehaus.plexus</groupId>
-                        <artifactId>plexus-compiler-eclipse</artifactId>
-                        <version>2.5.0-spigotmc</version>
-                    </dependency>
-                </dependencies>
             </plugin>
+            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -124,9 +104,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <!-- utterly useless artifact from shade 2.x -->
                     <createDependencyReducedPom>false</createDependencyReducedPom>
-                    <!-- when downloading via Maven we can pull depends individually -->
                     <shadedArtifactAttached>true</shadedArtifactAttached>
                 </configuration>
             </plugin>
