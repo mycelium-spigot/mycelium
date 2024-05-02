@@ -1,18 +1,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.github.paperspigot</groupId>
-    <artifactId>paperspigot-parent</artifactId>
-    <version>dev-SNAPSHOT</version>
+    <groupId>org.github.mycelium</groupId>
+    <artifactId>mycelium-parent</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>PaperSpigot-Parent</name>
-    <description>Parent project for all PaperSpigot modules.</description>
-    <url>https://github.com/PaperSpigot/Spigot</url>
+    <name>mycelium-parent</name>
+    <description>Parent project for all Mycelium modules.</description>
+    <url>https://github.com/mycelium-spigot/mycelium</url>
 
     <modules>
-        <module>PaperSpigot-Server</module>
-        <module>PaperSpigot-API</module>
+        <module>mycelium-server</module>
+        <module>mycelium-api</module>
     </modules>
 
     <properties>

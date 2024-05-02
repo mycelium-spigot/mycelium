@@ -2,18 +2,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.github.paperspigot</groupId>
-        <artifactId>paperspigot-parent</artifactId>
-        <version>dev-SNAPSHOT</version>
+        <groupId>org.github.mycelium</groupId>
+        <artifactId>mycelium-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.github.paperspigot</groupId>
-    <artifactId>paperspigot-api</artifactId>
-    <version>1.8.8-R0.1-SNAPSHOT</version>
+    <groupId>org.github.mycelium</groupId>
+    <artifactId>mycelium-api</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>PaperSpigot-API</name>
-    <description>An enhanced plugin API for Minecraft servers.</description>
+    <name>mycelium-api</name>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
