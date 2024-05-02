@@ -26,18 +26,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <!-- just until we get deployment to central approved -->
-    <distributionManagement>
-        <repository>
-            <id>destroystokyo-releases</id>
-            <url>https://repo.destroystokyo.com/content/repositories/releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>destroystokyo-snapshots</id>
-            <url>https://repo.destroystokyo.com/content/repositories/snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
-
     <!-- required until fixed plexus-compiler-eclipse is deployed -->
     <pluginRepositories>
         <pluginRepository>
