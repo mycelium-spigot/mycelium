@@ -746,55 +746,6 @@ public final class Bukkit {
     }
 
     /**
-     * Gets a set containing all current IPs that are banned.
-     *
-     * @return a set containing banned IP addresses
-     */
-    public static Set<String> getIPBans() {
-        return server.getIPBans();
-    }
-
-    /**
-     * Bans the specified address from the server.
-     *
-     * @param address the IP address to ban
-     */
-    public static void banIP(String address) {
-        server.banIP(address);
-    }
-
-    /**
-     * Unbans the specified address from the server.
-     *
-     * @param address the IP address to unban
-     */
-    public static void unbanIP(String address) {
-        server.unbanIP(address);
-    }
-
-    /**
-     * Gets a set containing all banned players.
-     *
-     * @return a set containing banned players
-     */
-    public static Set<OfflinePlayer> getBannedPlayers() {
-        return server.getBannedPlayers();
-    }
-
-    /**
-     * Gets a ban list for the supplied type.
-     * <p>
-     * Bans by name are no longer supported and this method will return
-     * null when trying to request them. The replacement is bans by UUID.
-     *
-     * @param type the type of list to fetch, cannot be null
-     * @return a ban list of the specified type
-     */
-    public static BanList getBanList(BanList.Type type){
-        return server.getBanList(type);
-    }
-
-    /**
      * Gets a set containing all player operators.
      *
      * @return a set containing player operators

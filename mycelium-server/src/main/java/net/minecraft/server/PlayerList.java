@@ -41,16 +41,12 @@ import org.spigotmc.event.player.PlayerSpawnLocationEvent;
 
 public abstract class PlayerList {
 
-    public static final File a = new File("banned-players.json");
-    public static final File b = new File("banned-ips.json");
     public static final File c = new File("ops.json");
     private static final Logger f = LogManager.getLogger();
     private static final SimpleDateFormat g = new SimpleDateFormat("yyyy-MM-dd \'at\' HH:mm:ss z");
     private final MinecraftServer server;
     public final List<EntityPlayer> players = new java.util.concurrent.CopyOnWriteArrayList(); // CraftBukkit - ArrayList -> CopyOnWriteArrayList: Iterator safety
     private final Map<UUID, EntityPlayer> j = Maps.newHashMap();
-    private final GameProfileBanList k;
-    private final IpBanList l;
     private final OpList operators;
     private final Map<UUID, ServerStatisticManager> o;
     public IPlayerFileData playerFileData;
@@ -70,13 +66,9 @@ public abstract class PlayerList {
         minecraftserver.reader.addCompleter(new org.bukkit.craftbukkit.command.ConsoleCommandCompleter(minecraftserver.server));
         // CraftBukkit end
         
-        this.k = new GameProfileBanList(PlayerList.a);
-        this.l = new IpBanList(PlayerList.b);
         this.operators = new OpList(PlayerList.c);
         this.o = Maps.newHashMap();
         this.server = minecraftserver;
-        this.k.a(false);
-        this.l.a(false);
         this.maxPlayers = 8;
     }
 
@@ -435,31 +427,9 @@ public abstract class PlayerList {
         PlayerLoginEvent event = new PlayerLoginEvent(player, hostname, ((java.net.InetSocketAddress) socketaddress).getAddress(), ((java.net.InetSocketAddress) loginlistener.networkManager.getRawAddress()).getAddress());
         String s;
 
-        if (getProfileBans().isBanned(gameprofile) && !getProfileBans().get(gameprofile).hasExpired()) {
-            GameProfileBanEntry gameprofilebanentry = (GameProfileBanEntry) this.k.get(gameprofile);
-
-            s = "You are banned from this server!\nReason: " + gameprofilebanentry.getReason();
-            if (gameprofilebanentry.getExpires() != null) {
-                s = s + "\nYour ban will be removed on " + PlayerList.g.format(gameprofilebanentry.getExpires());
-            }
-
-            // return s;
-            if (!gameprofilebanentry.hasExpired()) event.disallow(PlayerLoginEvent.Result.KICK_BANNED, s); // Spigot
-        } else if (getIPBans().isBanned(socketaddress) && !getIPBans().get(socketaddress).hasExpired()) {
-            IpBanEntry ipbanentry = this.l.get(socketaddress);
-
-            s = "Your IP address is banned from this server!\nReason: " + ipbanentry.getReason();
-            if (ipbanentry.getExpires() != null) {
-                s = s + "\nYour ban will be removed on " + PlayerList.g.format(ipbanentry.getExpires());
-            }
-
-            // return s;
-            event.disallow(PlayerLoginEvent.Result.KICK_BANNED, s);
-        } else {
-            // return this.players.size() >= this.maxPlayers && !this.f(gameprofile) ? "The server is full!" : null;
-            if (this.players.size() >= this.maxPlayers && !this.f(gameprofile)) {
-                event.disallow(PlayerLoginEvent.Result.KICK_FULL, org.spigotmc.SpigotConfig.serverFullMessage); // Spigot
-            }
+        // return this.players.size() >= this.maxPlayers && !this.f(gameprofile) ? "The server is full!" : null;
+        if (this.players.size() >= this.maxPlayers && !this.f(gameprofile)) {
+            event.disallow(PlayerLoginEvent.Result.KICK_FULL, org.spigotmc.SpigotConfig.serverFullMessage); // Spigot
         }
 
         cserver.getPluginManager().callEvent(event);
@@ -996,14 +966,6 @@ public abstract class PlayerList {
         }
 
         return agameprofile;
-    }
-
-    public GameProfileBanList getProfileBans() {
-        return this.k;
-    }
-
-    public IpBanList getIPBans() {
-        return this.l;
     }
 
     public void addOp(GameProfile gameprofile) {

@@ -32,8 +32,6 @@ import org.github.paperspigot.exception.ServerInternalException;
 public class NameReferencingFileConverter {
 
     private static final Logger e = LogManager.getLogger();
-    public static final File a = new File("banned-ips.txt");
-    public static final File b = new File("banned-players.txt");
     public static final File c = new File("ops.txt");
     public static final File d = new File("white-list.txt");
 
@@ -81,107 +79,6 @@ public class NameReferencingFileConverter {
             }
         }
 
-    }
-
-    public static boolean a(final MinecraftServer minecraftserver) {
-        final GameProfileBanList gameprofilebanlist = new GameProfileBanList(PlayerList.a);
-
-        if (NameReferencingFileConverter.b.exists() && NameReferencingFileConverter.b.isFile()) {
-            if (gameprofilebanlist.c().exists()) {
-                try {
-                    gameprofilebanlist.load();
-                // CraftBukkit start - FileNotFoundException -> IOException, don't print stacetrace
-                } catch (IOException filenotfoundexception) {
-                    NameReferencingFileConverter.e.warn("Could not load existing file " + gameprofilebanlist.c().getName());
-                }
-            }
-
-            try {
-                final HashMap hashmap = Maps.newHashMap();
-
-                a(NameReferencingFileConverter.b, (Map) hashmap);
-                ProfileLookupCallback profilelookupcallback = new ProfileLookupCallback() {
-                    public void onProfileLookupSucceeded(GameProfile gameprofile) {
-                        minecraftserver.getUserCache().a(gameprofile);
-                        String[] astring = (String[]) hashmap.get(gameprofile.getName().toLowerCase(Locale.ROOT));
-
-                        if (astring == null) {
-                            NameReferencingFileConverter.e.warn("Could not convert user banlist entry for " + gameprofile.getName());
-                            throw new NameReferencingFileConverter.FileConversionException("Profile not in the conversionlist", null);
-                        } else {
-                            Date date = astring.length > 1 ? NameReferencingFileConverter.b(astring[1], (Date) null) : null;
-                            String s = astring.length > 2 ? astring[2] : null;
-                            Date date1 = astring.length > 3 ? NameReferencingFileConverter.b(astring[3], (Date) null) : null;
-                            String s1 = astring.length > 4 ? astring[4] : null;
-
-                            gameprofilebanlist.add(new GameProfileBanEntry(gameprofile, date, s, date1, s1));
-                        }
-                    }
-
-                    public void onProfileLookupFailed(GameProfile gameprofile, Exception exception) {
-                        NameReferencingFileConverter.e.warn("Could not lookup user banlist entry for " + gameprofile.getName(), exception);
-                        if (!(exception instanceof ProfileNotFoundException)) {
-                            throw new NameReferencingFileConverter.FileConversionException("Could not request user " + gameprofile.getName() + " from backend systems", exception, null);
-                        }
-                    }
-                };
-
-                a(minecraftserver, hashmap.keySet(), profilelookupcallback);
-                gameprofilebanlist.save();
-                c(NameReferencingFileConverter.b);
-                return true;
-            } catch (IOException ioexception) {
-                NameReferencingFileConverter.e.warn("Could not read old user banlist to convert it!", ioexception);
-                return false;
-            } catch (NameReferencingFileConverter.FileConversionException namereferencingfileconverter_fileconversionexception) {
-                NameReferencingFileConverter.e.error("Conversion failed, please try again later", namereferencingfileconverter_fileconversionexception);
-                return false;
-            }
-        } else {
-            return true;
-        }
-    }
-
-    public static boolean b(MinecraftServer minecraftserver) {
-        IpBanList ipbanlist = new IpBanList(PlayerList.b);
-
-        if (NameReferencingFileConverter.a.exists() && NameReferencingFileConverter.a.isFile()) {
-            if (ipbanlist.c().exists()) {
-                try {
-                    ipbanlist.load();
-                // CraftBukkit start - FileNotFoundException -> IOException, don't print stacetrace
-                } catch (IOException filenotfoundexception) {
-                    NameReferencingFileConverter.e.warn("Could not load existing file " + ipbanlist.c().getName());
-                }
-            }
-
-            try {
-                HashMap hashmap = Maps.newHashMap();
-
-                a(NameReferencingFileConverter.a, (Map) hashmap);
-                Iterator iterator = hashmap.keySet().iterator();
-
-                while (iterator.hasNext()) {
-                    String s = (String) iterator.next();
-                    String[] astring = (String[]) hashmap.get(s);
-                    Date date = astring.length > 1 ? b(astring[1], (Date) null) : null;
-                    String s1 = astring.length > 2 ? astring[2] : null;
-                    Date date1 = astring.length > 3 ? b(astring[3], (Date) null) : null;
-                    String s2 = astring.length > 4 ? astring[4] : null;
-
-                    ipbanlist.add(new IpBanEntry(s, date, s1, date1, s2));
-                }
-
-                ipbanlist.save();
-                c(NameReferencingFileConverter.a);
-                return true;
-            } catch (IOException ioexception) {
-                NameReferencingFileConverter.e.warn("Could not parse old ip banlist to convert it!", ioexception);
-                return false;
-            }
-        } else {
-            return true;
-        }
     }
 
     public static boolean c(final MinecraftServer minecraftserver) {
@@ -391,18 +288,6 @@ public class NameReferencingFileConverter {
     }
 
     private static boolean b(PropertyManager propertymanager) {
-        boolean flag = false;
-
-        if (NameReferencingFileConverter.b.exists() && NameReferencingFileConverter.b.isFile()) {
-            flag = true;
-        }
-
-        boolean flag1 = false;
-
-        if (NameReferencingFileConverter.a.exists() && NameReferencingFileConverter.a.isFile()) {
-            flag1 = true;
-        }
-
         boolean flag2 = false;
 
         if (NameReferencingFileConverter.c.exists() && NameReferencingFileConverter.c.isFile()) {
@@ -415,18 +300,11 @@ public class NameReferencingFileConverter {
             flag3 = true;
         }
 
-        if (!flag && !flag1 && !flag2 && !flag3) {
+        if (!flag2 && !flag3) {
             return true;
         } else {
             NameReferencingFileConverter.e.warn("**** FAILED TO START THE SERVER AFTER ACCOUNT CONVERSION!");
             NameReferencingFileConverter.e.warn("** please remove the following files and restart the server:");
-            if (flag) {
-                NameReferencingFileConverter.e.warn("* " + NameReferencingFileConverter.b.getName());
-            }
-
-            if (flag1) {
-                NameReferencingFileConverter.e.warn("* " + NameReferencingFileConverter.a.getName());
-            }
 
             if (flag2) {
                 NameReferencingFileConverter.e.warn("* " + NameReferencingFileConverter.c.getName());

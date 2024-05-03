@@ -536,30 +536,8 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
 
     protected boolean aR() {
         server.getLogger().info( "**** Beginning UUID conversion, this may take A LONG time ****"); // Spigot, let the user know whats up!
-        boolean flag = false;
 
         int i;
-
-        for (i = 0; !flag && i <= 2; ++i) {
-            if (i > 0) {
-                DedicatedServer.LOGGER.warn("Encountered a problem while converting the user banlist, retrying in a few seconds");
-                this.aU();
-            }
-
-            flag = NameReferencingFileConverter.a((MinecraftServer) this);
-        }
-
-        boolean flag1 = false;
-
-        for (i = 0; !flag1 && i <= 2; ++i) {
-            if (i > 0) {
-                DedicatedServer.LOGGER.warn("Encountered a problem while converting the ip banlist, retrying in a few seconds");
-                this.aU();
-            }
-
-            flag1 = NameReferencingFileConverter.b((MinecraftServer) this);
-        }
-
         boolean flag2 = false;
 
         for (i = 0; !flag2 && i <= 2; ++i) {
@@ -582,7 +560,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
             flag4 = NameReferencingFileConverter.a(this, this.propertyManager);
         }
 
-        return flag || flag1 || flag2 || flag4;
+        return flag2 || flag4;
     }
 
     private void aU() {

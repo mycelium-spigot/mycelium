@@ -25,7 +25,6 @@ import javax.imageio.ImageIO;
 
 import net.minecraft.server.*;
 
-import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -696,17 +695,6 @@ public final class CraftServer implements Server {
         chunkGCLoadThresh = configuration.getInt("chunk-gc.load-threshold");
         loadIcon();
 
-        try {
-            playerList.getIPBans().load();
-        } catch (IOException ex) {
-            logger.log(Level.WARNING, "Failed to load banned-ips.json, " + ex.getMessage());
-        }
-        try {
-            playerList.getProfileBans().load();
-        } catch (IOException ex) {
-            logger.log(Level.WARNING, "Failed to load banned-players.json, " + ex.getMessage());
-        }
-
         org.spigotmc.SpigotConfig.init((File) console.options.valueOf("spigot-settings")); // Spigot
         org.github.paperspigot.PaperSpigotConfig.init((File) console.options.valueOf("paper-settings")); // PaperSpigot
         for (WorldServer world : console.worlds) {
@@ -1374,50 +1362,6 @@ public final class CraftServer implements Server {
         OfflinePlayer player = new CraftOfflinePlayer(this, profile);
         offlinePlayers.put(profile.getId(), player);
         return player;
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public Set<String> getIPBans() {
-        return new HashSet<String>(Arrays.asList(playerList.getIPBans().getEntries()));
-    }
-
-    @Override
-    public void banIP(String address) {
-        Validate.notNull(address, "Address cannot be null.");
-
-        this.getBanList(org.bukkit.BanList.Type.IP).addBan(address, null, null, null);
-    }
-
-    @Override
-    public void unbanIP(String address) {
-        Validate.notNull(address, "Address cannot be null.");
-
-        this.getBanList(org.bukkit.BanList.Type.IP).pardon(address);
-    }
-
-    @Override
-    public Set<OfflinePlayer> getBannedPlayers() {
-        Set<OfflinePlayer> result = new HashSet<OfflinePlayer>();
-
-        for (JsonListEntry entry : playerList.getProfileBans().getValues()) {
-            result.add(getOfflinePlayer((GameProfile) entry.getKey()));
-        }        
-
-        return result;
-    }
-
-    @Override
-    public BanList getBanList(BanList.Type type) {
-        Validate.notNull(type, "Type cannot be null");
-
-        switch(type){
-        case IP:
-            return new CraftIpBanList(playerList.getIPBans());
-        case NAME:
-        default:
-            return new CraftProfileBanList(playerList.getProfileBans());
-        }
     }
 
     @Override

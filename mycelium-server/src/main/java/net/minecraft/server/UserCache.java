@@ -65,7 +65,7 @@ public class UserCache {
         this.g = file;
         GsonBuilder gsonbuilder = new GsonBuilder();
 
-        gsonbuilder.registerTypeHierarchyAdapter(UserCache.UserCacheEntry.class, new UserCache.BanEntrySerializer(null));
+        gsonbuilder.registerTypeHierarchyAdapter(UserCache.UserCacheEntry.class, new UserCache.UserCacheSerializer(null));
         this.b = gsonbuilder.create();
         this.b();
     }
@@ -270,9 +270,9 @@ public class UserCache {
         }
     }
 
-    class BanEntrySerializer implements JsonDeserializer<UserCache.UserCacheEntry>, JsonSerializer<UserCache.UserCacheEntry> {
+    class UserCacheSerializer implements JsonDeserializer<UserCache.UserCacheEntry>, JsonSerializer<UserCache.UserCacheEntry> {
 
-        private BanEntrySerializer() {}
+        private UserCacheSerializer() {}
 
         public JsonElement a(UserCache.UserCacheEntry usercache_usercacheentry, Type type, JsonSerializationContext jsonserializationcontext) {
             JsonObject jsonobject = new JsonObject();
@@ -336,7 +336,7 @@ public class UserCache {
             return this.a(jsonelement, type, jsondeserializationcontext);
         }
 
-        BanEntrySerializer(Object object) {
+        UserCacheSerializer(Object object) {
             this();
         }
     }

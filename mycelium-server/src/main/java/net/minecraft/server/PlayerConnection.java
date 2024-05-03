@@ -1403,15 +1403,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
                 // this.player = this.minecraftServer.getPlayerList().moveToWorld(this.player, 0, true);
                 this.minecraftServer.getPlayerList().changeDimension(this.player, 0, PlayerTeleportEvent.TeleportCause.END_PORTAL); // CraftBukkit - reroute logic through custom portal management
             } else if (this.player.u().getWorldData().isHardcore()) {
-                if (this.minecraftServer.T() && this.player.getName().equals(this.minecraftServer.S())) {
-                    this.player.playerConnection.disconnect("You have died. Game over, man, it\'s game over!");
-                    this.minecraftServer.aa();
-                } else {
-                    GameProfileBanEntry gameprofilebanentry = new GameProfileBanEntry(this.player.getProfile(), (Date) null, "(You just lost the game)", (Date) null, "Death in Hardcore");
-
-                    this.minecraftServer.getPlayerList().getProfileBans().add(gameprofilebanentry);
-                    this.player.playerConnection.disconnect("You have died. Game over, man, it\'s game over!");
-                }
+                // TODO: Remove hardcore world stuff.
             } else {
                 if (this.player.getHealth() > 0.0F) {
                     return;

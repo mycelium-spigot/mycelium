@@ -11,7 +11,6 @@ import net.minecraft.server.EntityPlayer;
 import net.minecraft.server.NBTTagCompound;
 import net.minecraft.server.WorldNBTStorage;
 
-import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -86,26 +85,6 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
             server.getHandle().addOp(profile);
         } else {
             server.getHandle().removeOp(profile);
-        }
-    }
-
-    public boolean isBanned() {
-        if (getName() == null) {
-            return false;
-        }
-
-        return server.getBanList(BanList.Type.NAME).isBanned(getName());
-    }
-
-    public void setBanned(boolean value) {
-        if (getName() == null) {
-            return;
-        }
-
-        if (value) {
-            server.getBanList(BanList.Type.NAME).addBan(getName(), null, null, null);
-        } else {
-            server.getBanList(BanList.Type.NAME).pardon(getName());
         }
     }
 
