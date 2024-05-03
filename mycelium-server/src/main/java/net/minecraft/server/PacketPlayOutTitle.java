@@ -81,7 +81,7 @@ public class PacketPlayOutTitle implements Packet<PacketListenerPlayOut> {
     // PaperSpigot start - fix compile error
     /*
     public void a(PacketListener packetlistener) {
-        this.a((PacketListenerPlayOut) packetlistener);
+        this.a((PacketListenerPlayOut) this);
     }
     */
     // PaperSpigot end

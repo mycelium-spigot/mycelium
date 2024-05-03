@@ -4,3 +4,6 @@ dependency-reduced-pom.xml
 
 # VSCode
 .vscode/
+
+# Development Server
+/server
