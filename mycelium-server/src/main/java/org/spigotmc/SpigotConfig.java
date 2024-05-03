@@ -188,7 +188,6 @@ public class SpigotConfig
         tabComplete = getInt( "commands.tab-complete", 0 );
     }
 
-    public static String whitelistMessage;
     public static String unknownCommandMessage;
     public static String serverFullMessage;
     public static String outdatedClientMessage = "Outdated client! Please use {0}";
@@ -205,7 +204,6 @@ public class SpigotConfig
             set( "messages.outdated-server", outdatedServerMessage );
         }
 
-        whitelistMessage = transform( getString( "messages.whitelist", "You are not whitelisted on this server!" ) );
         unknownCommandMessage = transform( getString( "messages.unknown-command", "Unknown command. Type \"/help\" for help." ) );
         serverFullMessage = transform( getString( "messages.server-full", "The server is full!" ) );
         outdatedClientMessage = transform( getString( "messages.outdated-client", outdatedClientMessage ) );

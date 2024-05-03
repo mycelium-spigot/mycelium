@@ -44,7 +44,6 @@ public abstract class PlayerList {
     public static final File a = new File("banned-players.json");
     public static final File b = new File("banned-ips.json");
     public static final File c = new File("ops.json");
-    public static final File d = new File("whitelist.json");
     private static final Logger f = LogManager.getLogger();
     private static final SimpleDateFormat g = new SimpleDateFormat("yyyy-MM-dd \'at\' HH:mm:ss z");
     private final MinecraftServer server;
@@ -53,10 +52,8 @@ public abstract class PlayerList {
     private final GameProfileBanList k;
     private final IpBanList l;
     private final OpList operators;
-    private final WhiteList whitelist;
     private final Map<UUID, ServerStatisticManager> o;
     public IPlayerFileData playerFileData;
-    private boolean hasWhitelist;
     protected int maxPlayers;
     private int r;
     private WorldSettings.EnumGamemode s;
@@ -76,7 +73,6 @@ public abstract class PlayerList {
         this.k = new GameProfileBanList(PlayerList.a);
         this.l = new IpBanList(PlayerList.b);
         this.operators = new OpList(PlayerList.c);
-        this.whitelist = new WhiteList(PlayerList.d);
         this.o = Maps.newHashMap();
         this.server = minecraftserver;
         this.k.a(false);
@@ -449,9 +445,6 @@ public abstract class PlayerList {
 
             // return s;
             if (!gameprofilebanentry.hasExpired()) event.disallow(PlayerLoginEvent.Result.KICK_BANNED, s); // Spigot
-        } else if (!this.isWhitelisted(gameprofile)) {
-            // return "You are not white-listed on this server!";
-            event.disallow(PlayerLoginEvent.Result.KICK_WHITELIST, org.spigotmc.SpigotConfig.whitelistMessage); // Spigot
         } else if (getIPBans().isBanned(socketaddress) && !getIPBans().get(socketaddress).hasExpired()) {
             IpBanEntry ipbanentry = this.l.get(socketaddress);
 
@@ -1034,11 +1027,7 @@ public abstract class PlayerList {
         }
         // CraftBukkit end
     }
-
-    public boolean isWhitelisted(GameProfile gameprofile) {
-        return !this.hasWhitelist || this.operators.d(gameprofile) || this.whitelist.d(gameprofile);
-    }
-
+    
     public boolean isOp(GameProfile gameprofile) {
         return this.operators.d(gameprofile) || this.server.T() && this.server.worlds.get(0).getWorldData().v() && this.server.S().equalsIgnoreCase(gameprofile.getName()) || this.t; // CraftBukkit
     }
@@ -1081,22 +1070,6 @@ public abstract class PlayerList {
 
     }
 
-    public void addWhitelist(GameProfile gameprofile) {
-        this.whitelist.add(new WhiteListEntry(gameprofile));
-    }
-
-    public void removeWhitelist(GameProfile gameprofile) {
-        this.whitelist.remove(gameprofile);
-    }
-
-    public WhiteList getWhitelist() {
-        return this.whitelist;
-    }
-
-    public String[] getWhitelisted() {
-        return this.whitelist.getEntries();
-    }
-
     public OpList getOPs() {
         return this.operators;
     }
@@ -1104,8 +1077,6 @@ public abstract class PlayerList {
     public String[] n() {
         return this.operators.getEntries();
     }
-
-    public void reloadWhitelist() {}
 
     public void b(EntityPlayer entityplayer, WorldServer worldserver) {
         WorldBorder worldborder = entityplayer.world.getWorldBorder(); // CraftBukkit
@@ -1141,14 +1112,6 @@ public abstract class PlayerList {
 
     public String[] getSeenPlayers() {
         return this.server.worlds.get(0).getDataManager().getPlayerFileData().getSeenPlayers(); // CraftBukkit
-    }
-
-    public boolean getHasWhitelist() {
-        return this.hasWhitelist;
-    }
-
-    public void setHasWhitelist(boolean flag) {
-        this.hasWhitelist = flag;
     }
 
     public List<EntityPlayer> b(String s) {

@@ -109,18 +109,6 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
         }
     }
 
-    public boolean isWhitelisted() {
-        return server.getHandle().getWhitelist().isWhitelisted(profile);
-    }
-
-    public void setWhitelisted(boolean value) {
-        if (value) {
-            server.getHandle().addWhitelist(profile);
-        } else {
-            server.getHandle().removeWhitelist(profile);
-        }
-    }
-
     public Map<String, Object> serialize() {
         Map<String, Object> result = new LinkedHashMap<String, Object>();
 

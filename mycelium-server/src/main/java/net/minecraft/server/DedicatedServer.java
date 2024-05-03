@@ -388,8 +388,6 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
     }
 
     public void a(MojangStatisticsGenerator mojangstatisticsgenerator) {
-        mojangstatisticsgenerator.a("whitelist_enabled", Boolean.valueOf(this.aP().getHasWhitelist()));
-        mojangstatisticsgenerator.a("whitelist_count", Integer.valueOf(this.aP().getWhitelisted().length));
         super.a(mojangstatisticsgenerator);
     }
 
@@ -573,17 +571,6 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
             flag2 = NameReferencingFileConverter.c((MinecraftServer) this);
         }
 
-        boolean flag3 = false;
-
-        for (i = 0; !flag3 && i <= 2; ++i) {
-            if (i > 0) {
-                DedicatedServer.LOGGER.warn("Encountered a problem while converting the whitelist, retrying in a few seconds");
-                this.aU();
-            }
-
-            flag3 = NameReferencingFileConverter.d((MinecraftServer) this);
-        }
-
         boolean flag4 = false;
 
         for (i = 0; !flag4 && i <= 2; ++i) {
@@ -595,7 +582,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
             flag4 = NameReferencingFileConverter.a(this, this.propertyManager);
         }
 
-        return flag || flag1 || flag2 || flag3 || flag4;
+        return flag || flag1 || flag2 || flag4;
     }
 
     private void aU() {

@@ -246,40 +246,6 @@ public final class Bukkit {
     }
 
     /**
-     * Gets whether this server has a whitelist or not.
-     *
-     * @return whether this server has a whitelist or not
-     */
-    public static boolean hasWhitelist() {
-        return server.hasWhitelist();
-    }
-
-    /**
-     * Sets if the server is whitelisted.
-     *
-     * @param value true for whitelist on, false for off
-     */
-    public static void setWhitelist(boolean value) {
-        server.setWhitelist(value);
-    }
-
-    /**
-     * Gets a list of whitelisted players.
-     *
-     * @return a set containing all whitelisted players
-     */
-    public static Set<OfflinePlayer> getWhitelistedPlayers() {
-        return server.getWhitelistedPlayers();
-    }
-
-    /**
-     * Reloads the whitelist from disk.
-     */
-    public static void reloadWhitelist() {
-        server.reloadWhitelist();
-    }
-
-    /**
      * Broadcast a message to all players.
      * <p>
      * This is the same as calling {@link #broadcast(java.lang.String,

@@ -229,51 +229,6 @@ public class NameReferencingFileConverter {
         }
     }
 
-    public static boolean d(final MinecraftServer minecraftserver) {
-        final WhiteList whitelist = new WhiteList(PlayerList.d);
-
-        if (NameReferencingFileConverter.d.exists() && NameReferencingFileConverter.d.isFile()) {
-            if (whitelist.c().exists()) {
-                try {
-                    whitelist.load();
-                // CraftBukkit start - FileNotFoundException -> IOException, don't print stacetrace
-                } catch (IOException filenotfoundexception) {
-                    NameReferencingFileConverter.e.warn("Could not load existing file " + whitelist.c().getName());
-                }
-            }
-
-            try {
-                List list = Files.readLines(NameReferencingFileConverter.d, Charsets.UTF_8);
-                ProfileLookupCallback profilelookupcallback = new ProfileLookupCallback() {
-                    public void onProfileLookupSucceeded(GameProfile gameprofile) {
-                        minecraftserver.getUserCache().a(gameprofile);
-                        whitelist.add(new WhiteListEntry(gameprofile));
-                    }
-
-                    public void onProfileLookupFailed(GameProfile gameprofile, Exception exception) {
-                        NameReferencingFileConverter.e.warn("Could not lookup user whitelist entry for " + gameprofile.getName(), exception);
-                        if (!(exception instanceof ProfileNotFoundException)) {
-                            throw new NameReferencingFileConverter.FileConversionException("Could not request user " + gameprofile.getName() + " from backend systems", exception, null);
-                        }
-                    }
-                };
-
-                a(minecraftserver, list, profilelookupcallback);
-                whitelist.save();
-                c(NameReferencingFileConverter.d);
-                return true;
-            } catch (IOException ioexception) {
-                NameReferencingFileConverter.e.warn("Could not read old whitelist to convert it!", ioexception);
-                return false;
-            } catch (NameReferencingFileConverter.FileConversionException namereferencingfileconverter_fileconversionexception) {
-                NameReferencingFileConverter.e.error("Conversion failed, please try again later", namereferencingfileconverter_fileconversionexception);
-                return false;
-            }
-        } else {
-            return true;
-        }
-    }
-
     public static String a(String s) {
         if (!UtilColor.b(s) && s.length() <= 16) {
             final MinecraftServer minecraftserver = MinecraftServer.getServer();
@@ -290,7 +245,7 @@ public class NameReferencingFileConverter {
                     }
 
                     public void onProfileLookupFailed(GameProfile gameprofile, Exception exception) {
-                        NameReferencingFileConverter.e.warn("Could not lookup user whitelist entry for " + gameprofile.getName(), exception);
+                        NameReferencingFileConverter.e.warn("Could not lookup user legacy whitelist entry for " + gameprofile.getName(), exception);
                     }
                 };
 

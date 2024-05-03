@@ -202,32 +202,6 @@ public interface Server extends PluginMessageRecipient {
     public boolean getAllowNether();
 
     /**
-     * Gets whether this server has a whitelist or not.
-     *
-     * @return whether this server has a whitelist or not
-     */
-    public boolean hasWhitelist();
-
-    /**
-     * Sets if the server is whitelisted.
-     *
-     * @param value true for whitelist on, false for off
-     */
-    public void setWhitelist(boolean value);
-
-    /**
-     * Gets a list of whitelisted players.
-     *
-     * @return a set containing all whitelisted players
-     */
-    public Set<OfflinePlayer> getWhitelistedPlayers();
-
-    /**
-     * Reloads the whitelist from disk.
-     */
-    public void reloadWhitelist();
-
-    /**
      * Broadcast a message to all players.
      * <p>
      * This is the same as calling {@link #broadcast(java.lang.String,

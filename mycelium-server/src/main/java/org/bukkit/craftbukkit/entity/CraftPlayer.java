@@ -822,21 +822,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
             server.getBanList(BanList.Type.NAME).pardon(getName());
         }
     }
-
-    @Override
-    public boolean isWhitelisted() {
-        return server.getHandle().getWhitelist().isWhitelisted(getProfile());
-    }
-
-    @Override
-    public void setWhitelisted(boolean value) {
-        if (value) {
-            server.getHandle().addWhitelist(getProfile());
-        } else {
-            server.getHandle().removeWhitelist(getProfile());
-        }
-    }
-
+    
     @Override
     public void setGameMode(GameMode mode) {
         if (getHandle().playerConnection == null) return;

@@ -539,11 +539,6 @@ public final class CraftServer implements Server {
         return this.configuration.getBoolean("settings.query-plugins");
     }
 
-    @Override
-    public boolean hasWhitelist() {
-        return this.getConfigBoolean("white-list", false);
-    }
-
     // NOTE: Temporary calls through to server.properies until its replaced
     private String getConfigString(String variable, String defaultValue) {
         return this.console.getPropertyManager().getString(variable, defaultValue);
@@ -1426,23 +1421,6 @@ public final class CraftServer implements Server {
     }
 
     @Override
-    public void setWhitelist(boolean value) {
-        playerList.setHasWhitelist(value);
-        console.getPropertyManager().setProperty("white-list", value);
-    }
-
-    @Override
-    public Set<OfflinePlayer> getWhitelistedPlayers() {
-        Set<OfflinePlayer> result = new LinkedHashSet<OfflinePlayer>();
-
-        for (JsonListEntry entry : playerList.getWhitelist().getValues()) {
-            result.add(getOfflinePlayer((GameProfile) entry.getKey()));
-        }
-
-        return result;
-    }
-
-    @Override
     public Set<OfflinePlayer> getOperators() {
         Set<OfflinePlayer> result = new HashSet<OfflinePlayer>();
 
@@ -1452,12 +1430,7 @@ public final class CraftServer implements Server {
 
         return result;
     }
-
-    @Override
-    public void reloadWhitelist() {
-        playerList.reloadWhitelist();
-    }
-
+    
     @Override
     public GameMode getDefaultGameMode() {
         return GameMode.getByValue(console.worlds.get(0).getWorldData().getGameType().getId());
