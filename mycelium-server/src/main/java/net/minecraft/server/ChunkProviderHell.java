@@ -27,7 +27,6 @@ public class ChunkProviderHell implements IChunkProvider {
     private final WorldGenHellLava y;
     private final WorldGenMushrooms z;
     private final WorldGenMushrooms A;
-    private final WorldGenNether B;
     private final WorldGenBase C;
     double[] c;
     double[] d;
@@ -41,7 +40,6 @@ public class ChunkProviderHell implements IChunkProvider {
         this.y = new WorldGenHellLava(Blocks.FLOWING_LAVA, false);
         this.z = new WorldGenMushrooms(Blocks.BROWN_MUSHROOM);
         this.A = new WorldGenMushrooms(Blocks.RED_MUSHROOM);
-        this.B = new WorldGenNether();
         this.C = new WorldGenCavesHell();
         this.h = world;
         this.i = flag;
@@ -202,9 +200,6 @@ public class ChunkProviderHell implements IChunkProvider {
         this.a(i, j, chunksnapshot);
         this.b(i, j, chunksnapshot);
         if (this.h.paperSpigotConfig.generateCaves) this.C.a(this, this.h, i, j, chunksnapshot); // PaperSpigot
-        if (this.i && this.h.paperSpigotConfig.generateFortress) { // PaperSpigot
-            this.B.a(this, this.h, i, j, chunksnapshot);
-        }
 
         Chunk chunk = new Chunk(this.h, chunksnapshot, i, j);
         BiomeBase[] abiomebase = this.h.getWorldChunkManager().getBiomeBlock((BiomeBase[]) null, i * 16, j * 16, 16, 16);
@@ -299,10 +294,6 @@ public class ChunkProviderHell implements IChunkProvider {
     public void getChunkAt(IChunkProvider ichunkprovider, int i, int j) {
         BlockFalling.instaFall = true;
         BlockPosition blockposition = new BlockPosition(i * 16, 0, j * 16);
-        ChunkCoordIntPair chunkcoordintpair = new ChunkCoordIntPair(i, j);
-
-        this.B.a(this.h, this.j, chunkcoordintpair);
-
         int k;
 
         for (k = 0; k < 8; ++k) {
@@ -363,31 +354,13 @@ public class ChunkProviderHell implements IChunkProvider {
     }
 
     public List<BiomeBase.BiomeMeta> getMobsFor(EnumCreatureType enumcreaturetype, BlockPosition blockposition) {
-        if (enumcreaturetype == EnumCreatureType.MONSTER) {
-            if (this.B.b(blockposition)) {
-                return this.B.b();
-            }
-
-            if (this.B.a(this.h, blockposition) && this.h.getType(blockposition.down()).getBlock() == Blocks.NETHER_BRICK) {
-                return this.B.b();
-            }
-        }
-
         BiomeBase biomebase = this.h.getBiome(blockposition);
 
         return biomebase.getMobs(enumcreaturetype);
     }
 
-    public BlockPosition findNearestMapFeature(World world, String s, BlockPosition blockposition) {
-        return null;
-    }
-
     public int getLoadedChunks() {
         return 0;
-    }
-
-    public void recreateStructures(Chunk chunk, int i, int j) {
-        if (this.h.paperSpigotConfig.generateFortress) this.B.a(this, this.h, i, j, (ChunkSnapshot) null); // PaperSpigot
     }
 
     public Chunk getChunkAt(BlockPosition blockposition) {

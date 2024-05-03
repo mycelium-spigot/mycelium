@@ -14,7 +14,6 @@ public class ChunkProviderFlat implements IChunkProvider {
     private final WorldGenFlatInfo d;
     private final List<StructureGenerator> e = Lists.newArrayList();
     private final boolean f;
-    private final boolean g;
     private WorldGenLakes h;
     private WorldGenLakes i;
 
@@ -22,35 +21,6 @@ public class ChunkProviderFlat implements IChunkProvider {
         this.a = world;
         this.b = new Random(i);
         this.d = WorldGenFlatInfo.a(s);
-        if (flag) {
-            Map map = this.d.b();
-
-            if (map.containsKey("village") && world.paperSpigotConfig.generateVillage) { // PaperSpigot
-                Map map1 = (Map) map.get("village");
-
-                if (!map1.containsKey("size")) {
-                    map1.put("size", "1");
-                }
-
-                this.e.add(new WorldGenVillage(map1));
-            }
-
-            if (map.containsKey("biome_1") && world.paperSpigotConfig.generateTemple) { // PaperSpigot
-                this.e.add(new WorldGenLargeFeature((Map) map.get("biome_1")));
-            }
-
-            if (map.containsKey("mineshaft") && world.paperSpigotConfig.generateMineshaft) { // PaperSpigot
-                this.e.add(new WorldGenMineshaft((Map) map.get("mineshaft")));
-            }
-
-            if (map.containsKey("stronghold") && world.paperSpigotConfig.generateStronghold) { // PaperSpigot
-                this.e.add(new WorldGenStronghold((Map) map.get("stronghold")));
-            }
-
-            if (map.containsKey("oceanmonument") && world.paperSpigotConfig.generateMonument) { // PaperSpigot
-                this.e.add(new WorldGenMonument((Map) map.get("oceanmonument")));
-            }
-        }
 
         if (this.d.b().containsKey("lake")) {
             this.h = new WorldGenLakes(Blocks.WATER);
@@ -60,7 +30,6 @@ public class ChunkProviderFlat implements IChunkProvider {
             this.i = new WorldGenLakes(Blocks.LAVA);
         }
 
-        this.g = world.paperSpigotConfig.generateDungeon && this.d.b().containsKey("dungeon");  // PaperSpigot
         int j = 0;
         int k = 0;
         boolean flag1 = true;
@@ -143,17 +112,6 @@ public class ChunkProviderFlat implements IChunkProvider {
         long j1 = this.b.nextLong() / 2L * 2L + 1L;
 
         this.b.setSeed((long) i * i1 + (long) j * j1 ^ this.a.getSeed());
-        ChunkCoordIntPair chunkcoordintpair = new ChunkCoordIntPair(i, j);
-        Iterator iterator = this.e.iterator();
-
-        while (iterator.hasNext()) {
-            StructureGenerator structuregenerator = (StructureGenerator) iterator.next();
-            boolean flag1 = structuregenerator.a(this.a, this.b, chunkcoordintpair);
-
-            if (structuregenerator instanceof WorldGenVillage) {
-                flag |= flag1;
-            }
-        }
 
         if (this.h != null && !flag && this.b.nextInt(4) == 0) {
             this.h.generate(this.a, this.b, blockposition.a(this.b.nextInt(16) + 8, this.b.nextInt(256), this.b.nextInt(16) + 8));
@@ -164,12 +122,6 @@ public class ChunkProviderFlat implements IChunkProvider {
 
             if (blockposition1.getY() < this.a.F() || this.b.nextInt(10) == 0) {
                 this.i.generate(this.a, this.b, blockposition1);
-            }
-        }
-
-        if (this.g) {
-            for (int k1 = 0; k1 < 8; ++k1) {
-                (new WorldGenDungeons()).generate(this.a, this.b, blockposition.a(this.b.nextInt(16) + 8, this.b.nextInt(256), this.b.nextInt(16) + 8));
             }
         }
 
@@ -207,35 +159,8 @@ public class ChunkProviderFlat implements IChunkProvider {
         return biomebase.getMobs(enumcreaturetype);
     }
 
-    public BlockPosition findNearestMapFeature(World world, String s, BlockPosition blockposition) {
-        if ("Stronghold".equals(s)) {
-            Iterator iterator = this.e.iterator();
-
-            while (iterator.hasNext()) {
-                StructureGenerator structuregenerator = (StructureGenerator) iterator.next();
-
-                if (structuregenerator instanceof WorldGenStronghold) {
-                    return structuregenerator.getNearestGeneratedFeature(world, blockposition);
-                }
-            }
-        }
-
-        return null;
-    }
-
     public int getLoadedChunks() {
         return 0;
-    }
-
-    public void recreateStructures(Chunk chunk, int i, int j) {
-        Iterator iterator = this.e.iterator();
-
-        while (iterator.hasNext()) {
-            StructureGenerator structuregenerator = (StructureGenerator) iterator.next();
-
-            structuregenerator.a(this, this.a, i, j, (ChunkSnapshot) null);
-        }
-
     }
 
     public Chunk getChunkAt(BlockPosition blockposition) {

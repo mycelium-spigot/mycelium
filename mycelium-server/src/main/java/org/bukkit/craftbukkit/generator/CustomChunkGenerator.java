@@ -14,7 +14,6 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
     private final ChunkGenerator generator;
     private final WorldServer world;
     private final Random random;
-    private final WorldGenStronghold strongholdGen = new WorldGenStronghold();
 
     private static class CustomBiomeGrid implements BiomeGrid {
         BiomeBase[] biome;
@@ -240,20 +239,8 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
         return biomebase == null ? null : biomebase.getMobs(type);
     }
 
-    @Override
-    public BlockPosition findNearestMapFeature(World world, String type, BlockPosition position) {
-        return "Stronghold".equals(type) && this.strongholdGen != null ? this.strongholdGen.getNearestGeneratedFeature(world, position) : null;
-    }
-
-    public void recreateStructures(int i, int j) {}
-
     public int getLoadedChunks() {
         return 0;
-    }
-
-    @Override
-    public void recreateStructures(Chunk chunk, int i, int i1) {
-
     }
 
     public String getName() {

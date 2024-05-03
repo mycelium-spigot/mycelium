@@ -241,11 +241,6 @@ public class ChunkProviderServer implements IChunkProvider {
 
                 if (chunk != null) {
                     chunk.setLastSaved(this.world.getTime());
-                    if (this.chunkProvider != null) {
-                        world.timings.syncChunkLoadStructuresTimer.startTiming(); // Spigot
-                        this.chunkProvider.recreateStructures(chunk, i, j);
-                        world.timings.syncChunkLoadStructuresTimer.stopTiming(); // Spigot
-                    }
                 }
 
                 return chunk;
@@ -427,16 +422,10 @@ public class ChunkProviderServer implements IChunkProvider {
         return this.chunkProvider.getMobsFor(enumcreaturetype, blockposition);
     }
 
-    public BlockPosition findNearestMapFeature(World world, String s, BlockPosition blockposition) {
-        return this.chunkProvider.findNearestMapFeature(world, s, blockposition);
-    }
-
     public int getLoadedChunks() {
         // CraftBukkit - this.chunks.count() -> this.chunks.size()
         return this.chunks.size();
     }
-
-    public void recreateStructures(Chunk chunk, int i, int j) {}
 
     public Chunk getChunkAt(BlockPosition blockposition) {
         return this.getOrCreateChunk(blockposition.getX() >> 4, blockposition.getZ() >> 4);

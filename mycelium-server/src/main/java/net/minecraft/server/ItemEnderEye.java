@@ -1,5 +1,7 @@
 package net.minecraft.server;
 
+import org.bukkit.craftbukkit.util.CraftChatMessage;
+
 public class ItemEnderEye extends Item {
 
     public ItemEnderEye() {
@@ -110,24 +112,6 @@ public class ItemEnderEye extends Item {
         if (movingobjectposition != null && movingobjectposition.type == MovingObjectPosition.EnumMovingObjectType.BLOCK && world.getType(movingobjectposition.a()).getBlock() == Blocks.END_PORTAL_FRAME) {
             return itemstack;
         } else {
-            if (!world.isClientSide) {
-                BlockPosition blockposition = world.a("Stronghold", new BlockPosition(entityhuman));
-
-                if (blockposition != null) {
-                    EntityEnderSignal entityendersignal = new EntityEnderSignal(world, entityhuman.locX, entityhuman.locY, entityhuman.locZ);
-
-                    entityendersignal.a(blockposition);
-                    world.addEntity(entityendersignal);
-                    world.makeSound(entityhuman, "random.bow", 0.5F, 0.4F / (ItemEnderEye.g.nextFloat() * 0.4F + 0.8F));
-                    world.a((EntityHuman) null, 1002, new BlockPosition(entityhuman), 0);
-                    if (!entityhuman.abilities.canInstantlyBuild) {
-                        --itemstack.count;
-                    }
-
-                    entityhuman.b(StatisticList.USE_ITEM_COUNT[Item.getId(this)]);
-                }
-            }
-
             return itemstack;
         }
     }

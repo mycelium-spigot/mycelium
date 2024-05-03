@@ -3140,10 +3140,6 @@ public abstract class World implements IBlockAccess {
         return this.random;
     }
 
-    public BlockPosition a(String s, BlockPosition blockposition) {
-        return this.N().findNearestMapFeature(this, s, blockposition);
-    }
-
     public CrashReportSystemDetails a(CrashReport crashreport) {
         CrashReportSystemDetails crashreportsystemdetails = crashreport.a("Affected level", 1);
 

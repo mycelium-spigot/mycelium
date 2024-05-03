@@ -76,20 +76,10 @@ public class NormalChunkGenerator extends InternalChunkGenerator {
         return provider.getMobsFor(ect, position);
     }
 
-    @Override
-    public BlockPosition findNearestMapFeature(World world, String string, BlockPosition position) {
-        return provider.findNearestMapFeature(world, string, position);
-    }
-
     // n.m.s implementations always return 0. (The true implementation is in ChunkProviderServer)
     @Override
     public int getLoadedChunks() {
         return 0;
-    }
-
-    @Override
-    public void recreateStructures(Chunk chunk, int i, int i1) {
-        provider.recreateStructures(chunk, i, i1);
     }
 
     @Override

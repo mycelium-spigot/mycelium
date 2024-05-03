@@ -22,12 +22,7 @@ public class ChunkProviderGenerate implements IChunkProvider {
     private Block s;
     private double[] t;
     private WorldGenBase u;
-    private WorldGenStronghold v;
-    private WorldGenVillage w;
-    private WorldGenMineshaft x;
-    private WorldGenLargeFeature y;
     private WorldGenBase z;
-    private WorldGenMonument A;
     private BiomeBase[] B;
     double[] d;
     double[] e;
@@ -38,12 +33,7 @@ public class ChunkProviderGenerate implements IChunkProvider {
         this.s = Blocks.WATER;
         this.t = new double[256];
         this.u = new WorldGenCaves();
-        this.v = new WorldGenStronghold();
-        this.w = new WorldGenVillage();
-        this.x = new WorldGenMineshaft();
-        this.y = new WorldGenLargeFeature();
         this.z = new WorldGenCanyon();
-        this.A = new WorldGenMonument();
         this.m = world;
         this.n = flag;
         this.o = world.getWorldData().getType();
@@ -162,26 +152,6 @@ public class ChunkProviderGenerate implements IChunkProvider {
 
         if (this.r.z && this.m.paperSpigotConfig.generateCanyon) { // PaperSpigot
             this.z.a(this, this.m, i, j, chunksnapshot);
-        }
-
-        if (this.r.w && this.n && this.m.paperSpigotConfig.generateMineshaft) { // PaperSpigot
-            this.x.a(this, this.m, i, j, chunksnapshot);
-        }
-
-        if (this.r.v && this.n && this.m.paperSpigotConfig.generateVillage) { // PaperSpigot
-            this.w.a(this, this.m, i, j, chunksnapshot);
-        }
-
-        if (this.r.u && this.n && this.m.paperSpigotConfig.generateStronghold) { // PaperSpigot
-            this.v.a(this, this.m, i, j, chunksnapshot);
-        }
-
-        if (this.r.x && this.n && this.m.paperSpigotConfig.generateTemple) { // PaperSpigot
-            this.y.a(this, this.m, i, j, chunksnapshot);
-        }
-
-        if (this.r.y && this.n && this.m.paperSpigotConfig.generateMonument) { // PaperSpigot
-            this.A.a(this, this.m, i, j, chunksnapshot);
         }
 
         Chunk chunk = new Chunk(this.m, chunksnapshot, i, j);
@@ -317,27 +287,6 @@ public class ChunkProviderGenerate implements IChunkProvider {
 
         this.h.setSeed((long) i * i1 + (long) j * j1 ^ this.m.getSeed());
         boolean flag = false;
-        ChunkCoordIntPair chunkcoordintpair = new ChunkCoordIntPair(i, j);
-
-        if (this.r.w && this.n && this.m.paperSpigotConfig.generateMineshaft) { // PaperSpigot
-            this.x.a(this.m, this.h, chunkcoordintpair);
-        }
-
-        if (this.r.v && this.n && this.m.paperSpigotConfig.generateVillage) { // PaperSpigot
-            flag = this.w.a(this.m, this.h, chunkcoordintpair);
-        }
-
-        if (this.r.u && this.n && this.m.paperSpigotConfig.generateStronghold) { // PaperSpigot
-            this.v.a(this.m, this.h, chunkcoordintpair);
-        }
-
-        if (this.r.x && this.n && this.m.paperSpigotConfig.generateTemple) { // PaperSpigot
-            this.y.a(this.m, this.h, chunkcoordintpair);
-        }
-
-        if (this.r.y && this.n && this.m.paperSpigotConfig.generateMonument) { // PaperSpigot
-            this.A.a(this.m, this.h, chunkcoordintpair);
-        }
 
         int k1;
         int l1;
@@ -356,16 +305,6 @@ public class ChunkProviderGenerate implements IChunkProvider {
             i2 = this.h.nextInt(16) + 8;
             if (l1 < this.m.F() || this.h.nextInt(this.r.D / 8) == 0) {
                 (new WorldGenLakes(Blocks.LAVA)).generate(this.m, this.h, blockposition.a(k1, l1, i2));
-            }
-        }
-
-        if (this.r.s && this.m.paperSpigotConfig.generateDungeon) { // PaperSpigot
-            for (k1 = 0; k1 < this.r.t; ++k1) {
-                l1 = this.h.nextInt(16) + 8;
-                i2 = this.h.nextInt(256);
-                int j2 = this.h.nextInt(16) + 8;
-
-                (new WorldGenDungeons()).generate(this.m, this.h, blockposition.a(l1, i2, j2));
             }
         }
 
@@ -394,9 +333,9 @@ public class ChunkProviderGenerate implements IChunkProvider {
     public boolean a(IChunkProvider ichunkprovider, Chunk chunk, int i, int j) {
         boolean flag = false;
 
-        if (this.r.y && this.n && chunk.w() < 3600L) {
-            flag |= this.A.a(this.m, this.h, new ChunkCoordIntPair(i, j));
-        }
+        //if (this.r.y && this.n && chunk.w() < 3600L) {
+        //    flag |= this.A.a(this.m, this.h, new ChunkCoordIntPair(i, j));
+        //}
 
         return flag;
     }
@@ -422,48 +361,11 @@ public class ChunkProviderGenerate implements IChunkProvider {
     public List<BiomeBase.BiomeMeta> getMobsFor(EnumCreatureType enumcreaturetype, BlockPosition blockposition) {
         BiomeBase biomebase = this.m.getBiome(blockposition);
 
-        if (this.n) {
-            if (enumcreaturetype == EnumCreatureType.MONSTER && this.y.a(blockposition)) {
-                return this.y.b();
-            }
-
-            if (enumcreaturetype == EnumCreatureType.MONSTER && this.r.y && this.A.a(this.m, blockposition)) {
-                return this.A.b();
-            }
-        }
-
         return biomebase.getMobs(enumcreaturetype);
-    }
-
-    public BlockPosition findNearestMapFeature(World world, String s, BlockPosition blockposition) {
-        return "Stronghold".equals(s) && this.v != null ? this.v.getNearestGeneratedFeature(world, blockposition) : null;
     }
 
     public int getLoadedChunks() {
         return 0;
-    }
-
-    public void recreateStructures(Chunk chunk, int i, int j) {
-        if (this.r.w && this.n && this.m.paperSpigotConfig.generateMineshaft) { // PaperSpigot
-            this.x.a(this, this.m, i, j, (ChunkSnapshot) null);
-        }
-
-        if (this.r.v && this.n && this.m.paperSpigotConfig.generateVillage) { // PaperSpigot
-            this.w.a(this, this.m, i, j, (ChunkSnapshot) null);
-        }
-
-        if (this.r.u && this.n && this.m.paperSpigotConfig.generateStronghold) { // PaperSpigot
-            this.v.a(this, this.m, i, j, (ChunkSnapshot) null);
-        }
-
-        if (this.r.x && this.n && this.m.paperSpigotConfig.generateTemple) { // PaperSpigot
-            this.y.a(this, this.m, i, j, (ChunkSnapshot) null);
-        }
-
-        if (this.r.y && this.n && this.m.paperSpigotConfig.generateMonument) { // PaperSpigot
-            this.A.a(this, this.m, i, j, (ChunkSnapshot) null);
-        }
-
     }
 
     public Chunk getChunkAt(BlockPosition blockposition) {

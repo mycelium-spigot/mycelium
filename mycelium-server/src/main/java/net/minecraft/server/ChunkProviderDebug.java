@@ -100,15 +100,9 @@ public class ChunkProviderDebug implements IChunkProvider {
         return biomebase.getMobs(enumcreaturetype);
     }
 
-    public BlockPosition findNearestMapFeature(World world, String s, BlockPosition blockposition) {
-        return null;
-    }
-
     public int getLoadedChunks() {
         return 0;
     }
-
-    public void recreateStructures(Chunk chunk, int i, int j) {}
 
     public Chunk getChunkAt(BlockPosition blockposition) {
         return this.getOrCreateChunk(blockposition.getX() >> 4, blockposition.getZ() >> 4);
