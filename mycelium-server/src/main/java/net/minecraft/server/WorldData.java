@@ -31,7 +31,6 @@ public class WorldData {
     private int t;
     private WorldSettings.EnumGamemode u;
     private boolean v;
-    private boolean w;
     private boolean x;
     private boolean y;
     private EnumDifficulty z;
@@ -124,7 +123,7 @@ public class WorldData {
         this.q = nbttagcompound.getBoolean("raining");
         this.t = nbttagcompound.getInt("thunderTime");
         this.s = nbttagcompound.getBoolean("thundering");
-        this.w = nbttagcompound.getBoolean("hardcore");
+
         if (nbttagcompound.hasKeyOfType("initialized", 99)) {
             this.y = nbttagcompound.getBoolean("initialized");
         } else {
@@ -215,7 +214,6 @@ public class WorldData {
         this.b = worldsettings.d();
         this.u = worldsettings.e();
         this.v = worldsettings.g();
-        this.w = worldsettings.f();
         this.c = worldsettings.h();
         this.d = worldsettings.j();
         this.x = worldsettings.i();
@@ -254,7 +252,6 @@ public class WorldData {
         this.q = worlddata.q;
         this.t = worlddata.t;
         this.s = worlddata.s;
-        this.w = worlddata.w;
         this.x = worlddata.x;
         this.y = worlddata.y;
         this.K = worlddata.K;
@@ -306,7 +303,6 @@ public class WorldData {
         nbttagcompound.setBoolean("raining", this.q);
         nbttagcompound.setInt("thunderTime", this.t);
         nbttagcompound.setBoolean("thundering", this.s);
-        nbttagcompound.setBoolean("hardcore", this.w);
         nbttagcompound.setBoolean("allowCommands", this.x);
         nbttagcompound.setBoolean("initialized", this.y);
         nbttagcompound.setDouble("BorderCenterX", this.B);
@@ -466,14 +462,6 @@ public class WorldData {
 
     public void setGameType(WorldSettings.EnumGamemode worldsettings_enumgamemode) {
         this.u = worldsettings_enumgamemode;
-    }
-
-    public boolean isHardcore() {
-        return this.w;
-    }
-
-    public void g(boolean flag) {
-        this.w = flag;
     }
 
     public WorldType getType() {
@@ -692,7 +680,7 @@ public class WorldData {
         });
         crashreportsystemdetails.a("Level game mode", new Callable() {
             public String a() throws Exception {
-                return String.format("Game mode: %s (ID %d). Hardcore: %b. Cheats: %b", new Object[] { WorldData.this.u.b(), Integer.valueOf(WorldData.this.u.getId()), Boolean.valueOf(WorldData.this.w), Boolean.valueOf(WorldData.this.x)});
+                return String.format("Game mode: %s (ID %d). Cheats: %b", new Object[] { WorldData.this.u.b(), Integer.valueOf(WorldData.this.u.getId()), Boolean.valueOf(WorldData.this.x)});
             }
 
             public Object call() throws Exception {

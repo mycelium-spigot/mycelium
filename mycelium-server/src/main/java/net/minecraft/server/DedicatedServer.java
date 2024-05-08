@@ -338,10 +338,6 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
         return EnumDifficulty.getById(this.propertyManager.getInt("difficulty", EnumDifficulty.NORMAL.a()));
     }
 
-    public boolean isHardcore() {
-        return this.propertyManager.getBoolean("hardcore", false);
-    }
-
     protected void a(CrashReport crashreport) {}
 
     public CrashReport b(CrashReport crashreport) {

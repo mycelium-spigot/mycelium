@@ -247,7 +247,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
             String name = (dimension == 0) ? s : s + "_" + worldType;
 
             org.bukkit.generator.ChunkGenerator gen = this.server.getGenerator(name);
-            WorldSettings worldsettings = new WorldSettings(i, this.getGamemode(), this.getGenerateStructures(), this.isHardcore(), worldtype);
+            WorldSettings worldsettings = new WorldSettings(i, this.getGamemode(), this.getGenerateStructures(), worldtype);
             worldsettings.setGeneratorSettings(s2);
 
             if (j == 0) {
@@ -385,8 +385,6 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
     public abstract WorldSettings.EnumGamemode getGamemode();
 
     public abstract EnumDifficulty getDifficulty();
-
-    public abstract boolean isHardcore();
 
     public abstract int p();
 
@@ -1210,10 +1208,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
             // CraftBukkit end
 
             if (worldserver != null) {
-                if (worldserver.getWorldData().isHardcore()) {
-                    worldserver.getWorldData().setDifficulty(EnumDifficulty.HARD);
-                    worldserver.setSpawnFlags(true, true);
-                } else if (this.T()) {
+                if (this.T()) {
                     worldserver.getWorldData().setDifficulty(enumdifficulty);
                     worldserver.setSpawnFlags(worldserver.getDifficulty() != EnumDifficulty.PEACEFUL, true);
                 } else {

@@ -663,15 +663,6 @@ public final class Bukkit {
     }
 
     /**
-     * Gets whether the server is in hardcore mode or not.
-     *
-     * @return true if the server mode is hardcore, false otherwise
-     */
-    public static boolean isHardcore() {
-        return server.isHardcore();
-    }
-
-    /**
      * Gets whether to use vanilla (false) or exact behaviour (true).
      *
      * <ul>

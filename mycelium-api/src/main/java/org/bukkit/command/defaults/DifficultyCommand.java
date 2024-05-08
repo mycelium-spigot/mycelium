@@ -33,10 +33,6 @@ public class DifficultyCommand extends VanillaCommand {
 
         Difficulty difficulty = Difficulty.getByValue(getDifficultyForString(sender, args[0]));
 
-        if (Bukkit.isHardcore()) {
-            difficulty = Difficulty.HARD;
-        }
-
         Bukkit.getWorlds().get(0).setDifficulty(difficulty);
 
         int levelCount = 1;

@@ -1402,13 +1402,11 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
             if (this.player.viewingCredits) {
                 // this.player = this.minecraftServer.getPlayerList().moveToWorld(this.player, 0, true);
                 this.minecraftServer.getPlayerList().changeDimension(this.player, 0, PlayerTeleportEvent.TeleportCause.END_PORTAL); // CraftBukkit - reroute logic through custom portal management
-            } else if (this.player.u().getWorldData().isHardcore()) {
-                // TODO: Remove hardcore world stuff.
             } else {
                 if (this.player.getHealth() > 0.0F) {
                     return;
                 }
-
+            
                 this.player = this.minecraftServer.getPlayerList().moveToWorld(this.player, 0, false);
             }
             break;

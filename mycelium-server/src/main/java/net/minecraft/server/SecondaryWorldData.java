@@ -94,10 +94,6 @@ public class SecondaryWorldData extends WorldData {
         return this.b.shouldGenerateMapFeatures();
     }
 
-    public boolean isHardcore() {
-        return this.b.isHardcore();
-    }
-
     public WorldType getType() {
         return this.b.getType();
     }

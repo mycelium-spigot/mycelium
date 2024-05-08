@@ -886,12 +886,11 @@ public final class CraftServer implements Server {
                 }
             }
         } while(used);
-        boolean hardcore = false;
 
         IDataManager sdm = new ServerNBTManager(getWorldContainer(), name, true);
         WorldData worlddata = sdm.getWorldData();
         if (worlddata == null) {
-            WorldSettings worldSettings = new WorldSettings(creator.seed(), WorldSettings.EnumGamemode.getById(getDefaultGameMode().getValue()), generateStructures, hardcore, type);
+            WorldSettings worldSettings = new WorldSettings(creator.seed(), WorldSettings.EnumGamemode.getById(getDefaultGameMode().getValue()), generateStructures, type);
             worldSettings.setGeneratorSettings(creator.generatorSettings());
             worlddata = new WorldData(worldSettings, name);
         }
@@ -1205,11 +1204,6 @@ public final class CraftServer implements Server {
     @Override
     public boolean getAllowFlight() {
         return console.getAllowFlight();
-    }
-
-    @Override
-    public boolean isHardcore() {
-        return console.isHardcore();
     }
 
     @Override

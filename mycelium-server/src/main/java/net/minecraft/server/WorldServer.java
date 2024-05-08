@@ -205,11 +205,9 @@ public class WorldServer extends World implements IAsyncTaskHandler {
 
     public void doTick() {
         super.doTick();
-        if (this.getWorldData().isHardcore() && this.getDifficulty() != EnumDifficulty.HARD) {
-            this.getWorldData().setDifficulty(EnumDifficulty.HARD);
-        }
 
         this.worldProvider.m().b();
+
         if (this.everyoneDeeplySleeping()) {
             if (this.getGameRules().getBoolean("doDaylightCycle")) {
                 long i = this.worldData.getDayTime() + 24000L;
@@ -862,7 +860,6 @@ public class WorldServer extends World implements IAsyncTaskHandler {
         this.worldData.i(1000000000);
         this.worldData.setDayTime(6000L);
         this.worldData.setGameType(WorldSettings.EnumGamemode.SPECTATOR);
-        this.worldData.g(false);
         this.worldData.setDifficulty(EnumDifficulty.PEACEFUL);
         this.worldData.e(true);
         this.getGameRules().set("doDaylightCycle", "false");
