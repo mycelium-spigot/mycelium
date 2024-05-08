@@ -30,7 +30,6 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
 
     private static final Logger LOGGER = LogManager.getLogger();
     private final List<ServerCommand> l = Collections.synchronizedList(Lists.<ServerCommand>newArrayList()); // CraftBukkit - fix decompile error
-    private RemoteStatusListener m;
     private RemoteControlListener n;
     public PropertyManager propertyManager;
     private EULA p;
@@ -268,12 +267,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                 String s3 = String.format("%.3fs", new Object[] { Double.valueOf((double) i1 / 1.0E9D)});
 
                 DedicatedServer.LOGGER.info("Done (" + s3 + ")! For help, type \"help\" or \"?\"");
-                if (this.propertyManager.getBoolean("enable-query", false)) {
-                    DedicatedServer.LOGGER.info("Starting GS4 status listener");
-                    this.m = new RemoteStatusListener(this);
-                    this.m.a();
-                }
-
+                
                 if (this.propertyManager.getBoolean("enable-rcon", false)) {
                     DedicatedServer.LOGGER.info("Starting remote control listener");
                     this.n = new RemoteControlListener(this);
