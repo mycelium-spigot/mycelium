@@ -84,9 +84,8 @@ public class CommandDispatcher extends CommandHandler implements ICommandDispatc
 
                 if (entityhuman != icommandlistener && minecraftserver.getPlayerList().isOp(entityhuman.getProfile()) && icommand.canUse(icommandlistener)) {
                     boolean flag1 = icommandlistener instanceof MinecraftServer && MinecraftServer.getServer().r();
-                    boolean flag2 = icommandlistener instanceof RemoteControlCommandListener && MinecraftServer.getServer().q();
 
-                    if (flag1 || flag2 || !(icommandlistener instanceof RemoteControlCommandListener) && !(icommandlistener instanceof MinecraftServer)) {
+                    if (flag1 || !(icommandlistener instanceof MinecraftServer)) {
                         entityhuman.sendMessage(chatmessage);
                     }
                 }

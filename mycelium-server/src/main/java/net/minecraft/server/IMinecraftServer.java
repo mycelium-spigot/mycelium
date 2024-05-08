@@ -29,9 +29,7 @@ public interface IMinecraftServer {
     String U();
 
     String getPlugins();
-
-    String executeRemoteCommand(String s);
-
+    
     boolean isDebugging();
 
     void info(String s);

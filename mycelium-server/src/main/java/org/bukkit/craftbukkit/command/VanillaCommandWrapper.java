@@ -12,7 +12,6 @@ import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.ProxiedCommandSender;
-import org.bukkit.command.RemoteConsoleCommandSender;
 import org.bukkit.command.defaults.*;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.entity.CraftMinecartCommand;
@@ -162,9 +161,6 @@ public final class VanillaCommandWrapper extends VanillaCommand {
         }
         if (sender instanceof CommandMinecart) {
             return ((EntityMinecartCommandBlock) ((CraftMinecartCommand) sender).getHandle()).getCommandBlock();
-        }
-        if (sender instanceof RemoteConsoleCommandSender) {
-            return RemoteControlCommandListener.getInstance();
         }
         if (sender instanceof ConsoleCommandSender) {
             return ((CraftServer) sender.getServer()).getServer();

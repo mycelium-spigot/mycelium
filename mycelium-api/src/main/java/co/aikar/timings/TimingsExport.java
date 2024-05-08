@@ -31,7 +31,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.command.RemoteConsoleCommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.entity.EntityType;
@@ -279,14 +278,7 @@ class TimingsExport extends Thread {
     @SuppressWarnings("CallToThreadRun")
     @Override
     public synchronized void start() {
-        if (sender instanceof RemoteConsoleCommandSender) {
-            sender.sendMessage(ChatColor.RED + "Warning: Timings report done over RCON will cause lag spikes.");
-            sender.sendMessage(ChatColor.RED + "You should use " + ChatColor.YELLOW +
-                "/timings report" + ChatColor.RED + " in game or console.");
-            run();
-        } else {
             super.start();
-        }
     }
 
     @Override

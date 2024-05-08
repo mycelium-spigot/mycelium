@@ -27,7 +27,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.logging.Level;
 
-import org.bukkit.command.RemoteConsoleCommandSender;
 import org.bukkit.plugin.SimplePluginManager;
 import org.spigotmc.CustomTimingsHandler;
 // Spigot end

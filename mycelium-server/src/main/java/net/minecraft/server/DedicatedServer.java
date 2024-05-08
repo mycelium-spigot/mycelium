@@ -23,14 +23,12 @@ import org.bukkit.craftbukkit.LoggerOutputStream;
 import co.aikar.timings.SpigotTimings; // Spigot
 import org.bukkit.event.server.ServerCommandEvent;
 import org.bukkit.craftbukkit.util.Waitable;
-import org.bukkit.event.server.RemoteServerCommandEvent;
 // CraftBukkit end
 
 public class DedicatedServer extends MinecraftServer implements IMinecraftServer {
 
     private static final Logger LOGGER = LogManager.getLogger();
     private final List<ServerCommand> l = Collections.synchronizedList(Lists.<ServerCommand>newArrayList()); // CraftBukkit - fix decompile error
-    private RemoteControlListener n;
     public PropertyManager propertyManager;
     private EULA p;
     private boolean generateStructures;
@@ -266,13 +264,6 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                 String s3 = String.format("%.3fs", new Object[] { Double.valueOf((double) i1 / 1.0E9D)});
 
                 DedicatedServer.LOGGER.info("Done (" + s3 + ")! For help, type \"help\" or \"?\"");
-                
-                if (this.propertyManager.getBoolean("enable-rcon", false)) {
-                    DedicatedServer.LOGGER.info("Starting remote control listener");
-                    this.n = new RemoteControlListener(this);
-                    this.n.a();
-                    this.remoteConsole = new org.bukkit.craftbukkit.command.CraftRemoteConsoleCommandSender(); // CraftBukkit
-                }
 
                 // CraftBukkit start
                 if (this.server.getBukkitSpawnRadius() > -1) {
@@ -575,36 +566,6 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
         }
 
         return result.toString();
-        // CraftBukkit end
-    }
-
-    // CraftBukkit start - fire RemoteServerCommandEvent
-    public String executeRemoteCommand(final String s) {
-        Waitable<String> waitable = new Waitable<String>() {
-            @Override
-            protected String evaluate() {
-                RemoteControlCommandListener.getInstance().i();
-                // Event changes start
-                RemoteServerCommandEvent event = new RemoteServerCommandEvent(remoteConsole, s);
-                server.getPluginManager().callEvent(event);
-                if (event.isCancelled()) {
-                    return "";
-                }
-                // Event change end
-                ServerCommand serverCommand = new ServerCommand(event.getCommand(), RemoteControlCommandListener.getInstance());
-                server.dispatchServerCommand(remoteConsole, serverCommand);
-                return RemoteControlCommandListener.getInstance().j();
-            }
-        };
-        processQueue.add(waitable);
-        try {
-            return waitable.get();
-        } catch (java.util.concurrent.ExecutionException e) {
-            throw new RuntimeException("Exception processing rcon command " + s, e.getCause());
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt(); // Maintain interrupted state
-            throw new RuntimeException("Interrupted processing rcon command " + s, e);
-        }
         // CraftBukkit end
     }
 

@@ -108,7 +108,6 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
     public org.bukkit.craftbukkit.CraftServer server;
     public OptionSet options;
     public org.bukkit.command.ConsoleCommandSender console;
-    public org.bukkit.command.RemoteConsoleCommandSender remoteConsole;
     public ConsoleReader reader;
     public static int currentTick = 0; // PaperSpigot - Further improve tick loop
     public final Thread primaryThread;
