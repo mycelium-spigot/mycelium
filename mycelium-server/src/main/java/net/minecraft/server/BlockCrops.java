@@ -10,7 +10,7 @@ public class BlockCrops extends BlockPlant implements IBlockFragilePlantElement 
 
     protected BlockCrops() {
         this.j(this.blockStateList.getBlockData().set(BlockCrops.AGE, Integer.valueOf(0)));
-        this.a(true);
+        this.setTicking(true);
         float f = 0.5F;
 
         this.a(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, 0.25F, 0.5F + f);

@@ -17,7 +17,7 @@ public abstract class BlockButtonAbstract extends Block {
     protected BlockButtonAbstract(boolean flag) {
         super(Material.ORIENTABLE);
         this.j(this.blockStateList.getBlockData().set(BlockButtonAbstract.FACING, EnumDirection.NORTH).set(BlockButtonAbstract.POWERED, Boolean.valueOf(false)));
-        this.a(true);
+        this.setTicking(true);
         this.a(CreativeModeTab.d);
         this.N = flag;
     }

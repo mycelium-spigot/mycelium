@@ -11,7 +11,7 @@ public abstract class BlockFluids extends Block {
         super(material);
         this.j(this.blockStateList.getBlockData().set(BlockFluids.LEVEL, Integer.valueOf(0)));
         this.a(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-        this.a(true);
+        this.setTicking(true);
     }
 
     public boolean b(IBlockAccess iblockaccess, BlockPosition blockposition) {

@@ -12,7 +12,7 @@ public class BlockCactus extends Block {
     protected BlockCactus() {
         super(Material.CACTUS);
         this.j(this.blockStateList.getBlockData().set(BlockCactus.AGE, Integer.valueOf(0)));
-        this.a(true);
+        this.setTicking(true);
         this.a(CreativeModeTab.c);
     }
 

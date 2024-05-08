@@ -12,7 +12,7 @@ public abstract class BlockLeaves extends BlockTransparent {
 
     public BlockLeaves() {
         super(Material.LEAVES, false);
-        this.a(true);
+        this.setTicking(true);
         this.a(CreativeModeTab.c);
         this.c(0.2F);
         this.e(1);

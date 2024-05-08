@@ -46,7 +46,7 @@ public class BlockFire extends Block {
     protected BlockFire() {
         super(Material.FIRE);
         this.j(this.blockStateList.getBlockData().set(BlockFire.AGE, Integer.valueOf(0)).set(BlockFire.FLIP, Boolean.valueOf(false)).set(BlockFire.ALT, Boolean.valueOf(false)).set(BlockFire.NORTH, Boolean.valueOf(false)).set(BlockFire.EAST, Boolean.valueOf(false)).set(BlockFire.SOUTH, Boolean.valueOf(false)).set(BlockFire.WEST, Boolean.valueOf(false)).set(BlockFire.UPPER, Integer.valueOf(0)));
-        this.a(true);
+        this.setTicking(true);
     }
 
     public static void l() {

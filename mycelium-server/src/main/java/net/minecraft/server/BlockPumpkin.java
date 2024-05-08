@@ -27,7 +27,7 @@ public class BlockPumpkin extends BlockDirectional {
     protected BlockPumpkin() {
         super(Material.PUMPKIN, MaterialMapColor.q);
         this.j(this.blockStateList.getBlockData().set(BlockPumpkin.FACING, EnumDirection.NORTH));
-        this.a(true);
+        this.setTicking(true);
         this.a(CreativeModeTab.b);
     }
 

@@ -13,7 +13,7 @@ public class BlockPortal extends BlockHalfTransparent {
     public BlockPortal() {
         super(Material.PORTAL, false);
         this.j(this.blockStateList.getBlockData().set(BlockPortal.AXIS, EnumDirection.EnumAxis.X));
-        this.a(true);
+        this.setTicking(true);
     }
 
     public void b(World world, BlockPosition blockposition, IBlockData iblockdata, Random random) {

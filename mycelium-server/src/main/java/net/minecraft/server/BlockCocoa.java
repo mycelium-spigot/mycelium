@@ -11,7 +11,7 @@ public class BlockCocoa extends BlockDirectional implements IBlockFragilePlantEl
     public BlockCocoa() {
         super(Material.PLANT);
         this.j(this.blockStateList.getBlockData().set(BlockCocoa.FACING, EnumDirection.NORTH).set(BlockCocoa.AGE, Integer.valueOf(0)));
-        this.a(true);
+        this.setTicking(true);
     }
 
     public void b(World world, BlockPosition blockposition, IBlockData iblockdata, Random random) {

@@ -6,7 +6,7 @@ public class BlockSnowBlock extends Block {
 
     protected BlockSnowBlock() {
         super(Material.SNOW_BLOCK);
-        this.a(true);
+        this.setTicking(true);
         this.a(CreativeModeTab.b);
     }
 

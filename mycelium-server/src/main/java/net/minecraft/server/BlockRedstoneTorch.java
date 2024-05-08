@@ -42,7 +42,7 @@ public class BlockRedstoneTorch extends BlockTorch {
 
     protected BlockRedstoneTorch(boolean flag) {
         this.isOn = flag;
-        this.a(true);
+        this.setTicking(true);
         this.a((CreativeModeTab) null);
     }
 

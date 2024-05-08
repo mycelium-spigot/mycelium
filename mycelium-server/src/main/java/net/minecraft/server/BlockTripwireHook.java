@@ -18,7 +18,7 @@ public class BlockTripwireHook extends Block {
         super(Material.ORIENTABLE);
         this.j(this.blockStateList.getBlockData().set(BlockTripwireHook.FACING, EnumDirection.NORTH).set(BlockTripwireHook.POWERED, Boolean.valueOf(false)).set(BlockTripwireHook.ATTACHED, Boolean.valueOf(false)).set(BlockTripwireHook.SUSPENDED, Boolean.valueOf(false)));
         this.a(CreativeModeTab.d);
-        this.a(true);
+        this.setTicking(true);
     }
 
     public IBlockData updateState(IBlockData iblockdata, IBlockAccess iblockaccess, BlockPosition blockposition) {

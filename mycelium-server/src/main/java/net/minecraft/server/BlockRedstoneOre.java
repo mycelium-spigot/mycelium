@@ -14,7 +14,7 @@ public class BlockRedstoneOre extends Block {
     public BlockRedstoneOre(boolean flag) {
         super(Material.STONE);
         if (flag) {
-            this.a(true);
+            this.setTicking(true);
         }
 
         this.a = flag;

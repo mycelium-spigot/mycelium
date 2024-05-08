@@ -23,7 +23,7 @@ public class BlockStem extends BlockPlant implements IBlockFragilePlantElement {
     protected BlockStem(Block block) {
         this.j(this.blockStateList.getBlockData().set(BlockStem.AGE, Integer.valueOf(0)).set(BlockStem.FACING, EnumDirection.UP));
         this.blockFruit = block;
-        this.a(true);
+        this.setTicking(true);
         float f = 0.125F;
 
         this.a(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, 0.25F, 0.5F + f);

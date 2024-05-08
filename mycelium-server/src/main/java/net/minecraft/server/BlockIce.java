@@ -7,7 +7,7 @@ public class BlockIce extends BlockHalfTransparent {
     public BlockIce() {
         super(Material.ICE, false);
         this.frictionFactor = 0.98F;
-        this.a(true);
+        this.setTicking(true);
         this.a(CreativeModeTab.b);
     }
 

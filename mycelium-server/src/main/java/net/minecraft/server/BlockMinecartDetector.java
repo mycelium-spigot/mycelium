@@ -22,7 +22,7 @@ public class BlockMinecartDetector extends BlockMinecartTrackAbstract {
     public BlockMinecartDetector() {
         super(true);
         this.j(this.blockStateList.getBlockData().set(BlockMinecartDetector.POWERED, Boolean.valueOf(false)).set(BlockMinecartDetector.SHAPE, BlockMinecartTrackAbstract.EnumTrackPosition.NORTH_SOUTH));
-        this.a(true);
+        this.setTicking(true);
     }
 
     public int a(World world) {

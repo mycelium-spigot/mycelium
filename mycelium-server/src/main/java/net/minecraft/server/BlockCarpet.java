@@ -8,7 +8,7 @@ public class BlockCarpet extends Block {
         super(Material.WOOL);
         this.j(this.blockStateList.getBlockData().set(BlockCarpet.COLOR, EnumColor.WHITE));
         this.a(0.0F, 0.0F, 0.0F, 1.0F, 0.0625F, 1.0F);
-        this.a(true);
+        this.setTicking(true);
         this.a(CreativeModeTab.c);
         this.b(0);
     }

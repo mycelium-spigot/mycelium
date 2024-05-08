@@ -13,7 +13,7 @@ public abstract class BlockPressurePlateAbstract extends Block {
     protected BlockPressurePlateAbstract(Material material, MaterialMapColor materialmapcolor) {
         super(material, materialmapcolor);
         this.a(CreativeModeTab.d);
-        this.a(true);
+        this.setTicking(true);
     }
 
     public void updateShape(IBlockAccess iblockaccess, BlockPosition blockposition) {

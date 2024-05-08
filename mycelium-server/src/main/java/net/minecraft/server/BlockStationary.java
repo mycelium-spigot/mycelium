@@ -8,9 +8,9 @@ public class BlockStationary extends BlockFluids {
 
     protected BlockStationary(Material material) {
         super(material);
-        this.a(false);
+        this.setTicking(false);
         if (material == Material.LAVA) {
-            this.a(true);
+            this.setTicking(true);
         }
 
     }

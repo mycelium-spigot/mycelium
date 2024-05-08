@@ -17,7 +17,7 @@ public class BlockVine extends Block {
     public BlockVine() {
         super(Material.REPLACEABLE_PLANT);
         this.j(this.blockStateList.getBlockData().set(BlockVine.UP, Boolean.valueOf(false)).set(BlockVine.NORTH, Boolean.valueOf(false)).set(BlockVine.EAST, Boolean.valueOf(false)).set(BlockVine.SOUTH, Boolean.valueOf(false)).set(BlockVine.WEST, Boolean.valueOf(false)));
-        this.a(true);
+        this.setTicking(true);
         this.a(CreativeModeTab.c);
     }
 

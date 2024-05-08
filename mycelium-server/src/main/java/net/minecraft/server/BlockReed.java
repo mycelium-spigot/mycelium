@@ -13,7 +13,7 @@ public class BlockReed extends Block {
         float f = 0.375F;
 
         this.a(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, 1.0F, 0.5F + f);
-        this.a(true);
+        this.setTicking(true);
     }
 
     public void b(World world, BlockPosition blockposition, IBlockData iblockdata, Random random) {

@@ -9,7 +9,7 @@ public class BlockCake extends Block {
     protected BlockCake() {
         super(Material.CAKE);
         this.j(this.blockStateList.getBlockData().set(BlockCake.BITES, Integer.valueOf(0)));
-        this.a(true);
+        this.setTicking(true);
     }
 
     public void updateShape(IBlockAccess iblockaccess, BlockPosition blockposition) {

@@ -63,7 +63,7 @@ public class Block {
     protected float strength;
     protected float durability;
     protected boolean y;
-    protected boolean z;
+    protected boolean ticking;
     protected boolean isTileEntity;
     // Spigot start
     public co.aikar.timings.Timing timing;
@@ -254,13 +254,13 @@ public class Block {
         return this.strength;
     }
 
-    protected Block a(boolean flag) {
-        this.z = flag;
+    protected Block setTicking(boolean shouldTick) {
+        this.ticking = shouldTick;
         return this;
     }
 
     public boolean isTicking() {
-        return this.z;
+        return this.ticking;
     }
 
     public boolean isTileEntity() {

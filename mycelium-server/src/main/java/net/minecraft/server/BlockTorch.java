@@ -18,7 +18,7 @@ public class BlockTorch extends Block {
     protected BlockTorch() {
         super(Material.ORIENTABLE);
         this.j(this.blockStateList.getBlockData().set(BlockTorch.FACING, EnumDirection.UP));
-        this.a(true);
+        this.setTicking(true);
         this.a(CreativeModeTab.c);
     }
 

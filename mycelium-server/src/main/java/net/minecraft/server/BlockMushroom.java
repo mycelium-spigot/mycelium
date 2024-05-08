@@ -15,7 +15,7 @@ public class BlockMushroom extends BlockPlant implements IBlockFragilePlantEleme
         float f = 0.2F;
 
         this.a(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 2.0F, 0.5F + f);
-        this.a(true);
+        this.setTicking(true);
     }
 
     public void b(World world, BlockPosition blockposition, IBlockData iblockdata, Random random) {
