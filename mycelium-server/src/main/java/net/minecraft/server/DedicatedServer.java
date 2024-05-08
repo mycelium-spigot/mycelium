@@ -257,7 +257,6 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                 this.aB();
                 this.getEnableCommandBlock();
                 this.p();
-                this.getSnooperEnabled();
                 this.aK();
                 this.c(this.propertyManager.getInt("max-build-height", 256));
                 this.c((this.getMaxBuildHeight() + 8) / 16 * 16);
@@ -385,14 +384,6 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
 
     public boolean getSpawnMonsters() {
         return this.propertyManager.getBoolean("spawn-monsters", true);
-    }
-
-    public void a(MojangStatisticsGenerator mojangstatisticsgenerator) {
-        super.a(mojangstatisticsgenerator);
-    }
-
-    public boolean getSnooperEnabled() {
-        return this.propertyManager.getBoolean("snooper-enabled", true);
     }
 
     public void issueCommand(String s, ICommandListener icommandlistener) {
