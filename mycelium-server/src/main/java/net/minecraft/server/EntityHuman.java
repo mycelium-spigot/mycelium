@@ -222,10 +222,6 @@ public abstract class EntityHuman extends EntityLiving {
 
         if (!this.world.isClientSide) {
             this.foodData.a(this);
-            this.b(StatisticList.g);
-            if (this.isAlive()) {
-                this.b(StatisticList.h);
-            }
         }
 
         int i = 29999999;
@@ -482,9 +478,6 @@ public abstract class EntityHuman extends EntityLiving {
         } else {
             this.motX = this.motZ = 0.0D;
         }
-
-        this.b(StatisticList.y);
-        this.a(StatisticList.h);
     }
 
     protected String bo() {
@@ -501,12 +494,9 @@ public abstract class EntityHuman extends EntityLiving {
         Collection<ScoreboardScore> collection = this.world.getServer().getScoreboardManager().getScoreboardScores(IScoreboardCriteria.f, this.getName(), new java.util.ArrayList<ScoreboardScore>());
 
         if (entity instanceof EntityHuman) {
-            this.b(StatisticList.B);
             // CraftBukkit - Get our scores instead
             this.world.getServer().getScoreboardManager().getScoreboardScores(IScoreboardCriteria.e, this.getName(), collection);
             collection.addAll(this.e(entity));
-        } else {
-            this.b(StatisticList.z);
         }
 
         Iterator iterator = collection.iterator();
@@ -619,9 +609,6 @@ public abstract class EntityHuman extends EntityLiving {
             // CraftBukkit end
 
             this.a(entityitem);
-            if (flag1) {
-                this.b(StatisticList.v);
-            }
 
             return entityitem;
         }
@@ -877,10 +864,6 @@ public abstract class EntityHuman extends EntityLiving {
 
                 this.setHealth(this.getHealth() - f);
                 this.bs().a(damagesource, f2, f);
-                if (f < 3.4028235E37F) {
-                    this.a(StatisticList.x, Math.round(f * 10.0F));
-                }
-
             }
         }
         return false; // CraftBukkit
@@ -1042,10 +1025,6 @@ public abstract class EntityHuman extends EntityLiving {
                             this.c(entity);
                         }
 
-                        if (f >= 18.0F) {
-                            this.b((Statistic) AchievementList.F);
-                        }
-
                         this.p(entity);
                         if (entity instanceof EntityLiving) {
                             EnchantmentManager.a((EntityLiving) entity, (Entity) this);
@@ -1064,7 +1043,8 @@ public abstract class EntityHuman extends EntityLiving {
                         }
 
                         if (itemstack != null && object instanceof EntityLiving) {
-                            itemstack.a((EntityLiving) object, this);
+                            // Not a clue what these do because Mojang and their obfuscation...
+                            //itemstack.a((EntityLiving) object, this);
                             // CraftBukkit - bypass infinite items; <= 0 -> == 0
                             if (itemstack.count == 0) {
                                 this.ca();
@@ -1072,7 +1052,6 @@ public abstract class EntityHuman extends EntityLiving {
                         }
 
                         if (entity instanceof EntityLiving) {
-                            this.a(StatisticList.w, Math.round(f * 10.0F));
                             if (j > 0) {
                                 // CraftBukkit start - Call a combust event when somebody hits with a fire enchanted item
                                 EntityCombustByEntityEvent combustEvent = new EntityCombustByEntityEvent(this.getBukkitEntity(), entity.getBukkitEntity(), j * 4);
@@ -1330,17 +1309,8 @@ public abstract class EntityHuman extends EntityLiving {
 
     }
 
-    public void b(Statistic statistic) {
-        this.a(statistic, 1);
-    }
-
-    public void a(Statistic statistic, int i) {}
-
-    public void a(Statistic statistic) {}
-
     public void bF() {
         super.bF();
-        this.b(StatisticList.u);
         if (this.isSprinting()) {
             this.applyExhaustion(world.spigotConfig.sprintExhaustion); // Spigot - Change to use configurable value
         } else {
@@ -1380,38 +1350,24 @@ public abstract class EntityHuman extends EntityLiving {
             if (this.a(Material.WATER)) {
                 i = Math.round(MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2) * 100.0F);
                 if (i > 0) {
-                    this.a(StatisticList.p, i);
                     this.applyExhaustion(world.paperSpigotConfig.playerSwimmingExhaustion * (float) i * 0.01F); // PaperSpigot - Configurable swimming exhaustion
                 }
             } else if (this.V()) {
                 i = Math.round(MathHelper.sqrt(d0 * d0 + d2 * d2) * 100.0F);
                 if (i > 0) {
-                    this.a(StatisticList.l, i);
                     this.applyExhaustion(world.paperSpigotConfig.playerSwimmingExhaustion * (float) i * 0.01F); // PaperSpigot - Configurable swimming (diving) exhaustion
-                }
-            } else if (this.k_()) {
-                if (d1 > 0.0D) {
-                    this.a(StatisticList.n, (int) Math.round(d1 * 100.0D));
                 }
             } else if (this.onGround) {
                 i = Math.round(MathHelper.sqrt(d0 * d0 + d2 * d2) * 100.0F);
                 if (i > 0) {
-                    this.a(StatisticList.i, i);
                     if (this.isSprinting()) {
-                        this.a(StatisticList.k, i);
                         this.applyExhaustion(0.099999994F * (float) i * 0.01F);
                     } else {
                         if (this.isSneaking()) {
-                            this.a(StatisticList.j, i);
                         }
 
                         this.applyExhaustion(0.01F * (float) i * 0.01F);
                     }
-                }
-            } else {
-                i = Math.round(MathHelper.sqrt(d0 * d0 + d2 * d2) * 100.0F);
-                if (i > 25) {
-                    this.a(StatisticList.o, i);
                 }
             }
 
@@ -1424,18 +1380,9 @@ public abstract class EntityHuman extends EntityLiving {
 
             if (i > 0) {
                 if (this.vehicle instanceof EntityMinecartAbstract) {
-                    this.a(StatisticList.q, i);
                     if (this.e == null) {
                         this.e = new BlockPosition(this);
-                    } else if (this.e.c((double) MathHelper.floor(this.locX), (double) MathHelper.floor(this.locY), (double) MathHelper.floor(this.locZ)) >= 1000000.0D) {
-                        this.b((Statistic) AchievementList.q);
                     }
-                } else if (this.vehicle instanceof EntityBoat) {
-                    this.a(StatisticList.r, i);
-                } else if (this.vehicle instanceof EntityPig) {
-                    this.a(StatisticList.s, i);
-                } else if (this.vehicle instanceof EntityHorse) {
-                    this.a(StatisticList.t, i);
                 }
             }
         }
@@ -1444,10 +1391,6 @@ public abstract class EntityHuman extends EntityLiving {
 
     public void e(float f, float f1) {
         if (!this.abilities.canFly) {
-            if (f >= 2.0F) {
-                this.a(StatisticList.m, (int) Math.round((double) f * 100.0D));
-            }
-
             super.e(f, f1);
         }
     }
@@ -1464,14 +1407,11 @@ public abstract class EntityHuman extends EntityLiving {
     }
 
     public void a(EntityLiving entityliving) {
-        if (entityliving instanceof IMonster) {
-            this.b((Statistic) AchievementList.s);
-        }
-
         EntityTypes.MonsterEggInfo entitytypes_monsteregginfo = (EntityTypes.MonsterEggInfo) EntityTypes.eggInfo.get(Integer.valueOf(EntityTypes.a(entityliving)));
 
         if (entitytypes_monsteregginfo != null) {
-            this.b(entitytypes_monsteregginfo.killEntityStatistic);
+            // Not a clue what these do because Mojang and their obfuscation...
+            //this.b(entitytypes_monsteregginfo.killEntityStatistic);
         }
 
     }

@@ -97,8 +97,6 @@ public class ItemMonsterEgg extends Item {
                             if (!entityhuman.abilities.canInstantlyBuild) {
                                 --itemstack.count;
                             }
-
-                            entityhuman.b(StatisticList.USE_ITEM_COUNT[Item.getId(this)]);
                         }
                     }
                 }

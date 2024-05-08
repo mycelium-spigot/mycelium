@@ -323,11 +323,6 @@ public class BlockChest extends BlockContainer {
 
             if (itileinventory != null) {
                 entityhuman.openContainer(itileinventory);
-                if (this.b == 0) {
-                    entityhuman.b(StatisticList.aa);
-                } else if (this.b == 1) {
-                    entityhuman.b(StatisticList.U);
-                }
             }
 
             return true;

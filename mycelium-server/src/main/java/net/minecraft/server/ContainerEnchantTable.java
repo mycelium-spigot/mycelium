@@ -259,7 +259,6 @@ public class ContainerEnchantTable extends Container {
                         }
                     }
 
-                    entityhuman.b(StatisticList.W);
                     this.enchantSlots.update();
                     this.f = entityhuman.cj();
                     this.a(this.enchantSlots);

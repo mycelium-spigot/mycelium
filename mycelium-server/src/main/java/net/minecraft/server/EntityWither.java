@@ -447,15 +447,8 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
         }
 
         if (!this.world.isClientSide) {
-            Iterator iterator = this.world.a(EntityHuman.class, this.getBoundingBox().grow(50.0D, 100.0D, 50.0D)).iterator();
-
-            while (iterator.hasNext()) {
-                EntityHuman entityhuman = (EntityHuman) iterator.next();
-
-                entityhuman.b((Statistic) AchievementList.J);
-            }
+            this.world.a(EntityHuman.class, this.getBoundingBox().grow(50.0D, 100.0D, 50.0D));
         }
-
     }
 
     protected void D() {

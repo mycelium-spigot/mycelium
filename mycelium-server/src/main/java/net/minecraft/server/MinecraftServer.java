@@ -1429,10 +1429,6 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
         return new ChatComponentText(this.getName());
     }
 
-    public boolean aB() {
-        return true;
-    }
-
     public MinecraftSessionService aD() {
         return this.W;
     }

@@ -58,7 +58,6 @@ public class BlockEnderChest extends BlockContainer {
             } else {
                 inventoryenderchest.a((TileEntityEnderChest) tileentity);
                 entityhuman.openContainer(inventoryenderchest);
-                entityhuman.b(StatisticList.V);
                 return true;
             }
         } else {

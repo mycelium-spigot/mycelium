@@ -41,7 +41,6 @@ public class BlockNote extends BlockContainer {
 
                 tileentitynote.b();
                 tileentitynote.play(world, blockposition);
-                entityhuman.b(StatisticList.S);
             }
 
             return true;
@@ -54,9 +53,7 @@ public class BlockNote extends BlockContainer {
 
             if (tileentity instanceof TileEntityNote) {
                 ((TileEntityNote) tileentity).play(world, blockposition);
-                entityhuman.b(StatisticList.R);
             }
-
         }
     }
 

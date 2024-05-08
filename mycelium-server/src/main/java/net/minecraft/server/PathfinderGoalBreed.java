@@ -81,13 +81,6 @@ public class PathfinderGoalBreed extends PathfinderGoal {
                 entityhuman = this.e.cq();
             }
 
-            if (entityhuman != null) {
-                entityhuman.b(StatisticList.A);
-                if (this.d instanceof EntityCow) {
-                    entityhuman.b((Statistic) AchievementList.H);
-                }
-            }
-
             this.d.setAgeRaw(6000);
             this.e.setAgeRaw(6000);
             this.d.cs();

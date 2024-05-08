@@ -12,7 +12,6 @@ public class BlockWorkbench extends Block {
             return true;
         } else {
             entityhuman.openTileEntity(new BlockWorkbench.TileEntityContainerWorkbench(world, blockposition));
-            entityhuman.b(StatisticList.Z);
             return true;
         }
     }

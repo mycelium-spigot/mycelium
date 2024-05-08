@@ -51,7 +51,6 @@ public class BlockBrewingStand extends BlockContainer {
 
             if (tileentity instanceof TileEntityBrewingStand) {
                 entityhuman.openContainer((TileEntityBrewingStand) tileentity);
-                entityhuman.b(StatisticList.M);
             }
 
             return true;

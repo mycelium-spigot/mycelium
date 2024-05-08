@@ -48,7 +48,6 @@ public abstract class PlayerList {
     public final List<EntityPlayer> players = new java.util.concurrent.CopyOnWriteArrayList(); // CraftBukkit - ArrayList -> CopyOnWriteArrayList: Iterator safety
     private final Map<UUID, EntityPlayer> j = Maps.newHashMap();
     private final OpList operators;
-    private final Map<UUID, ServerStatisticManager> o;
     public IPlayerFileData playerFileData;
     protected int maxPlayers;
     private int r;
@@ -67,7 +66,6 @@ public abstract class PlayerList {
         // CraftBukkit end
         
         this.operators = new OpList(PlayerList.c);
-        this.o = Maps.newHashMap();
         this.server = minecraftserver;
         this.maxPlayers = 8;
     }
@@ -140,8 +138,6 @@ public abstract class PlayerList {
         playerconnection.sendPacket(new PacketPlayOutSpawnPosition(blockposition));
         playerconnection.sendPacket(new PacketPlayOutAbilities(entityplayer.abilities));
         playerconnection.sendPacket(new PacketPlayOutHeldItemSlot(entityplayer.inventory.itemInHandIndex));
-        entityplayer.getStatisticManager().d();
-        entityplayer.getStatisticManager().updateStatistics(entityplayer);
         this.sendScoreboard((ScoreboardServer) worldserver.getScoreboard(), entityplayer);
         this.server.aH();
         // CraftBukkit start - login message is handled in the event
@@ -282,12 +278,6 @@ public abstract class PlayerList {
 
     protected void savePlayerFile(EntityPlayer entityplayer) {
         this.playerFileData.save(entityplayer);
-        ServerStatisticManager serverstatisticmanager = (ServerStatisticManager) this.o.get(entityplayer.getUniqueID());
-
-        if (serverstatisticmanager != null) {
-            serverstatisticmanager.b();
-        }
-
     }
 
     public void onPlayerJoin(EntityPlayer entityplayer, String joinMessage) { // CraftBukkit added param
@@ -343,8 +333,6 @@ public abstract class PlayerList {
     }
 
     public String disconnect(EntityPlayer entityplayer) { // CraftBukkit - return string
-        entityplayer.b(StatisticList.f);
-
         // CraftBukkit start - Quitting must be before we do final save of data, in case plugins need to modify it
         org.bukkit.craftbukkit.event.CraftEventFactory.handleInventoryCloseEvent(entityplayer);
 
@@ -370,7 +358,6 @@ public abstract class PlayerList {
 
         if (entityplayer1 == entityplayer) {
             this.j.remove(uuid);
-            this.o.remove(uuid);
         }
 
         // CraftBukkit start
@@ -1139,30 +1126,6 @@ public abstract class PlayerList {
 
     public void sendMessage(IChatBaseComponent ichatbasecomponent) {
         this.sendMessage(ichatbasecomponent, true);
-    }
-
-    public ServerStatisticManager a(EntityHuman entityhuman) {
-        UUID uuid = entityhuman.getUniqueID();
-        ServerStatisticManager serverstatisticmanager = uuid == null ? null : (ServerStatisticManager) this.o.get(uuid);
-
-        if (serverstatisticmanager == null) {
-            File file = new File(this.server.getWorldServer(0).getDataManager().getDirectory(), "stats");
-            File file1 = new File(file, uuid.toString() + ".json");
-
-            if (!file1.exists()) {
-                File file2 = new File(file, entityhuman.getName() + ".json");
-
-                if (file2.exists() && file2.isFile()) {
-                    file2.renameTo(file1);
-                }
-            }
-
-            serverstatisticmanager = new ServerStatisticManager(this.server, file1);
-            serverstatisticmanager.a();
-            this.o.put(uuid, serverstatisticmanager);
-        }
-
-        return serverstatisticmanager;
     }
 
     public void a(int i) {

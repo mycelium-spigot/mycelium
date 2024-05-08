@@ -481,17 +481,14 @@ public class EntityFishingHook extends Entity {
         f1 = MathHelper.a(f1, 0.0F, 1.0F);
         f2 = MathHelper.a(f2, 0.0F, 1.0F);
         if (f < f1) {
-            this.owner.b(StatisticList.D);
             return ((PossibleFishingResult) WeightedRandom.a(this.random, EntityFishingHook.d)).a(this.random);
         } else {
             f -= f1;
             if (f < f2) {
-                this.owner.b(StatisticList.E);
                 return ((PossibleFishingResult) WeightedRandom.a(this.random, EntityFishingHook.e)).a(this.random);
             } else {
                 float f3 = f - f2;
 
-                this.owner.b(StatisticList.C);
                 return ((PossibleFishingResult) WeightedRandom.a(this.random, EntityFishingHook.f)).a(this.random);
             }
         }

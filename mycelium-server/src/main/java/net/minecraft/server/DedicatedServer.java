@@ -253,7 +253,6 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                     worldtype = WorldType.NORMAL;
                 }
 
-                this.aB();
                 this.getEnableCommandBlock();
                 this.p();
                 this.aK();
@@ -493,10 +492,6 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
 
     public boolean r() {
         return this.propertyManager.getBoolean("broadcast-console-to-ops", true);
-    }
-
-    public boolean aB() {
-        return this.propertyManager.getBoolean("announce-player-achievements", true);
     }
 
     public int aI() {

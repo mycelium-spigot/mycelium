@@ -54,7 +54,6 @@ public class BlockCake extends Block {
 
     private void b(World world, BlockPosition blockposition, IBlockData iblockdata, EntityHuman entityhuman) {
         if (entityhuman.j(false)) {
-            entityhuman.b(StatisticList.H);
             // CraftBukkit start
             // entityhuman.getFoodData().eat(2, 0.1F);
             int oldFoodLevel = entityhuman.getFoodData().foodLevel;

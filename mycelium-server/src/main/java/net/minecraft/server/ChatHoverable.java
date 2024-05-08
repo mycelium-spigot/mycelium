@@ -58,7 +58,7 @@ public class ChatHoverable {
 
     public static enum EnumHoverAction {
 
-        SHOW_TEXT("show_text", true), SHOW_ACHIEVEMENT("show_achievement", true), SHOW_ITEM("show_item", true), SHOW_ENTITY("show_entity", true);
+        SHOW_TEXT("show_text", true), SHOW_ITEM("show_item", true), SHOW_ENTITY("show_entity", true);
 
         private static final Map<String, ChatHoverable.EnumHoverAction> e = Maps.newHashMap();
         private final boolean f;

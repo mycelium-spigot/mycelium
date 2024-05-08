@@ -24,7 +24,6 @@ public class ItemCarrotStick extends Item {
             }
         }
 
-        entityhuman.b(StatisticList.USE_ITEM_COUNT[Item.getId(this)]);
         return itemstack;
     }
 }

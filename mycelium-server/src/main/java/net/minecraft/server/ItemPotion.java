@@ -76,7 +76,6 @@ public class ItemPotion extends Item {
             }
         }
 
-        entityhuman.b(StatisticList.USE_ITEM_COUNT[Item.getId(this)]);
         if (!entityhuman.abilities.canInstantlyBuild) {
             if (itemstack.count <= 0) {
                 return new ItemStack(Items.GLASS_BOTTLE);
@@ -107,7 +106,6 @@ public class ItemPotion extends Item {
                 world.addEntity(new EntityPotion(world, entityhuman, itemstack));
             }
 
-            entityhuman.b(StatisticList.USE_ITEM_COUNT[Item.getId(this)]);
             return itemstack;
         } else {
             entityhuman.a(itemstack, this.d(itemstack));

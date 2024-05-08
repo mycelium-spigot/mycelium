@@ -401,14 +401,6 @@ public abstract class EntityInsentient extends EntityLiving {
                     this.a(itemstack1, 0.0F);
                 }
 
-                if (itemstack.getItem() == Items.DIAMOND && entityitem.n() != null) {
-                    EntityHuman entityhuman = this.world.a(entityitem.n());
-
-                    if (entityhuman != null) {
-                        entityhuman.b((Statistic) AchievementList.x);
-                    }
-                }
-
                 this.setEquipment(i, itemstack);
                 this.dropChances[i] = 2.0F;
                 this.persistent = true;

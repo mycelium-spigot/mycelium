@@ -20,7 +20,6 @@ public class BlockBeacon extends BlockContainer {
 
             if (tileentity instanceof TileEntityBeacon) {
                 entityhuman.openContainer((TileEntityBeacon) tileentity);
-                entityhuman.b(StatisticList.N);
             }
 
             return true;

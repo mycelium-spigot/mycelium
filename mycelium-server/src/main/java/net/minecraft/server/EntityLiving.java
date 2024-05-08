@@ -1133,9 +1133,6 @@ public abstract class EntityLiving extends Entity {
                 if (human) {
                     // PAIL: Be sure to drag all this code from the EntityHuman subclass each update.
                     ((EntityHuman) this).applyExhaustion(damagesource.getExhaustionCost());
-                    if (f < 3.4028235E37F) {
-                        ((EntityHuman) this).a(StatisticList.x, Math.round(f * 10.0F));
-                    }
                 }
                 // CraftBukkit end
                 float f2 = this.getHealth();

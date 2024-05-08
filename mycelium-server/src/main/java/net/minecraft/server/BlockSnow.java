@@ -72,7 +72,6 @@ public class BlockSnow extends Block {
     public void a(World world, EntityHuman entityhuman, BlockPosition blockposition, IBlockData iblockdata, TileEntity tileentity) {
         a(world, blockposition, new ItemStack(Items.SNOWBALL, ((Integer) iblockdata.get(BlockSnow.LAYERS)).intValue() + 1, 0));
         world.setAir(blockposition);
-        entityhuman.b(StatisticList.MINE_BLOCK_COUNT[Block.getId(this)]);
     }
 
     public Item getDropType(IBlockData iblockdata, Random random, int i) {

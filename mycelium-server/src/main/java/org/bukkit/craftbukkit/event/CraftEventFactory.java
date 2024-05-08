@@ -14,13 +14,11 @@ import net.minecraft.server.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Server;
-import org.bukkit.Statistic.Type;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.craftbukkit.CraftServer;
-import org.bukkit.craftbukkit.CraftStatistic;
 import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.craftbukkit.block.CraftBlock;
 import org.bukkit.craftbukkit.block.CraftBlockState;
@@ -916,53 +914,6 @@ public class CraftEventFactory {
         PlayerLeashEntityEvent event = new PlayerLeashEntityEvent(entity.getBukkitEntity(), leashHolder.getBukkitEntity(), (Player) player.getBukkitEntity());
         entity.world.getServer().getPluginManager().callEvent(event);
         return event;
-    }
-
-    public static Cancellable handleStatisticsIncrease(EntityHuman entityHuman, net.minecraft.server.Statistic statistic, int current, int incrementation) {
-        Player player = ((EntityPlayer) entityHuman).getBukkitEntity();
-        Event event;
-        if (statistic instanceof net.minecraft.server.Achievement) {
-            if (current != 0) {
-                return null;
-            }
-            event = new PlayerAchievementAwardedEvent(player, CraftStatistic.getBukkitAchievement((net.minecraft.server.Achievement) statistic));
-        } else {
-            org.bukkit.Statistic stat = CraftStatistic.getBukkitStatistic(statistic);
-            if (stat == null) {
-                System.err.println("Unhandled statistic: " + statistic);
-                return null;
-            }
-            switch (stat) {
-                case FALL_ONE_CM:
-                case BOAT_ONE_CM:
-                case CLIMB_ONE_CM:
-                case DIVE_ONE_CM:
-                case FLY_ONE_CM:
-                case HORSE_ONE_CM:
-                case MINECART_ONE_CM:
-                case PIG_ONE_CM:
-                case PLAY_ONE_TICK:
-                case SWIM_ONE_CM:
-                case WALK_ONE_CM:
-                case SPRINT_ONE_CM:
-                case CROUCH_ONE_CM:
-                case TIME_SINCE_DEATH:
-                    // Do not process event for these - too spammy
-                    return null;
-                default:
-            }
-            if (stat.getType() == Type.UNTYPED) {
-                event = new PlayerStatisticIncrementEvent(player, stat, current, current + incrementation);
-            } else if (stat.getType() == Type.ENTITY) {
-                EntityType entityType = CraftStatistic.getEntityTypeFromStatistic(statistic);
-                event = new PlayerStatisticIncrementEvent(player, stat, current, current + incrementation, entityType);
-            } else {
-                Material material = CraftStatistic.getMaterialFromStatistic(statistic);
-                event = new PlayerStatisticIncrementEvent(player, stat, current, current + incrementation, material);
-            }
-        }
-        entityHuman.world.getServer().getPluginManager().callEvent(event);
-        return (Cancellable) event;
     }
 
     public static FireworkExplodeEvent callFireworkExplodeEvent(EntityFireworks firework) {

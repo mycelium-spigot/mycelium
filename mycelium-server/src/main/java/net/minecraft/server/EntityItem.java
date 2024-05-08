@@ -324,34 +324,6 @@ public class EntityItem extends Entity {
             // CraftBukkit end
 
             if (this.pickupDelay == 0 && (this.g == null || 6000 - this.age <= 200 || this.g.equals(entityhuman.getName())) && entityhuman.inventory.pickup(itemstack)) {
-                if (itemstack.getItem() == Item.getItemOf(Blocks.LOG)) {
-                    entityhuman.b((Statistic) AchievementList.g);
-                }
-
-                if (itemstack.getItem() == Item.getItemOf(Blocks.LOG2)) {
-                    entityhuman.b((Statistic) AchievementList.g);
-                }
-
-                if (itemstack.getItem() == Items.LEATHER) {
-                    entityhuman.b((Statistic) AchievementList.t);
-                }
-
-                if (itemstack.getItem() == Items.DIAMOND) {
-                    entityhuman.b((Statistic) AchievementList.w);
-                }
-
-                if (itemstack.getItem() == Items.BLAZE_ROD) {
-                    entityhuman.b((Statistic) AchievementList.A);
-                }
-
-                if (itemstack.getItem() == Items.DIAMOND && this.n() != null) {
-                    EntityHuman entityhuman1 = this.world.a(this.n());
-
-                    if (entityhuman1 != null && entityhuman1 != entityhuman) {
-                        entityhuman1.b((Statistic) AchievementList.x);
-                    }
-                }
-
                 if (!this.R()) {
                     this.world.makeSound(entityhuman, "random.pop", 0.2F, ((this.random.nextFloat() - this.random.nextFloat()) * 0.7F + 1.0F) * 2.0F);
                 }

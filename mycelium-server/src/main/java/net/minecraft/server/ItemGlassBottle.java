@@ -25,7 +25,7 @@ public class ItemGlassBottle extends Item {
 
                 if (world.getType(blockposition).getBlock().getMaterial() == Material.WATER) {
                     --itemstack.count;
-                    entityhuman.b(StatisticList.USE_ITEM_COUNT[Item.getId(this)]);
+                    
                     if (itemstack.count <= 0) {
                         return new ItemStack(Items.POTION);
                     }

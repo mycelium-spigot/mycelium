@@ -1410,13 +1410,6 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
                 this.player = this.minecraftServer.getPlayerList().moveToWorld(this.player, 0, false);
             }
             break;
-
-        case 2:
-            this.player.getStatisticManager().a(this.player);
-            break;
-
-        case 3:
-            this.player.b((Statistic) AchievementList.f);
         }
 
     }

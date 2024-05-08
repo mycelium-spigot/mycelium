@@ -50,7 +50,6 @@ public class ItemBucket extends Item {
                         }
                         // CraftBukkit end
                         world.setAir(blockposition);
-                        entityhuman.b(StatisticList.USE_ITEM_COUNT[Item.getId(this)]);
                         return this.a(itemstack, entityhuman, Items.WATER_BUCKET, event.getItemStack()); // CraftBukkit - added Event stack
                     }
 
@@ -63,7 +62,6 @@ public class ItemBucket extends Item {
                         }
                         // CraftBukkit end
                         world.setAir(blockposition);
-                        entityhuman.b(StatisticList.USE_ITEM_COUNT[Item.getId(this)]);
                         return this.a(itemstack, entityhuman, Items.LAVA_BUCKET, event.getItemStack()); // CraftBukkit - added Event stack
                     }
                 } else {
@@ -94,7 +92,6 @@ public class ItemBucket extends Item {
                     // CraftBukkit end
 
                     if (this.a(world, blockposition1) && !entityhuman.abilities.canInstantlyBuild) {
-                        entityhuman.b(StatisticList.USE_ITEM_COUNT[Item.getId(this)]);
                         // PaperSpigot start - Stackable Buckets
                         if ((this == Items.LAVA_BUCKET && PaperSpigotConfig.stackableLavaBuckets) ||
                                 (this == Items.WATER_BUCKET && PaperSpigotConfig.stackableWaterBuckets)) {

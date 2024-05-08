@@ -58,11 +58,6 @@ public class BlockDispenser extends BlockContainer {
 
             if (tileentity instanceof TileEntityDispenser) {
                 entityhuman.openContainer((TileEntityDispenser) tileentity);
-                if (tileentity instanceof TileEntityDropper) {
-                    entityhuman.b(StatisticList.O);
-                } else {
-                    entityhuman.b(StatisticList.Q);
-                }
             }
 
             return true;

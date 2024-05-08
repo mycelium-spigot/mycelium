@@ -144,7 +144,6 @@ public class BlockTallPlant extends BlockPlant implements IBlockFragilePlantElem
         if (blocktallplant_enumtallflowervariants != BlockTallPlant.EnumTallFlowerVariants.FERN && blocktallplant_enumtallflowervariants != BlockTallPlant.EnumTallFlowerVariants.GRASS) {
             return false;
         } else {
-            entityhuman.b(StatisticList.MINE_BLOCK_COUNT[Block.getId(this)]);
             int i = (blocktallplant_enumtallflowervariants == BlockTallPlant.EnumTallFlowerVariants.GRASS ? BlockLongGrass.EnumTallGrassType.GRASS : BlockLongGrass.EnumTallGrassType.FERN).a();
 
             a(world, blockposition, new ItemStack(Blocks.TALLGRASS, 2, i));

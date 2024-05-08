@@ -13,11 +13,11 @@ public class ItemSnowball extends Item {
         }
 
         world.makeSound(entityhuman, "random.bow", 0.5F, 0.4F / (ItemSnowball.g.nextFloat() * 0.4F + 0.8F));
+        
         if (!world.isClientSide) {
             world.addEntity(new EntitySnowball(world, entityhuman));
         }
 
-        entityhuman.b(StatisticList.USE_ITEM_COUNT[Item.getId(this)]);
         return itemstack;
     }
 }

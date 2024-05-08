@@ -55,7 +55,6 @@ public class BlockFlowerPot extends BlockContainer {
                     tileentityflowerpot.a(itemstack.getItem(), itemstack.getData());
                     tileentityflowerpot.update();
                     world.notify(blockposition);
-                    entityhuman.b(StatisticList.T);
                     if (!entityhuman.abilities.canInstantlyBuild && --itemstack.count <= 0) {
                         entityhuman.inventory.setItem(entityhuman.inventory.itemInHandIndex, (ItemStack) null);
                     }

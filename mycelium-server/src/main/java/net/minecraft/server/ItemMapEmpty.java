@@ -27,8 +27,7 @@ public class ItemMapEmpty extends ItemWorldMapBase {
             if (!entityhuman.inventory.pickup(itemstack1.cloneItemStack())) {
                 entityhuman.drop(itemstack1, false);
             }
-
-            entityhuman.b(StatisticList.USE_ITEM_COUNT[Item.getId(this)]);
+            
             return itemstack;
         }
     }

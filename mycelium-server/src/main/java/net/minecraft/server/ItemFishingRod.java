@@ -33,7 +33,6 @@ public class ItemFishingRod extends Item {
             }
 
             entityhuman.bw();
-            entityhuman.b(StatisticList.USE_ITEM_COUNT[Item.getId(this)]);
         }
 
         return itemstack;

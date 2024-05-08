@@ -17,7 +17,6 @@ public class ItemEgg extends Item {
             world.addEntity(new EntityEgg(world, entityhuman));
         }
 
-        entityhuman.b(StatisticList.USE_ITEM_COUNT[Item.getId(this)]);
         return itemstack;
     }
 }

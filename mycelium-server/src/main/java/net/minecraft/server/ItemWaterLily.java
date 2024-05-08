@@ -39,8 +39,6 @@ public class ItemWaterLily extends ItemWithAuxData {
                     if (!entityhuman.abilities.canInstantlyBuild) {
                         --itemstack.count;
                     }
-
-                    entityhuman.b(StatisticList.USE_ITEM_COUNT[Item.getId(this)]);
                 }
             }
 

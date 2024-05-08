@@ -81,7 +81,6 @@ public class BlockHopper extends BlockContainer {
 
             if (tileentity instanceof TileEntityHopper) {
                 entityhuman.openContainer((TileEntityHopper) tileentity);
-                entityhuman.b(StatisticList.P);
             }
 
             return true;

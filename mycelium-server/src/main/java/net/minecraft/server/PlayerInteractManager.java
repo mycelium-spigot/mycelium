@@ -341,7 +341,8 @@ public class PlayerInteractManager {
                 boolean flag1 = this.player.b(iblockdata.getBlock());
 
                 if (itemstack1 != null) {
-                    itemstack1.a(this.world, iblockdata.getBlock(), blockposition, this.player);
+                    // Not a clue what these do because Mojang and their obfuscation...
+                    //itemstack1.a(this.world, iblockdata.getBlock(), blockposition, this.player);
                     if (itemstack1.count == 0) {
                         this.player.ca();
                     }

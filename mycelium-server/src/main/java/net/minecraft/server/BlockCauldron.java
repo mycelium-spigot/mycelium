@@ -69,7 +69,6 @@ public class BlockCauldron extends Block {
                             entityhuman.inventory.setItem(entityhuman.inventory.itemInHandIndex, new ItemStack(Items.BUCKET));
                         }
 
-                        entityhuman.b(StatisticList.I);
                         this.a(world, blockposition, iblockdata, 3);
                     }
 
@@ -87,7 +86,6 @@ public class BlockCauldron extends Block {
                                     ((EntityPlayer) entityhuman).updateInventory(entityhuman.defaultContainer);
                                 }
 
-                                entityhuman.b(StatisticList.J);
                                 --itemstack.count;
                                 if (itemstack.count <= 0) {
                                     entityhuman.inventory.setItem(entityhuman.inventory.itemInHandIndex, (ItemStack) null);
@@ -105,7 +103,6 @@ public class BlockCauldron extends Block {
                             if (itemarmor.x_() == ItemArmor.EnumArmorMaterial.LEATHER && itemarmor.d_(itemstack)) {
                                 itemarmor.c(itemstack);
                                 this.a(world, blockposition, iblockdata, i - 1);
-                                entityhuman.b(StatisticList.K);
                                 return true;
                             }
                         }
@@ -123,7 +120,6 @@ public class BlockCauldron extends Block {
                                     ((EntityPlayer) entityhuman).updateInventory(entityhuman.defaultContainer);
                                 }
 
-                                entityhuman.b(StatisticList.L);
                                 if (!entityhuman.abilities.canInstantlyBuild) {
                                     --itemstack.count;
                                 }

@@ -53,7 +53,6 @@ public class BlockFurnace extends BlockContainer {
 
             if (tileentity instanceof TileEntityFurnace) {
                 entityhuman.openContainer((TileEntityFurnace) tileentity);
-                entityhuman.b(StatisticList.Y);
             }
 
             return true;

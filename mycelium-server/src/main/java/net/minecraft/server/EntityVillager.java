@@ -136,7 +136,6 @@ public class EntityVillager extends EntityAgeable implements IMerchant, NPC {
                 entityhuman.openTrade(this);
             }
 
-            entityhuman.b(StatisticList.F);
             return true;
         } else {
             return super.a(entityhuman);

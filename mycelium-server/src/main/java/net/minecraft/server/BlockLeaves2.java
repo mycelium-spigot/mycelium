@@ -68,7 +68,6 @@ public class BlockLeaves2 extends BlockLeaves {
 
     public void a(World world, EntityHuman entityhuman, BlockPosition blockposition, IBlockData iblockdata, TileEntity tileentity) {
         if (!world.isClientSide && entityhuman.bZ() != null && entityhuman.bZ().getItem() == Items.SHEARS) {
-            entityhuman.b(StatisticList.MINE_BLOCK_COUNT[Block.getId(this)]);
             a(world, blockposition, new ItemStack(Item.getItemOf(this), 1, ((BlockWood.EnumLogVariant) iblockdata.get(BlockLeaves2.VARIANT)).a() - 4));
         } else {
             super.a(world, entityhuman, blockposition, iblockdata, tileentity);

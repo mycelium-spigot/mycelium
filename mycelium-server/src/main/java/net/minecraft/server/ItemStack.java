@@ -198,7 +198,6 @@ public final class ItemStack {
                     ((BlockJukeBox) Blocks.JUKEBOX).a(world, blockposition, world.getType(blockposition), this);
                     world.a((EntityHuman) null, 1005, blockposition, Item.getId(this.getItem()));
                     --this.count;
-                    entityhuman.b(StatisticList.X);
                 }
 
                 if (this.getItem() == Items.SKULL) { // Special case skulls to allow wither spawns to be cancelled
@@ -217,8 +216,6 @@ public final class ItemStack {
                         }
                     }
                 }
-
-                entityhuman.b(StatisticList.USE_ITEM_COUNT[Item.getId(this.item)]);
             }
         }
         world.capturedTileEntities.clear();
@@ -398,7 +395,6 @@ public final class ItemStack {
                     if (entityliving instanceof EntityHuman) {
                         EntityHuman entityhuman = (EntityHuman) entityliving;
 
-                        entityhuman.b(StatisticList.BREAK_ITEM_COUNT[Item.getId(this.item)]);
                         if (this.count == 0 && this.getItem() instanceof ItemBow) {
                             entityhuman.ca();
                         }
@@ -421,7 +417,8 @@ public final class ItemStack {
         }
     }
 
-    public void a(EntityLiving entityliving, EntityHuman entityhuman) {
+    // Not a clue what these do because Mojang and their obfuscation...
+    /*public void a(EntityLiving entityliving, EntityHuman entityhuman) {
         boolean flag = this.item.a(this, entityliving, (EntityLiving) entityhuman);
 
         if (flag) {
@@ -438,6 +435,7 @@ public final class ItemStack {
         }
 
     }
+    */
 
     public boolean b(Block block) {
         return this.item.canDestroySpecialBlock(block);
@@ -510,7 +508,6 @@ public final class ItemStack {
     }
 
     public void a(World world, EntityHuman entityhuman, int i) {
-        entityhuman.a(StatisticList.CRAFT_BLOCK_COUNT[Item.getId(this.item)], i);
         this.item.d(this, world, entityhuman);
     }
 

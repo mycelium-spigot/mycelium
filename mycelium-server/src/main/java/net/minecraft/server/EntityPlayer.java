@@ -35,7 +35,6 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
     public double e;
     public final List<ChunkCoordIntPair> chunkCoordIntPairQueue = Lists.newLinkedList();
     public final List<Integer> removeQueue = Lists.newLinkedList();
-    private final ServerStatisticManager bK;
     private float bL = Float.MIN_VALUE;
     private float bM = -1.0E8F;
     private int bN = -99999999;
@@ -103,7 +102,6 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         }
 
         this.server = minecraftserver;
-        this.bK = minecraftserver.getPlayerList().a((EntityHuman) this);
         this.S = 0.0F;
         this.setPositionRotation(blockposition, 0.0F, 0.0F);
 
@@ -336,10 +334,6 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
                 this.playerConnection.sendPacket(new PacketPlayOutExperience(this.exp, this.expTotal, this.expLevel));
             }
 
-            if (this.ticksLived % 20 * 5 == 0 && !this.getStatisticManager().hasAchievement(AchievementList.L)) {
-                this.i_();
-            }
-
             // CraftBukkit start - initialize oldLevel and fire PlayerLevelChangeEvent
             if (this.oldLevel == -1) {
                 this.oldLevel = this.expLevel;
@@ -357,44 +351,6 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
             this.appendEntityCrashDetails(crashreportsystemdetails);
             throw new ReportedException(crashreport);
         }
-    }
-
-    protected void i_() {
-        BiomeBase biomebase = this.world.getBiome(new BlockPosition(MathHelper.floor(this.locX), 0, MathHelper.floor(this.locZ)));
-        String s = biomebase.ah;
-        AchievementSet achievementset = (AchievementSet) this.getStatisticManager().b((Statistic) AchievementList.L);
-
-        if (achievementset == null) {
-            achievementset = (AchievementSet) this.getStatisticManager().a(AchievementList.L, new AchievementSet());
-        }
-
-        achievementset.add(s);
-        if (this.getStatisticManager().b(AchievementList.L) && achievementset.size() >= BiomeBase.n.size()) {
-            HashSet hashset = Sets.newHashSet(BiomeBase.n);
-            Iterator iterator = achievementset.iterator();
-
-            while (iterator.hasNext()) {
-                String s1 = (String) iterator.next();
-                Iterator iterator1 = hashset.iterator();
-
-                while (iterator1.hasNext()) {
-                    BiomeBase biomebase1 = (BiomeBase) iterator1.next();
-
-                    if (biomebase1.ah.equals(s1)) {
-                        iterator1.remove();
-                    }
-                }
-
-                if (hashset.isEmpty()) {
-                    break;
-                }
-            }
-
-            if (hashset.isEmpty()) {
-                this.b((Statistic) AchievementList.L);
-            }
-        }
-
     }
 
     public void die(DamageSource damagesource) {
@@ -465,14 +421,13 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
             EntityTypes.MonsterEggInfo entitytypes_monsteregginfo = (EntityTypes.MonsterEggInfo) EntityTypes.eggInfo.get(Integer.valueOf(EntityTypes.a(entityliving)));
 
             if (entitytypes_monsteregginfo != null) {
-                this.b(entitytypes_monsteregginfo.e);
+                // Not a clue what these do because Mojang and their obfuscation...
+                //this.b(entitytypes_monsteregginfo.e);
             }
 
             entityliving.b(this, this.aW);
         }
-
-        this.b(StatisticList.y);
-        this.a(StatisticList.h);
+        
         this.bs().g();
     }
 
@@ -519,30 +474,12 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         // PaperSpigot start - Allow configurable end portal credits
         boolean endPortal = this.dimension == 1 && i == 1;
         if (endPortal) {
-            this.b((Statistic) AchievementList.D);
             if (!world.paperSpigotConfig.disableEndCredits) {
                 this.world.kill(this);
                 this.viewingCredits = true;
                 this.playerConnection.sendPacket(new PacketPlayOutGameStateChange(4, 0.0F));
             }
         // PaperSpigot end
-        } else {
-            if (this.dimension == 0 && i == 1) {
-                this.b((Statistic) AchievementList.C);
-                // CraftBukkit start - Rely on custom portal management
-                /*
-                BlockPosition blockposition = this.server.getWorldServer(i).getDimensionSpawn();
-
-                if (blockposition != null) {
-                    this.playerConnection.a((double) blockposition.getX(), (double) blockposition.getY(), (double) blockposition.getZ(), 0.0F, 0.0F);
-                }
-
-                i = 1;
-                */
-                // CraftBukkit end
-            } else {
-                this.b((Statistic) AchievementList.y);
-            }
         }
 
         // PaperSpigot start - Allow configurable end portal credits
@@ -833,42 +770,6 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
 
     }
 
-    public void a(Statistic statistic, int i) {
-        if (statistic != null) {
-            this.bK.b(this, statistic, i);
-            Iterator iterator = this.getScoreboard().getObjectivesForCriteria(statistic.k()).iterator();
-
-            while (iterator.hasNext()) {
-                ScoreboardObjective scoreboardobjective = (ScoreboardObjective) iterator.next();
-
-                this.getScoreboard().getPlayerScoreForObjective(this.getName(), scoreboardobjective).addScore(i);
-            }
-
-            if (this.bK.e()) {
-                this.bK.a(this);
-            }
-
-        }
-    }
-
-    public void a(Statistic statistic) {
-        if (statistic != null) {
-            this.bK.setStatistic(this, statistic, 0);
-            Iterator iterator = this.getScoreboard().getObjectivesForCriteria(statistic.k()).iterator();
-
-            while (iterator.hasNext()) {
-                ScoreboardObjective scoreboardobjective = (ScoreboardObjective) iterator.next();
-
-                this.getScoreboard().getPlayerScoreForObjective(this.getName(), scoreboardobjective).setScore(0);
-            }
-
-            if (this.bK.e()) {
-                this.bK.a(this);
-            }
-
-        }
-    }
-
     public void q() {
         if (this.passenger != null) {
             this.passenger.mount(this);
@@ -1038,10 +939,6 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
 
     public void resetIdleTimer() {
         this.bT = MinecraftServer.az();
-    }
-
-    public ServerStatisticManager getStatisticManager() {
-        return this.bK;
     }
 
     public void d(Entity entity) {

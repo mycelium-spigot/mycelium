@@ -17,7 +17,6 @@ public class ItemEnderPearl extends Item {
                 world.addEntity(new EntityEnderPearl(world, entityhuman));
             }
 
-            entityhuman.b(StatisticList.USE_ITEM_COUNT[Item.getId(this)]);
             return itemstack;
         }
     }

@@ -18,7 +18,6 @@ public class ItemMilkBucket extends Item {
             entityhuman.removeAllEffects();
         }
 
-        entityhuman.b(StatisticList.USE_ITEM_COUNT[Item.getId(this)]);
         // PaperSpigot start - Stackable Buckets
         if (PaperSpigotConfig.stackableMilkBuckets) {
             if (itemstack.count <= 0) {

@@ -193,31 +193,25 @@ public class BlockSkull extends BlockContainer {
                 entitywither.setPositionRotation((double) blockposition2.getX() + 0.5D, (double) blockposition2.getY() + 0.55D, (double) blockposition2.getZ() + 0.5D, shapedetector_shapedetectorcollection.b().k() == EnumDirection.EnumAxis.X ? 0.0F : 90.0F, 0.0F);
                 entitywither.aI = shapedetector_shapedetectorcollection.b().k() == EnumDirection.EnumAxis.X ? 0.0F : 90.0F;
                 entitywither.n();
-                Iterator iterator = world.a(EntityHuman.class, entitywither.getBoundingBox().grow(50.0D, 50.0D, 50.0D)).iterator();
+                world.a(EntityHuman.class, entitywither.getBoundingBox().grow(50.0D, 50.0D, 50.0D));
 
                 // CraftBukkit start
                 if (world.addEntity(entitywither, SpawnReason.BUILD_WITHER)) {
                     blockList.updateList();
-                    
-                while (iterator.hasNext()) {
-                    EntityHuman entityhuman = (EntityHuman) iterator.next();
 
-                    entityhuman.b((Statistic) AchievementList.I);
-                }
+                    int k;
 
-                int k;
-
-                for (k = 0; k < 120; ++k) {
-                    world.addParticle(EnumParticle.SNOWBALL, (double) blockposition1.getX() + world.random.nextDouble(), (double) (blockposition1.getY() - 2) + world.random.nextDouble() * 3.9D, (double) blockposition1.getZ() + world.random.nextDouble(), 0.0D, 0.0D, 0.0D, new int[0]);
-                }
-
-                for (k = 0; k < shapedetector.c(); ++k) {
-                    for (int l = 0; l < shapedetector.b(); ++l) {
-                        ShapeDetectorBlock shapedetectorblock2 = shapedetector_shapedetectorcollection.a(k, l, 0);
-
-                        world.update(shapedetectorblock2.getPosition(), Blocks.AIR);
+                    for (k = 0; k < 120; ++k) {
+                        world.addParticle(EnumParticle.SNOWBALL, (double) blockposition1.getX() + world.random.nextDouble(), (double) (blockposition1.getY() - 2) + world.random.nextDouble() * 3.9D, (double) blockposition1.getZ() + world.random.nextDouble(), 0.0D, 0.0D, 0.0D, new int[0]);
                     }
-                }
+
+                    for (k = 0; k < shapedetector.c(); ++k) {
+                        for (int l = 0; l < shapedetector.b(); ++l) {
+                            ShapeDetectorBlock shapedetectorblock2 = shapedetector_shapedetectorcollection.a(k, l, 0);
+
+                            world.update(shapedetectorblock2.getPosition(), Blocks.AIR);
+                        }
+                    }
                 } // CraftBukkit end
 
             }

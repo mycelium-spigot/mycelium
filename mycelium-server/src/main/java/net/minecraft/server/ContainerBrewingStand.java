@@ -147,10 +147,6 @@ public class ContainerBrewingStand extends Container {
         }
 
         public void a(EntityHuman entityhuman, ItemStack itemstack) {
-            if (itemstack.getItem() == Items.POTION && itemstack.getData() > 0) {
-                this.a.b((Statistic) AchievementList.B);
-            }
-
             super.a(entityhuman, itemstack);
         }
 

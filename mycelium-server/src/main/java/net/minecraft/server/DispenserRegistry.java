@@ -655,7 +655,6 @@ public class DispenserRegistry {
             Block.S();
             BlockFire.l();
             Item.t();
-            StatisticList.a();
             b();
         }
     }

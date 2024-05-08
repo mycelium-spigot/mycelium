@@ -29,7 +29,6 @@ public class ItemFood extends Item {
         entityhuman.getFoodData().a(this, itemstack);
         world.makeSound(entityhuman, "random.burp", 0.5F, world.random.nextFloat() * 0.1F + 0.9F);
         this.c(itemstack, world, entityhuman);
-        entityhuman.b(StatisticList.USE_ITEM_COUNT[Item.getId(this)]);
         return itemstack;
     }
 

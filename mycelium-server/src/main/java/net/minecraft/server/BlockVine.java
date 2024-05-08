@@ -325,7 +325,6 @@ public class BlockVine extends Block {
 
     public void a(World world, EntityHuman entityhuman, BlockPosition blockposition, IBlockData iblockdata, TileEntity tileentity) {
         if (!world.isClientSide && entityhuman.bZ() != null && entityhuman.bZ().getItem() == Items.SHEARS) {
-            entityhuman.b(StatisticList.MINE_BLOCK_COUNT[Block.getId(this)]);
             a(world, blockposition, new ItemStack(Blocks.VINE, 1, 0));
         } else {
             super.a(world, entityhuman, blockposition, iblockdata, tileentity);

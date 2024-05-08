@@ -126,10 +126,6 @@ public class EntitySkeleton extends EntityMonster implements IRangedEntity {
             EntityHuman entityhuman = (EntityHuman) damagesource.getEntity();
             double d0 = entityhuman.locX - this.locX;
             double d1 = entityhuman.locZ - this.locZ;
-
-            if (d0 * d0 + d1 * d1 >= 2500.0D) {
-                entityhuman.b((Statistic) AchievementList.v);
-            }
         } else if (damagesource.getEntity() instanceof EntityCreeper && ((EntityCreeper) damagesource.getEntity()).isPowered() && ((EntityCreeper) damagesource.getEntity()).cp()) {
             ((EntityCreeper) damagesource.getEntity()).cq();
             // CraftBukkit start

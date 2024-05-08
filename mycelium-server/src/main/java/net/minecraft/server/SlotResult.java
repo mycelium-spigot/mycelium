@@ -35,50 +35,6 @@ public class SlotResult extends Slot {
         }
 
         this.c = 0;
-        if (itemstack.getItem() == Item.getItemOf(Blocks.CRAFTING_TABLE)) {
-            this.b.b((Statistic) AchievementList.h);
-        }
-
-        if (itemstack.getItem() instanceof ItemPickaxe) {
-            this.b.b((Statistic) AchievementList.i);
-        }
-
-        if (itemstack.getItem() == Item.getItemOf(Blocks.FURNACE)) {
-            this.b.b((Statistic) AchievementList.j);
-        }
-
-        if (itemstack.getItem() instanceof ItemHoe) {
-            this.b.b((Statistic) AchievementList.l);
-        }
-
-        if (itemstack.getItem() == Items.BREAD) {
-            this.b.b((Statistic) AchievementList.m);
-        }
-
-        if (itemstack.getItem() == Items.CAKE) {
-            this.b.b((Statistic) AchievementList.n);
-        }
-
-        if (itemstack.getItem() instanceof ItemPickaxe && ((ItemPickaxe) itemstack.getItem()).g() != Item.EnumToolMaterial.WOOD) {
-            this.b.b((Statistic) AchievementList.o);
-        }
-
-        if (itemstack.getItem() instanceof ItemSword) {
-            this.b.b((Statistic) AchievementList.r);
-        }
-
-        if (itemstack.getItem() == Item.getItemOf(Blocks.ENCHANTING_TABLE)) {
-            this.b.b((Statistic) AchievementList.E);
-        }
-
-        if (itemstack.getItem() == Item.getItemOf(Blocks.BOOKSHELF)) {
-            this.b.b((Statistic) AchievementList.G);
-        }
-
-        if (itemstack.getItem() == Items.GOLDEN_APPLE && itemstack.getData() == 1) {
-            this.b.b((Statistic) AchievementList.M);
-        }
-
     }
 
     public void a(EntityHuman entityhuman, ItemStack itemstack) {
