@@ -28,9 +28,6 @@ public final class SpigotTimings {
     public static final Timing entityActivationCheckTimer = Timings.ofSafe("entityActivationCheck");
     public static final Timing checkIfActiveTimer = Timings.ofSafe("checkIfActive");
 
-    public static final Timing antiXrayUpdateTimer = Timings.ofSafe("anti-xray - update");
-    public static final Timing antiXrayObfuscateTimer = Timings.ofSafe("anti-xray - obfuscate");
-
     private SpigotTimings() {}
 
     /**
