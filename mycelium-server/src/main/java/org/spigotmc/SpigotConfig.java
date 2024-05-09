@@ -291,12 +291,6 @@ public class SpigotConfig
         System.out.println( "Server Ping Player Sample Count: " + playerSample );
     }
 
-    public static int playerShuffle;
-    private static void playerShuffle()
-    {
-        playerShuffle = getInt( "settings.player-shuffle", 0 );
-    }
-
     public static List<String> spamExclusions;
     private static void spamExclusions()
     {
