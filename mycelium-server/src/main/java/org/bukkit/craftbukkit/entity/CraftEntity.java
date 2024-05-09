@@ -102,7 +102,6 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
                         else { return new CraftSpider(server, (EntitySpider) entity); }
                     }
                     else if (entity instanceof EntityEndermite) { return new CraftEndermite(server, (EntityEndermite) entity); }
-                    else if (entity instanceof EntityGuardian) { return new CraftGuardian(server, (EntityGuardian) entity); }
 
                     else  { return new CraftMonster(server, (EntityMonster) entity); }
                 }

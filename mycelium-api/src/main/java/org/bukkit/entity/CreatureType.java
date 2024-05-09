@@ -27,7 +27,6 @@ public enum CreatureType {
     MAGMA_CUBE("LavaSlime", MagmaCube.class, 62),
     ENDER_DRAGON("EnderDragon", EnderDragon.class, 63),
     ENDERMITE("Endermite", Endermite.class, 67),
-    GUARDIAN("Guardian", Guardian.class, 68),
     PIG("Pig", Pig.class, 90),
     SHEEP("Sheep", Sheep.class, 91),
     COW("Cow", Cow.class, 92),

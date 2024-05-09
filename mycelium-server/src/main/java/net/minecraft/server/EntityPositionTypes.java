@@ -35,7 +35,6 @@ public class EntityPositionTypes {
         EntityPositionTypes.a.put(EntityEndermite.class, EntityInsentient.EnumEntityPositionType.ON_GROUND);
         EntityPositionTypes.a.put(EntityGhast.class, EntityInsentient.EnumEntityPositionType.ON_GROUND);
         EntityPositionTypes.a.put(EntityGiantZombie.class, EntityInsentient.EnumEntityPositionType.ON_GROUND);
-        EntityPositionTypes.a.put(EntityGuardian.class, EntityInsentient.EnumEntityPositionType.IN_WATER);
         EntityPositionTypes.a.put(EntityMagmaCube.class, EntityInsentient.EnumEntityPositionType.ON_GROUND);
         EntityPositionTypes.a.put(EntityPigZombie.class, EntityInsentient.EnumEntityPositionType.ON_GROUND);
         EntityPositionTypes.a.put(EntitySilverfish.class, EntityInsentient.EnumEntityPositionType.ON_GROUND);

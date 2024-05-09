@@ -208,7 +208,6 @@ public class EntityTypes {
         a(EntityBat.class, "Bat", 65, 4996656, 986895);
         a(EntityWitch.class, "Witch", 66, 3407872, 5349438);
         a(EntityEndermite.class, "Endermite", 67, 1447446, 7237230);
-        a(EntityGuardian.class, "Guardian", 68, 5931634, 15826224);
         a(EntityPig.class, "Pig", 90, 15771042, 14377823);
         a(EntitySheep.class, "Sheep", 91, 15198183, 16758197);
         a(EntityCow.class, "Cow", 92, 4470310, 10592673);
