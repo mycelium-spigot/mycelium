@@ -14,7 +14,6 @@ public class WorldTimingsHandler {
     public final Timing scheduledBlocksTicking;
     public final Timing chunkTicks;
     public final Timing chunkTicksBlocks;
-    public final Timing doVillages;
     public final Timing doChunkMap;
     public final Timing doChunkGC;
     public final Timing doSounds;
@@ -44,7 +43,6 @@ public class WorldTimingsHandler {
         scheduledBlocksTicking = Timings.ofSafe(name + "Scheduled Blocks - Ticking");
         chunkTicks = Timings.ofSafe(name + "Chunk Ticks");
         chunkTicksBlocks = Timings.ofSafe(name + "Chunk Ticks - Blocks");
-        doVillages = Timings.ofSafe(name + "doVillages");
         doChunkMap = Timings.ofSafe(name + "doChunkMap");
         doSounds = Timings.ofSafe(name + "doSounds");
         doChunkGC = Timings.ofSafe(name + "doChunkGC");

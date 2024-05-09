@@ -44,7 +44,6 @@ public class WorldServer extends World implements IAsyncTaskHandler {
     private int emptyTime;
     private final PortalTravelAgent Q;
     private final SpawnerCreature R = new SpawnerCreature();
-    protected final VillageSiege siegeManager = new VillageSiege(this);
     private WorldServer.BlockActionDataList[] S = new WorldServer.BlockActionDataList[] { new WorldServer.BlockActionDataList(null), new WorldServer.BlockActionDataList(null)};
     private int T;
     private static final List<StructurePieceTreasure> U = Lists.newArrayList(new StructurePieceTreasure[] { new StructurePieceTreasure(Items.STICK, 0, 1, 3, 10), new StructurePieceTreasure(Item.getItemOf(Blocks.PLANKS), 0, 1, 3, 10), new StructurePieceTreasure(Item.getItemOf(Blocks.LOG), 0, 1, 3, 10), new StructurePieceTreasure(Items.STONE_AXE, 0, 1, 1, 3), new StructurePieceTreasure(Items.WOODEN_AXE, 0, 1, 1, 5), new StructurePieceTreasure(Items.STONE_PICKAXE, 0, 1, 1, 3), new StructurePieceTreasure(Items.WOODEN_PICKAXE, 0, 1, 1, 5), new StructurePieceTreasure(Items.APPLE, 0, 2, 3, 5), new StructurePieceTreasure(Items.BREAD, 0, 2, 3, 3), new StructurePieceTreasure(Item.getItemOf(Blocks.LOG2), 0, 1, 3, 10)});
@@ -73,16 +72,6 @@ public class WorldServer extends World implements IAsyncTaskHandler {
 
     public World b() {
         this.worldMaps = new PersistentCollection(this.dataManager);
-        String s = PersistentVillage.a(this.worldProvider);
-        PersistentVillage persistentvillage = (PersistentVillage) this.worldMaps.get(PersistentVillage.class, s);
-
-        if (persistentvillage == null) {
-            this.villages = new PersistentVillage(this);
-            this.worldMaps.a(s, this.villages);
-        } else {
-            this.villages = persistentvillage;
-            this.villages.a((World) this);
-        }
 
         if (getServer().getScoreboardManager() == null) { // CraftBukkit
         this.scoreboard = new ScoreboardServer(this.server);
@@ -244,11 +233,6 @@ public class WorldServer extends World implements IAsyncTaskHandler {
         timings.doChunkMap.startTiming(); // Spigot
         this.manager.flush();
         timings.doChunkMap.stopTiming(); // Spigot
-        this.methodProfiler.c("village");
-        timings.doVillages.startTiming(); // Spigot
-        this.villages.tick();
-        this.siegeManager.a();
-        timings.doVillages.stopTiming(); // Spigot
         this.methodProfiler.c("portalForcer");
         timings.doPortalForcer.startTiming(); // Spigot
         this.Q.a(this.getTime());

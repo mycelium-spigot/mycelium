@@ -47,16 +47,6 @@ public class SecondaryWorldServer extends WorldServer {
     public World b() {
         this.worldMaps = this.a.T();
         // this.scoreboard = this.a.getScoreboard(); // CraftBukkit
-        String s = PersistentVillage.a(this.worldProvider);
-        PersistentVillage persistentvillage = (PersistentVillage) this.worldMaps.get(PersistentVillage.class, s);
-
-        if (persistentvillage == null) {
-            this.villages = new PersistentVillage(this);
-            this.worldMaps.a(s, this.villages);
-        } else {
-            this.villages = persistentvillage;
-            this.villages.a((World) this);
-        }
 
         return super.b(); // CraftBukkit
     }

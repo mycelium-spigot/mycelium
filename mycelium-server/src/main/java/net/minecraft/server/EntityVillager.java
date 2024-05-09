@@ -9,7 +9,6 @@ public class EntityVillager extends EntityAgeable implements IMerchant, NPC {
     private int profession;
     private boolean bo;
     private boolean bp;
-    Village village;
     private EntityHuman tradingPlayer;
     private MerchantRecipeList br;
     private int bs;
@@ -39,11 +38,8 @@ public class EntityVillager extends EntityAgeable implements IMerchant, NPC {
         this.goalSelector.a(1, new PathfinderGoalAvoidTarget(this, EntityZombie.class, 8.0F, 0.6D, 0.6D));
         this.goalSelector.a(1, new PathfinderGoalTradeWithPlayer(this));
         this.goalSelector.a(1, new PathfinderGoalLookAtTradingPlayer(this));
-        this.goalSelector.a(2, new PathfinderGoalMoveIndoors(this));
-        this.goalSelector.a(3, new PathfinderGoalRestrictOpenDoor(this));
         this.goalSelector.a(4, new PathfinderGoalOpenDoor(this, true));
         this.goalSelector.a(5, new PathfinderGoalMoveTowardsRestriction(this, 0.6D));
-        this.goalSelector.a(6, new PathfinderGoalMakeLove(this));
         this.goalSelector.a(7, new PathfinderGoalTakeFlower(this));
         this.goalSelector.a(9, new PathfinderGoalInteract(this, EntityHuman.class, 3.0F, 1.0F));
         this.goalSelector.a(9, new PathfinderGoalInteractVillagers(this));
@@ -79,22 +75,8 @@ public class EntityVillager extends EntityAgeable implements IMerchant, NPC {
 
     protected void E() {
         if (--this.profession <= 0) {
-            BlockPosition blockposition = new BlockPosition(this);
-
-            this.world.ae().a(blockposition);
             this.profession = 70 + this.random.nextInt(50);
-            this.village = this.world.ae().getClosestVillage(blockposition, 32);
-            if (this.village == null) {
-                this.cj();
-            } else {
-                BlockPosition blockposition1 = this.village.a();
-
-                this.a(blockposition1, (int) ((float) this.village.b() * 1.0F));
-                if (this.bz) {
-                    this.bz = false;
-                    this.village.b(5);
-                }
-            }
+            this.cj();
         }
 
         if (!this.co() && this.bs > 0) {
@@ -113,10 +95,6 @@ public class EntityVillager extends EntityAgeable implements IMerchant, NPC {
 
                     this.cw();
                     this.bt = false;
-                    if (this.village != null && this.bw != null) {
-                        this.world.broadcastEntityEffect(this, (byte) 14);
-                        this.village.a(this.bw, 1);
-                    }
                 }
 
                 this.addEffect(new MobEffect(MobEffectList.REGENERATION.id, 200, 0));
@@ -240,43 +218,9 @@ public class EntityVillager extends EntityAgeable implements IMerchant, NPC {
 
     public void b(EntityLiving entityliving) {
         super.b(entityliving);
-        if (this.village != null && entityliving != null) {
-            this.village.a(entityliving);
-            if (entityliving instanceof EntityHuman) {
-                byte b0 = -1;
-
-                if (this.isBaby()) {
-                    b0 = -3;
-                }
-
-                this.village.a(entityliving.getName(), b0);
-                if (this.isAlive()) {
-                    this.world.broadcastEntityEffect(this, (byte) 13);
-                }
-            }
-        }
-
     }
 
     public void die(DamageSource damagesource) {
-        if (this.village != null) {
-            Entity entity = damagesource.getEntity();
-
-            if (entity != null) {
-                if (entity instanceof EntityHuman) {
-                    this.village.a(entity.getName(), -2);
-                } else if (entity instanceof IMonster) {
-                    this.village.h();
-                }
-            } else {
-                EntityHuman entityhuman = this.world.findNearbyPlayer(this, 16.0D);
-
-                if (entityhuman != null) {
-                    this.village.h();
-                }
-            }
-        }
-
         super.die(damagesource);
     }
 

@@ -86,7 +86,6 @@ public abstract class World implements IBlockAccess {
     public WorldData worldData; // CraftBukkit - public
     protected boolean isLoading;
     public PersistentCollection worldMaps; // CraftBukkit - public
-    protected PersistentVillage villages;
     public final MethodProfiler methodProfiler;
     private final Calendar K = Calendar.getInstance();
     public Scoreboard scoreboard = new Scoreboard(); // CraftBukkit - public
@@ -3231,10 +3230,6 @@ public abstract class World implements IBlockAccess {
 
     public boolean ad() {
         return this.isLoading;
-    }
-
-    public PersistentVillage ae() {
-        return this.villages;
     }
 
     public WorldBorder getWorldBorder() {
