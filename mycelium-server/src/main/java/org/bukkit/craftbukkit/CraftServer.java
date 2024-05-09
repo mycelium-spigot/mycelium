@@ -325,7 +325,6 @@ public final class CraftServer implements Server {
             setVanillaCommands(false);
             // Spigot end
             commandMap.registerServerAliases();
-            loadCustomPermissions();
             DefaultPermissions.registerCorePermissions();
             CraftDefaultPermissions.registerCorePermissions();
             helpMap.initializeCommands();
@@ -761,53 +760,6 @@ public final class CraftServer implements Server {
             }
         } catch (Exception ex) {
             getLogger().log(Level.WARNING, "Couldn't load server icon", ex);
-        }
-    }
-
-    @SuppressWarnings({ "unchecked", "finally" })
-    private void loadCustomPermissions() {
-        File file = new File(configuration.getString("settings.permissions-file"));
-        FileInputStream stream;
-
-        try {
-            stream = new FileInputStream(file);
-        } catch (FileNotFoundException ex) {
-            try {
-                file.createNewFile();
-            } finally {
-                return;
-            }
-        }
-
-        Map<String, Map<String, Object>> perms;
-
-        try {
-            perms = (Map<String, Map<String, Object>>) yaml.load(stream);
-        } catch (MarkedYAMLException ex) {
-            getLogger().log(Level.WARNING, "Server permissions file " + file + " is not valid YAML: " + ex.toString());
-            return;
-        } catch (Throwable ex) {
-            getLogger().log(Level.WARNING, "Server permissions file " + file + " is not valid YAML.", ex);
-            return;
-        } finally {
-            try {
-                stream.close();
-            } catch (IOException ex) {}
-        }
-
-        if (perms == null) {
-            getLogger().log(Level.INFO, "Server permissions file " + file + " is empty, ignoring it");
-            return;
-        }
-
-        List<Permission> permsList = Permission.loadPermissions(perms, "Permission node '%s' in " + file + " is invalid", Permission.DEFAULT_PERMISSION);
-
-        for (Permission perm : permsList) {
-            try {
-                pluginManager.addPermission(perm);
-            } catch (IllegalArgumentException ex) {
-                getLogger().log(Level.SEVERE, "Permission in " + file + " was already defined", ex);
-            }
         }
     }
 
