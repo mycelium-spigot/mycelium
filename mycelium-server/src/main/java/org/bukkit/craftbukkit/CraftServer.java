@@ -106,10 +106,6 @@ import org.yaml.snakeyaml.constructor.SafeConstructor;
 import org.yaml.snakeyaml.error.MarkedYAMLException;
 import org.apache.commons.lang.Validate;
 
-import com.avaje.ebean.config.DataSourceConfig;
-import com.avaje.ebean.config.ServerConfig;
-import com.avaje.ebean.config.dbplatform.SQLitePlatform;
-import com.avaje.ebeaninternal.server.lib.sql.TransactionIsolation;
 import com.google.common.base.Charsets;
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
@@ -1021,25 +1017,6 @@ public final class CraftServer implements Server {
     public void savePlayers() {
         checkSaveState();
         playerList.savePlayers();
-    }
-
-    @Override
-    public void configureDbConfig(ServerConfig config) {
-        Validate.notNull(config, "Config cannot be null");
-
-        DataSourceConfig ds = new DataSourceConfig();
-        ds.setDriver(configuration.getString("database.driver"));
-        ds.setUrl(configuration.getString("database.url"));
-        ds.setUsername(configuration.getString("database.username"));
-        ds.setPassword(configuration.getString("database.password"));
-        ds.setIsolationLevel(TransactionIsolation.getLevel(configuration.getString("database.isolation")));
-
-        if (ds.getDriver().contains("sqlite")) {
-            config.setDatabasePlatform(new SQLitePlatform());
-            config.getDatabasePlatform().getDbDdlSyntax().setIdentity("");
-        }
-
-        config.setDataSourceConfig(ds);
     }
 
     @Override
