@@ -34,15 +34,7 @@ public class EntityEnderman extends EntityMonster {
         this.goalSelector.a(11, new EntityEnderman.PathfinderGoalEndermanPickupBlock(this));
         this.targetSelector.a(1, new PathfinderGoalHurtByTarget(this, false, new Class[0]));
         this.targetSelector.a(2, new EntityEnderman.PathfinderGoalPlayerWhoLookedAtTarget(this));
-        this.targetSelector.a(3, new PathfinderGoalNearestAttackableTarget(this, EntityEndermite.class, 10, true, false, new Predicate() {
-            public boolean a(EntityEndermite entityendermite) {
-                return entityendermite.n();
-            }
-
-            public boolean apply(Object object) {
-                return this.a((EntityEndermite) object);
-            }
-        }));
+        this.targetSelector.a(3, new PathfinderGoalNearestAttackableTarget(this, EntityHuman.class, true));
     }
 
     protected void initAttributes() {
@@ -272,7 +264,7 @@ public class EntityEnderman extends EntityMonster {
         if (this.isInvulnerable(damagesource)) {
             return false;
         } else {
-            if (damagesource.getEntity() == null || !(damagesource.getEntity() instanceof EntityEndermite)) {
+            if (damagesource.getEntity() == null) {
                 if (!this.world.isClientSide) {
                     this.a(true);
                 }
