@@ -28,7 +28,6 @@ import java.net.URLEncoder;
 import java.util.logging.Level;
 
 import org.bukkit.plugin.SimplePluginManager;
-import org.spigotmc.CustomTimingsHandler;
 // Spigot end
 
 public class TimingsCommand extends BukkitCommand {
