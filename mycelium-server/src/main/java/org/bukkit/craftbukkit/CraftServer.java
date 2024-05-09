@@ -1658,16 +1658,6 @@ public final class CraftServer implements Server {
     }
 
     @Override
-    public void setIdleTimeout(int threshold) {
-        console.setIdleTimeout(threshold);
-    }
-
-    @Override
-    public int getIdleTimeout() {
-        return console.getIdleTimeout();
-    }
-
-    @Override
     public ChunkGenerator.ChunkData createChunkData(World world) {
         return new CraftChunkData(world);
     }

@@ -835,23 +835,6 @@ public interface Server extends PluginMessageRecipient {
     CachedServerIcon loadServerIcon(BufferedImage image) throws IllegalArgumentException, Exception;
 
     /**
-     * Set the idle kick timeout. Any players idle for the specified amount of
-     * time will be automatically kicked.
-     * <p>
-     * A value of 0 will disable the idle kick timeout.
-     *
-     * @param threshold the idle timeout in minutes
-     */
-    public void setIdleTimeout(int threshold);
-
-    /**
-     * Gets the idle kick timeout.
-     *
-     * @return the idle timeout in minutes
-     */
-    public int getIdleTimeout();
-
-    /**
      * Create a ChunkData for use in a generator.
      * 
      * See {@link ChunkGenerator#generateChunkData(org.bukkit.World, java.util.Random, int, int, org.bukkit.generator.ChunkGenerator.BiomeGrid)}

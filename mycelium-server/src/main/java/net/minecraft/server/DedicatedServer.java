@@ -148,7 +148,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
             this.setResourcePack(this.propertyManager.getString("resource-pack", ""), this.propertyManager.getString("resource-pack-hash", ""));
             this.setMotd(this.propertyManager.getString("motd", "A Minecraft Server"));
             this.setForceGamemode(this.propertyManager.getBoolean("force-gamemode", false));
-            this.setIdleTimeout(this.propertyManager.getInt("player-idle-timeout", 0));
+
             if (this.propertyManager.getInt("difficulty", 1) < 0) {
                 this.propertyManager.setProperty("difficulty", Integer.valueOf(0));
             } else if (this.propertyManager.getInt("difficulty", 1) > 3) {
@@ -469,12 +469,6 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
 
     public int p() {
         return this.propertyManager.getInt("op-permission-level", 4);
-    }
-
-    public void setIdleTimeout(int i) {
-        super.setIdleTimeout(i);
-        this.propertyManager.setProperty("player-idle-timeout", Integer.valueOf(i));
-        this.a();
     }
 
     public boolean q() {

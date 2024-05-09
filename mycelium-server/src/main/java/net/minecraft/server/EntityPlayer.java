@@ -43,7 +43,6 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
     public int invulnerableTicks = 60;
     private EntityHuman.EnumChatVisibility bR;
     private boolean bS = true;
-    private long bT = System.currentTimeMillis();
     private Entity bU = null;
     private int containerCounter;
     public boolean g;
@@ -937,10 +936,6 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         return new BlockPosition(this.locX, this.locY + 0.5D, this.locZ);
     }
 
-    public void resetIdleTimer() {
-        this.bT = MinecraftServer.az();
-    }
-
     public void d(Entity entity) {
         if (entity instanceof EntityHuman) {
             this.playerConnection.sendPacket(new PacketPlayOutEntityDestroy(new int[] { entity.getId()}));
@@ -983,10 +978,6 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
             super.attack(entity);
         }
 
-    }
-
-    public long D() {
-        return this.bT;
     }
 
     public IChatBaseComponent getPlayerListName() {

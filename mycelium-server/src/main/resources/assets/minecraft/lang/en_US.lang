@@ -273,7 +273,6 @@ disconnect.genericReason=%s
 disconnect.disconnected=Disconnected by Server
 disconnect.lost=Connection Lost
 disconnect.kicked=Was kicked from the game
-disconnect.timeout=Timed out
 disconnect.closed=Connection closed
 disconnect.loginFailed=Failed to login
 disconnect.loginFailedInfo=Failed to login: %s
@@ -1486,8 +1485,6 @@ commands.generic.double.tooSmall=The number you have entered (%.2f) is too small
 commands.generic.double.tooBig=The number you have entered (%.2f) is too big, it must be at most %.2f
 commands.generic.usage=Usage: %s
 
-commands.setidletimeout.usage=/setidletimeout <Minutes until kick>
-commands.setidletimeout.success=Successfully set the idle timeout to %d minutes.
 commands.xp.failure.widthdrawXp=Cannot give player negative experience points
 commands.xp.success=Given %d experience to %s
 commands.xp.success.levels=Given %d levels to %s

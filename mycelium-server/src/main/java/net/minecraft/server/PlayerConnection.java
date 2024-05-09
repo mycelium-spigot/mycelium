@@ -147,12 +147,6 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
         if (this.m > 0) {
             --this.m;
         }
-
-        if (this.player.D() > 0L && this.minecraftServer.getIdleTimeout() > 0 && MinecraftServer.az() - this.player.D() > (long) (this.minecraftServer.getIdleTimeout() * 1000 * 60)) {
-            this.player.resetIdleTimer(); // CraftBukkit - SPIGOT-854
-            this.disconnect("You have been idle for too long!");
-        }
-
     }
 
     public NetworkManager a() {
@@ -572,7 +566,6 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
         WorldServer worldserver = this.minecraftServer.getWorldServer(this.player.dimension);
         BlockPosition blockposition = packetplayinblockdig.a();
 
-        this.player.resetIdleTimer();
         // CraftBukkit start
         switch (PlayerConnection.SyntheticClass_1.a[packetplayinblockdig.c().ordinal()]) {
         case 1: // DROP_ITEM
@@ -688,7 +681,6 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
         BlockPosition blockposition = packetplayinblockplace.a();
         EnumDirection enumdirection = EnumDirection.fromType1(packetplayinblockplace.getFace());
 
-        this.player.resetIdleTimer();
         if (packetplayinblockplace.getFace() == 255) {
             if (itemstack == null) {
                 return;
@@ -935,12 +927,10 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
             this.server.getPluginManager().callEvent(event);
             if (event.isCancelled()) {
                 this.sendPacket(new PacketPlayOutHeldItemSlot(this.player.inventory.itemInHandIndex));
-                this.player.resetIdleTimer();
                 return;
             }
             // CraftBukkit end
             this.player.inventory.itemInHandIndex = packetplayinhelditemslot.a();
-            this.player.resetIdleTimer();
         } else {
             PlayerConnection.c.warn(this.player.getName() + " tried to set an invalid carried item");
             this.disconnect("Invalid hotbar selection (Hacking?)"); // CraftBukkit //Spigot "Nope" -> Descriptive reason
@@ -960,7 +950,6 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
             chatmessage.getChatModifier().setColor(EnumChatFormat.RED);
             this.sendPacket(new PacketPlayOutChat(chatmessage));
         } else {
-            this.player.resetIdleTimer();
             String s = packetplayinchat.a();
 
             s = StringUtils.normalizeSpace(s);
@@ -1204,7 +1193,6 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     public void a(PacketPlayInArmAnimation packetplayinarmanimation) {
         if (this.player.dead) return; // CraftBukkit
         PlayerConnectionUtils.ensureMainThread(packetplayinarmanimation, this, this.player.u());
-        this.player.resetIdleTimer();
         // CraftBukkit start - Raytrace to look for 'rogue armswings'
         float f1 = this.player.pitch;
         float f2 = this.player.yaw;
@@ -1261,7 +1249,6 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
                 break;
         }
         // CraftBukkit end
-        this.player.resetIdleTimer();
         switch (PlayerConnection.SyntheticClass_1.b[packetplayinentityaction.b().ordinal()]) {
         case 1:
             this.player.setSneaking(true);
@@ -1315,7 +1302,6 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
         }
         // Spigot End
 
-        this.player.resetIdleTimer();
         if (entity != null) {
             boolean flag = this.player.hasLineOfSight(entity);
             double d0 = 36.0D;
@@ -1394,7 +1380,6 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
 
     public void a(PacketPlayInClientCommand packetplayinclientcommand) {
         PlayerConnectionUtils.ensureMainThread(packetplayinclientcommand, this, this.player.u());
-        this.player.resetIdleTimer();
         PacketPlayInClientCommand.EnumClientCommand packetplayinclientcommand_enumclientcommand = packetplayinclientcommand.a();
 
         switch (PlayerConnection.SyntheticClass_1.c[packetplayinclientcommand_enumclientcommand.ordinal()]) {
@@ -1426,7 +1411,6 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     public void a(PacketPlayInWindowClick packetplayinwindowclick) {
         if (this.player.dead) return; // CraftBukkit
         PlayerConnectionUtils.ensureMainThread(packetplayinwindowclick, this, this.player.u());
-        this.player.resetIdleTimer();
         if (this.player.activeContainer.windowId == packetplayinwindowclick.a() && this.player.activeContainer.c(this.player)) {
             boolean cancelled = this.player.isSpectator(); // CraftBukkit - see below if
             if (false) { // this.player.isSpectator()) {
@@ -1741,7 +1725,6 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
 
     public void a(PacketPlayInEnchantItem packetplayinenchantitem) {
         PlayerConnectionUtils.ensureMainThread(packetplayinenchantitem, this, this.player.u());
-        this.player.resetIdleTimer();
         if (this.player.activeContainer.windowId == packetplayinenchantitem.a() && this.player.activeContainer.c(this.player) && !this.player.isSpectator()) {
             this.player.activeContainer.a(this.player, packetplayinenchantitem.b());
             this.player.activeContainer.b();
@@ -1852,7 +1835,6 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     public void a(PacketPlayInUpdateSign packetplayinupdatesign) {
         if (this.player.dead) return; // CraftBukkit
         PlayerConnectionUtils.ensureMainThread(packetplayinupdatesign, this, this.player.u());
-        this.player.resetIdleTimer();
         WorldServer worldserver = this.minecraftServer.getWorldServer(this.player.dimension);
         BlockPosition blockposition = packetplayinupdatesign.a();
 

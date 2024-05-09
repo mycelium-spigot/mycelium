@@ -1416,14 +1416,6 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
         return System.currentTimeMillis();
     }
 
-    public int getIdleTimeout() {
-        return this.G;
-    }
-
-    public void setIdleTimeout(int i) {
-        this.G = i;
-    }
-
     public IChatBaseComponent getScoreboardDisplayName() {
         return new ChatComponentText(this.getName());
     }
