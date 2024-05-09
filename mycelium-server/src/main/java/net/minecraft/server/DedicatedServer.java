@@ -33,7 +33,6 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
     private EULA p;
     private boolean generateStructures;
     private WorldSettings.EnumGamemode r;
-    private boolean s;
 
     // CraftBukkit start - Signature changed
     public DedicatedServer(joptsimple.OptionSet options) {
@@ -425,15 +424,6 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
         File file = this.propertyManager.c();
 
         return file != null ? file.getAbsolutePath() : "No settings file";
-    }
-
-    public void aQ() {
-        ServerGUI.a(this);
-        this.s = true;
-    }
-
-    public boolean as() {
-        return this.s;
     }
 
     public String a(WorldSettings.EnumGamemode worldsettings_enumgamemode, boolean flag) {
