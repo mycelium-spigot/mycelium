@@ -84,7 +84,6 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
     private KeyPair H;
     private String I;
     private String J;
-    private boolean demoMode;
     private boolean M;
     private boolean N;
     private String O = "";
@@ -256,11 +255,8 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
                     worlddata = new WorldData(worldsettings, s1);
                 }
                 worlddata.checkName(s1); // CraftBukkit - Migration did not rewrite the level.dat; This forces 1.8 to take the last loaded world as respawn (in this case the end)
-                if (this.X()) {
-                    world = (WorldServer) (new DemoWorldServer(this, idatamanager, worlddata, dimension, this.methodProfiler, org.bukkit.World.Environment.getEnvironment(dimension), gen)).b();
-                } else {
-                    world = (WorldServer) (new WorldServer(this, idatamanager, worlddata, dimension, this.methodProfiler, org.bukkit.World.Environment.getEnvironment(dimension), gen)).b();
-                }
+                
+                world = (WorldServer) (new WorldServer(this, idatamanager, worlddata, dimension, this.methodProfiler, org.bukkit.World.Environment.getEnvironment(dimension), gen)).b();
 
                 world.a(worldsettings);
                 this.server.scoreboardManager = new org.bukkit.craftbukkit.scoreboard.CraftScoreboardManager(this, world.getScoreboard());
@@ -1221,14 +1217,6 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
 
     protected boolean getSpawnMonsters() {
         return true;
-    }
-
-    public boolean X() {
-        return this.demoMode;
-    }
-
-    public void b(boolean flag) {
-        this.demoMode = flag;
     }
 
     public void c(boolean flag) {
