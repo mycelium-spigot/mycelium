@@ -173,22 +173,6 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      */
     public void loadData();
 
-    /**
-     * Sets whether the player is ignored as not sleeping. If everyone is
-     * either sleeping or has this flag set, then time will advance to the
-     * next day. If everyone has this flag set but no one is actually in bed,
-     * then nothing will happen.
-     *
-     * @param isSleeping Whether to ignore.
-     */
-    public void setSleepingIgnored(boolean isSleeping);
-
-    /**
-     * Returns whether the player is sleeping ignored.
-     *
-     * @return Whether player is ignoring sleep.
-     */
-    public boolean isSleepingIgnored();
 
     /**
      * Play a note for a player at a location. This requires a note block

@@ -1055,7 +1055,6 @@ public abstract class World implements IBlockAccess {
                 EntityHuman entityhuman = (EntityHuman) entity;
 
                 this.players.add(entityhuman);
-                this.everyoneSleeping();
             }
 
             this.getChunkAt(i, j).a(entity);
@@ -1110,7 +1109,6 @@ public abstract class World implements IBlockAccess {
                 }
             }
             // Spigot end
-            this.everyoneSleeping();
             this.b(entity);
         }
 
@@ -1121,7 +1119,6 @@ public abstract class World implements IBlockAccess {
         entity.die();
         if (entity instanceof EntityHuman) {
             this.players.remove(entity);
-            this.everyoneSleeping();
         }
 
         if (!guardEntityList) { // Spigot - It will get removed after the tick if we are ticking
@@ -3031,18 +3028,6 @@ public abstract class World implements IBlockAccess {
     public GameRules getGameRules() {
         return this.worldData.x();
     }
-
-    public void everyoneSleeping() {}
-
-    // CraftBukkit start
-    // Calls the method that checks to see if players are sleeping
-    // Called by CraftPlayer.setPermanentSleeping()
-    public void checkSleepStatus() {
-        if (!this.isClientSide) {
-            this.everyoneSleeping();
-        }
-    }
-    // CraftBukkit end
 
     public float h(float f) {
         return (this.q + (this.r - this.q) * f) * this.j(f);

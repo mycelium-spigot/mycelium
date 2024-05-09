@@ -207,17 +207,7 @@ public class WorldServer extends World implements IAsyncTaskHandler {
         super.doTick();
 
         this.worldProvider.m().b();
-
-        if (this.everyoneDeeplySleeping()) {
-            if (this.getGameRules().getBoolean("doDaylightCycle")) {
-                long i = this.worldData.getDayTime() + 24000L;
-
-                this.worldData.setDayTime(i - i % 24000L);
-            }
-
-            this.e();
-        }
-
+        
         // CraftBukkit start - Only call spawner if we have players online and the world allows for mobs or animals
         long time = this.worldData.getTime();
         if (this.getGameRules().getBoolean("doMobSpawning") && this.worldData.getType() != WorldType.DEBUG_ALL_BLOCK_STATES && (this.allowMonsters || this.allowAnimals) && (this instanceof WorldServer && this.players.size() > 0)) {
@@ -282,91 +272,6 @@ public class WorldServer extends World implements IAsyncTaskHandler {
         List list = this.N().getMobsFor(enumcreaturetype, blockposition);
 
         return list != null && !list.isEmpty() ? list.contains(biomebase_biomemeta) : false;
-    }
-
-    public void everyoneSleeping() {
-        this.O = false;
-        if (!this.players.isEmpty()) {
-            int i = 0;
-            int j = 0;
-            Iterator iterator = this.players.iterator();
-
-            while (iterator.hasNext()) {
-                EntityHuman entityhuman = (EntityHuman) iterator.next();
-
-                if (entityhuman.isSpectator()) {
-                    ++i;
-                } else if (entityhuman.isSleeping() || entityhuman.fauxSleeping) {
-                    ++j;
-                }
-            }
-
-            this.O = j > 0 && j >= this.players.size() - i;
-        }
-
-    }
-
-    protected void e() {
-        this.O = false;
-        Iterator iterator = this.players.iterator();
-
-        while (iterator.hasNext()) {
-            EntityHuman entityhuman = (EntityHuman) iterator.next();
-
-            if (entityhuman.isSleeping()) {
-                entityhuman.a(false, false, true);
-            }
-        }
-
-        this.ag();
-    }
-
-    private void ag() {
-        this.worldData.setStorm(false);
-        // CraftBukkit start
-        // If we stop due to everyone sleeping we should reset the weather duration to some other random value.
-        // Not that everyone ever manages to get the whole server to sleep at the same time....
-        if (!this.worldData.hasStorm()) {
-            this.worldData.setWeatherDuration(0);
-        }
-        // CraftBukkit end
-        this.worldData.setThundering(false);
-        // CraftBukkit start
-        // If we stop due to everyone sleeping we should reset the weather duration to some other random value.
-        // Not that everyone ever manages to get the whole server to sleep at the same time....
-        if (!this.worldData.isThundering()) {
-            this.worldData.setThunderDuration(0);
-        }
-        // CraftBukkit end
-    }
-
-    public boolean everyoneDeeplySleeping() {
-        if (this.O && !this.isClientSide) {
-            Iterator iterator = this.players.iterator();
-
-            // CraftBukkit - This allows us to assume that some people are in bed but not really, allowing time to pass in spite of AFKers
-            boolean foundActualSleepers = false;
-
-            EntityHuman entityhuman;
-
-            do {
-                if (!iterator.hasNext()) {
-                    return foundActualSleepers;
-                }
-
-                entityhuman = (EntityHuman) iterator.next();
-
-                // CraftBukkit start
-                if (entityhuman.isDeeplySleeping()) {
-                    foundActualSleepers = true;
-                }
-            } while (!entityhuman.isSpectator() || entityhuman.isDeeplySleeping() || entityhuman.fauxSleeping);
-            // CraftBukkit end
-
-            return false;
-        } else {
-            return false;
-        }
     }
 
     protected void h() {
@@ -493,6 +398,7 @@ public class WorldServer extends World implements IAsyncTaskHandler {
                                 if (block.isTicking()) {
                                     ++i;
                                     block.a((World) this, new BlockPosition(j2 + k, l2 + chunksection.getYPosition(), k2 + l), iblockdata, this.random);
+                                    //System.out.println("[Debug #1] [WorldServer] [Block Tick] Ticking block " + block + " @ " + j2 + ", " + l2 + ", " + k2 + ".");
                                 }
                             }
                         }

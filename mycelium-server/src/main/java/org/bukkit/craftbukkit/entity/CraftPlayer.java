@@ -602,17 +602,6 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     }
 
     @Override
-    public void setSleepingIgnored(boolean isSleeping) {
-        getHandle().fauxSleeping = isSleeping;
-        ((CraftWorld) getWorld()).getHandle().checkSleepStatus();
-    }
-
-    @Override
-    public boolean isSleepingIgnored() {
-        return getHandle().fauxSleeping;
-    }
-
-    @Override
     public void setPlayerTime(long time, boolean relative) {
         getHandle().timeOffset = time;
         getHandle().relativeTime = relative;

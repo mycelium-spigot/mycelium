@@ -1173,9 +1173,6 @@ public abstract class EntityHuman extends EntityLiving {
         this.sleepTicks = 0;
         this.bx = blockposition;
         this.motX = this.motZ = this.motY = 0.0D;
-        if (!this.world.isClientSide) {
-            this.world.everyoneSleeping();
-        }
 
         return EntityHuman.EnumBedResult.OK;
     }
@@ -1218,9 +1215,6 @@ public abstract class EntityHuman extends EntityLiving {
         }
 
         this.sleeping = false;
-        if (!this.world.isClientSide && flag1) {
-            this.world.everyoneSleeping();
-        }
 
         // CraftBukkit start - fire PlayerBedLeaveEvent
         if (this.getBukkitEntity() instanceof Player) {
