@@ -80,7 +80,6 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
                     }
                     else if (entity instanceof EntitySheep) { return new CraftSheep(server, (EntitySheep) entity); }
                     else if (entity instanceof EntityHorse) { return new CraftHorse(server, (EntityHorse) entity); }
-                    else if (entity instanceof EntityRabbit) { return new CraftRabbit(server, (EntityRabbit) entity); }
                     else  { return new CraftAnimals(server, (EntityAnimal) entity); }
                 }
                 // Monsters
@@ -101,7 +100,6 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
                         if (entity instanceof EntityCaveSpider) { return new CraftCaveSpider(server, (EntityCaveSpider) entity); }
                         else { return new CraftSpider(server, (EntitySpider) entity); }
                     }
-                    else if (entity instanceof EntityEndermite) { return new CraftEndermite(server, (EntityEndermite) entity); }
 
                     else  { return new CraftMonster(server, (EntityMonster) entity); }
                 }

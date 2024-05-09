@@ -118,7 +118,6 @@ public abstract class BiomeBase {
         BiomeBase.biomes[i] = this;
         this.as = this.a();
         this.au.add(new BiomeMeta(EntitySheep.class, 12, 4, 4));
-        this.au.add(new BiomeMeta(EntityRabbit.class, 10, 3, 3));
         this.au.add(new BiomeMeta(EntityPig.class, 10, 4, 4));
         this.au.add(new BiomeMeta(EntityChicken.class, 10, 4, 4));
         this.au.add(new BiomeMeta(EntityCow.class, 8, 4, 4));

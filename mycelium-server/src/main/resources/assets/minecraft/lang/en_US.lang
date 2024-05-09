@@ -1154,7 +1154,6 @@ entity.Slime.name=Slime
 entity.Ghast.name=Ghast
 entity.PigZombie.name=Zombie Pigman
 entity.Enderman.name=Enderman
-entity.Endermite.name=Endermite
 entity.Silverfish.name=Silverfish
 entity.CaveSpider.name=Cave Spider
 entity.Blaze.name=Blaze
@@ -1194,7 +1193,6 @@ entity.donkey.name=Donkey
 entity.mule.name=Mule
 entity.skeletonhorse.name=Skeleton Horse
 entity.zombiehorse.name=Zombie Horse
-entity.Rabbit.name=Rabbit
 entity.KillerBunny.name=The Killer Bunny
 
 entity.PrimedTnt.name=Block of TNT

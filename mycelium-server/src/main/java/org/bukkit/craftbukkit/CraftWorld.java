@@ -1057,10 +1057,6 @@ public class CraftWorld implements World {
                 if (Bat.class.isAssignableFrom(clazz)) {
                     entity = new EntityBat(world);
                 }
-            } else if (Rabbit.class.isAssignableFrom(clazz)) {
-                entity = new EntityRabbit(world);
-            } else if (Endermite.class.isAssignableFrom(clazz)) {
-                entity = new EntityEndermite(world);
             } else if (ArmorStand.class.isAssignableFrom(clazz)) {
                 entity = new EntityArmorStand(world, x, y, z);
             }

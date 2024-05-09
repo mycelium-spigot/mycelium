@@ -207,7 +207,6 @@ public class EntityTypes {
         a(EntityWither.class, "WitherBoss", 64);
         a(EntityBat.class, "Bat", 65, 4996656, 986895);
         a(EntityWitch.class, "Witch", 66, 3407872, 5349438);
-        a(EntityEndermite.class, "Endermite", 67, 1447446, 7237230);
         a(EntityPig.class, "Pig", 90, 15771042, 14377823);
         a(EntitySheep.class, "Sheep", 91, 15198183, 16758197);
         a(EntityCow.class, "Cow", 92, 4470310, 10592673);
@@ -219,7 +218,6 @@ public class EntityTypes {
         a(EntityOcelot.class, "Ozelot", 98, 15720061, 5653556);
         a(EntityIronGolem.class, "VillagerGolem", 99);
         a(EntityHorse.class, "EntityHorse", 100, 12623485, 15656192);
-        a(EntityRabbit.class, "Rabbit", 101, 10051392, 7555121);
         a(EntityVillager.class, "Villager", 120, 5651507, 12422002);
         a(EntityEnderCrystal.class, "EnderCrystal", 200);
     }

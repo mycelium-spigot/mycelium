@@ -35,7 +35,7 @@ public class EntityWolf extends EntityTameableAnimal {
         this.targetSelector.a(3, new PathfinderGoalHurtByTarget(this, true, new Class[0]));
         this.targetSelector.a(4, new PathfinderGoalRandomTargetNonTamed(this, EntityAnimal.class, false, new Predicate() {
             public boolean a(Entity entity) {
-                return entity instanceof EntitySheep || entity instanceof EntityRabbit;
+                return entity instanceof EntitySheep;
             }
 
             public boolean apply(Object object) {
