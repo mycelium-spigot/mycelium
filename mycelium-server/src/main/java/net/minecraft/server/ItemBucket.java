@@ -92,18 +92,6 @@ public class ItemBucket extends Item {
                     // CraftBukkit end
 
                     if (this.a(world, blockposition1) && !entityhuman.abilities.canInstantlyBuild) {
-                        // PaperSpigot start - Stackable Buckets
-                        if ((this == Items.LAVA_BUCKET && PaperSpigotConfig.stackableLavaBuckets) ||
-                                (this == Items.WATER_BUCKET && PaperSpigotConfig.stackableWaterBuckets)) {
-                            if (--itemstack.count <= 0) {
-                                return CraftItemStack.asNMSCopy(event.getItemStack());
-                            }
-                            if (!entityhuman.inventory.pickup(CraftItemStack.asNMSCopy(event.getItemStack()))) {
-                                entityhuman.drop(CraftItemStack.asNMSCopy(event.getItemStack()), false);
-                            }
-                            return itemstack;
-                        }
-                        // PaperSpigot end
                         return CraftItemStack.asNMSCopy(event.getItemStack()); // CraftBukkit
                     }
                 }
