@@ -507,50 +507,36 @@ public class Chunk {
         }
         return Blocks.AIR.getBlockData();
     }
+    
     public IBlockData getBlockDataSlow(final BlockPosition blockposition) {
-        // PaperSpigot end
-        if (this.world.G() == WorldType.DEBUG_ALL_BLOCK_STATES) {
-            IBlockData iblockdata = null;
+        try {
+            if (blockposition.getY() >= 0 && blockposition.getY() >> 4 < this.sections.length) {
+                ChunkSection chunksection = this.sections[blockposition.getY() >> 4];
 
-            if (blockposition.getY() == 60) {
-                iblockdata = Blocks.BARRIER.getBlockData();
+                if (chunksection != null) {
+                    int i = blockposition.getX() & 15;
+                    int j = blockposition.getY() & 15;
+                    int k = blockposition.getZ() & 15;
+
+                    return chunksection.getType(i, j, k);
+                }
             }
 
-            if (blockposition.getY() == 70) {
-                iblockdata = ChunkProviderDebug.b(blockposition.getX(), blockposition.getZ());
-            }
+            return Blocks.AIR.getBlockData();
+        } catch (Throwable throwable) {
+            CrashReport crashreport = CrashReport.a(throwable, "Getting block state");
+            CrashReportSystemDetails crashreportsystemdetails = crashreport.a("Block being got");
 
-            return iblockdata == null ? Blocks.AIR.getBlockData() : iblockdata;
-        } else {
-            try {
-                if (blockposition.getY() >= 0 && blockposition.getY() >> 4 < this.sections.length) {
-                    ChunkSection chunksection = this.sections[blockposition.getY() >> 4];
-
-                    if (chunksection != null) {
-                        int i = blockposition.getX() & 15;
-                        int j = blockposition.getY() & 15;
-                        int k = blockposition.getZ() & 15;
-
-                        return chunksection.getType(i, j, k);
-                    }
+            crashreportsystemdetails.a("Location", new Callable() {
+                public String a() throws Exception {
+                    return CrashReportSystemDetails.a(blockposition);
                 }
 
-                return Blocks.AIR.getBlockData();
-            } catch (Throwable throwable) {
-                CrashReport crashreport = CrashReport.a(throwable, "Getting block state");
-                CrashReportSystemDetails crashreportsystemdetails = crashreport.a("Block being got");
-
-                crashreportsystemdetails.a("Location", new Callable() {
-                    public String a() throws Exception {
-                        return CrashReportSystemDetails.a(blockposition);
-                    }
-
-                    public Object call() throws Exception {
-                        return this.a();
-                    }
-                });
-                throw new ReportedException(crashreport);
-            }
+                public Object call() throws Exception {
+                    return this.a();
+                }
+            });
+            throw new ReportedException(crashreport);
         }
     }
 
