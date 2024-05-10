@@ -4,22 +4,20 @@ public final class WorldSettings {
 
     private final long a;
     private final WorldSettings.EnumGamemode b;
-    private final boolean c;
     private final WorldType e;
     private boolean f;
     private boolean g;
     private String h;
 
-    public WorldSettings(long i, WorldSettings.EnumGamemode worldsettings_enumgamemode, boolean flag, WorldType worldtype) {
+    public WorldSettings(long i, WorldSettings.EnumGamemode worldsettings_enumgamemode, WorldType worldtype) {
         this.h = "";
         this.a = i;
         this.b = worldsettings_enumgamemode;
-        this.c = flag;
         this.e = worldtype;
     }
 
     public WorldSettings(WorldData worlddata) {
-        this(worlddata.getSeed(), worlddata.getGameType(), worlddata.shouldGenerateMapFeatures(), worlddata.getType());
+        this(worlddata.getSeed(), worlddata.getGameType(), worlddata.getType());
     }
 
     public WorldSettings a() {
@@ -42,10 +40,6 @@ public final class WorldSettings {
 
     public WorldSettings.EnumGamemode e() {
         return this.b;
-    }
-
-    public boolean g() {
-        return this.c;
     }
 
     public WorldType h() {

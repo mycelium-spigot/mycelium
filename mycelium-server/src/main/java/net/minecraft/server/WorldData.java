@@ -30,7 +30,6 @@ public class WorldData {
     private boolean s;
     private int t;
     private WorldSettings.EnumGamemode u;
-    private boolean v;
     private boolean x;
     private boolean y;
     private EnumDifficulty z;
@@ -98,11 +97,6 @@ public class WorldData {
         }
 
         this.u = WorldSettings.EnumGamemode.getById(nbttagcompound.getInt("GameType"));
-        if (nbttagcompound.hasKeyOfType("MapFeatures", 99)) {
-            this.v = nbttagcompound.getBoolean("MapFeatures");
-        } else {
-            this.v = true;
-        }
 
         this.e = nbttagcompound.getInt("SpawnX");
         this.f = nbttagcompound.getInt("SpawnY");
@@ -213,7 +207,6 @@ public class WorldData {
     public void a(WorldSettings worldsettings) {
         this.b = worldsettings.d();
         this.u = worldsettings.e();
-        this.v = worldsettings.g();
         this.c = worldsettings.h();
         this.d = worldsettings.j();
         this.x = worldsettings.i();
@@ -236,7 +229,6 @@ public class WorldData {
         this.c = worlddata.c;
         this.d = worlddata.d;
         this.u = worlddata.u;
-        this.v = worlddata.v;
         this.e = worlddata.e;
         this.f = worlddata.f;
         this.g = worlddata.g;
@@ -288,7 +280,6 @@ public class WorldData {
         nbttagcompound.setInt("generatorVersion", this.c.getVersion());
         nbttagcompound.setString("generatorOptions", this.d);
         nbttagcompound.setInt("GameType", this.u.getId());
-        nbttagcompound.setBoolean("MapFeatures", this.v);
         nbttagcompound.setInt("SpawnX", this.e);
         nbttagcompound.setInt("SpawnY", this.f);
         nbttagcompound.setInt("SpawnZ", this.g);
@@ -452,14 +443,6 @@ public class WorldData {
         return this.u;
     }
 
-    public boolean shouldGenerateMapFeatures() {
-        return this.v;
-    }
-
-    public void f(boolean flag) {
-        this.v = flag;
-    }
-
     public void setGameType(WorldSettings.EnumGamemode worldsettings_enumgamemode) {
         this.u = worldsettings_enumgamemode;
     }
@@ -602,7 +585,7 @@ public class WorldData {
         });
         crashreportsystemdetails.a("Level generator", new Callable() {
             public String a() throws Exception {
-                return String.format("ID %02d - %s, ver %d. Features enabled: %b", new Object[] { Integer.valueOf(WorldData.this.c.g()), WorldData.this.c.name(), Integer.valueOf(WorldData.this.c.getVersion()), Boolean.valueOf(WorldData.this.v)});
+                return String.format("ID %02d - %s, ver %d. Features enabled: %b", new Object[] { Integer.valueOf(WorldData.this.c.g()), WorldData.this.c.name(), Integer.valueOf(WorldData.this.c.getVersion())});
             }
 
             public Object call() throws Exception {

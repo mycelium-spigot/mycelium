@@ -6,7 +6,6 @@ import java.util.Random;
 public class ChunkProviderHell implements IChunkProvider {
 
     private final World h;
-    private final boolean i;
     private final Random j;
     private double[] k = new double[256];
     private double[] l = new double[256];
@@ -34,7 +33,7 @@ public class ChunkProviderHell implements IChunkProvider {
     double[] f;
     double[] g;
 
-    public ChunkProviderHell(World world, boolean flag, long i) {
+    public ChunkProviderHell(World world, long i) {
         this.w = new WorldGenMinable(Blocks.QUARTZ_ORE.getBlockData(), 14, BlockPredicate.a(Blocks.NETHERRACK));
         this.x = new WorldGenHellLava(Blocks.FLOWING_LAVA, true);
         this.y = new WorldGenHellLava(Blocks.FLOWING_LAVA, false);
@@ -42,7 +41,6 @@ public class ChunkProviderHell implements IChunkProvider {
         this.A = new WorldGenMushrooms(Blocks.RED_MUSHROOM);
         this.C = new WorldGenCavesHell();
         this.h = world;
-        this.i = flag;
         this.j = new Random(i);
         this.o = new NoiseGeneratorOctaves(this.j, 16);
         this.p = new NoiseGeneratorOctaves(this.j, 16);

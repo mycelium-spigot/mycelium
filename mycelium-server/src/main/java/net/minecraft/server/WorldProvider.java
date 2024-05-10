@@ -35,22 +35,15 @@ public abstract class WorldProvider {
     }
 
     protected void b() {
-        WorldType worldtype = this.b.getWorldData().getType();
-
-        if (worldtype == WorldType.FLAT) {
-            WorldGenFlatInfo worldgenflatinfo = WorldGenFlatInfo.a(this.b.getWorldData().getGeneratorOptions());
-
-            this.c = new WorldChunkManagerHell(BiomeBase.getBiome(worldgenflatinfo.a(), BiomeBase.ad), 0.5F);
-        } else if (worldtype == WorldType.DEBUG_ALL_BLOCK_STATES) {
-            this.c = new WorldChunkManagerHell(BiomeBase.PLAINS, 0.0F);
-        } else {
-            this.c = new WorldChunkManager(this.b);
-        }
-
+        this.c = new WorldChunkManager(this.b);
     }
 
     public IChunkProvider getChunkProvider() {
-        return (IChunkProvider) (this.type == WorldType.FLAT ? new ChunkProviderFlat(this.b, this.b.getSeed(), this.b.getWorldData().shouldGenerateMapFeatures(), this.i) : (this.type == WorldType.DEBUG_ALL_BLOCK_STATES ? new ChunkProviderDebug(this.b) : (this.type == WorldType.CUSTOMIZED ? new ChunkProviderGenerate(this.b, this.b.getSeed(), this.b.getWorldData().shouldGenerateMapFeatures(), this.i) : new ChunkProviderGenerate(this.b, this.b.getSeed(), this.b.getWorldData().shouldGenerateMapFeatures(), this.i))));
+        return new ChunkProviderGenerate(
+            this.b, 
+            this.b.getSeed(),
+            this.i
+        );
     }
 
     public boolean canSpawn(int i, int j) {
@@ -97,7 +90,7 @@ public abstract class WorldProvider {
     }
 
     public int getSeaLevel() {
-        return this.type == WorldType.FLAT ? 4 : this.b.F() + 1;
+        return this.b.F() + 1;
     }
 
     public abstract String getName();

@@ -511,11 +511,6 @@ public final class CraftServer implements Server {
     }
 
     @Override
-    public boolean getGenerateStructures() {
-        return this.getConfigBoolean("generate-structures", true);
-    }
-
-    @Override
     public boolean getAllowEnd() {
         return this.configuration.getBoolean("settings.allow-end");
     }
@@ -789,7 +784,6 @@ public final class CraftServer implements Server {
         File folder = new File(getWorldContainer(), name);
         World world = getWorld(name);
         WorldType type = WorldType.getType(creator.type().getName());
-        boolean generateStructures = creator.generateStructures();
 
         if (world != null) {
             return world;
@@ -838,7 +832,7 @@ public final class CraftServer implements Server {
         IDataManager sdm = new ServerNBTManager(getWorldContainer(), name, true);
         WorldData worlddata = sdm.getWorldData();
         if (worlddata == null) {
-            WorldSettings worldSettings = new WorldSettings(creator.seed(), WorldSettings.EnumGamemode.getById(getDefaultGameMode().getValue()), generateStructures, type);
+            WorldSettings worldSettings = new WorldSettings(creator.seed(), WorldSettings.EnumGamemode.getById(getDefaultGameMode().getValue()), type);
             worldSettings.setGeneratorSettings(creator.generatorSettings());
             worlddata = new WorldData(worldSettings, name);
         }

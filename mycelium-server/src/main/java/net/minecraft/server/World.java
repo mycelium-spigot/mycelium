@@ -317,14 +317,6 @@ public abstract class World implements IBlockAccess {
         return this.isAreaLoaded(blockposition.getX(), blockposition.getY(), blockposition.getZ(), blockposition1.getX(), blockposition1.getY(), blockposition1.getZ(), flag);
     }
 
-    public boolean a(StructureBoundingBox structureboundingbox) {
-        return this.b(structureboundingbox, true);
-    }
-
-    public boolean b(StructureBoundingBox structureboundingbox, boolean flag) {
-        return this.isAreaLoaded(structureboundingbox.a, structureboundingbox.b, structureboundingbox.c, structureboundingbox.d, structureboundingbox.e, structureboundingbox.f, flag);
-    }
-
     private boolean isAreaLoaded(int i, int j, int k, int l, int i1, int j1, boolean flag) {
         if (i1 >= 0 && j < 256) {
             i >>= 4;
@@ -2592,10 +2584,6 @@ public abstract class World implements IBlockAccess {
     }
 
     public List<NextTickListEntry> a(Chunk chunk, boolean flag) {
-        return null;
-    }
-
-    public List<NextTickListEntry> a(StructureBoundingBox structureboundingbox, boolean flag) {
         return null;
     }
 

@@ -223,26 +223,22 @@ public class EntitySlime extends EntityInsentient implements IMonster {
     public boolean bR() {
         BlockPosition blockposition = new BlockPosition(MathHelper.floor(this.locX), 0, MathHelper.floor(this.locZ));
         Chunk chunk = this.world.getChunkAtWorldCoords(blockposition);
-
-        if (this.world.getWorldData().getType() == WorldType.FLAT && this.random.nextInt(4) != 1) {
-            return false;
-        } else {
-            if (this.world.getDifficulty() != EnumDifficulty.PEACEFUL) {
-                BiomeBase biomebase = this.world.getBiome(blockposition);
-
-                if (biomebase == BiomeBase.SWAMPLAND && this.locY > 50.0D && this.locY < 70.0D && this.random.nextFloat() < 0.5F && this.random.nextFloat() < this.world.y() && this.world.getLightLevel(new BlockPosition(this)) <= this.random.nextInt(8)) {
-                    return super.bR();
-                }
-
-                // PaperSpigot - Toggle to make all chunks spawn chunks
-                boolean isSlimeChunk = world.paperSpigotConfig.allChunksAreSlimeChunks || chunk.a(987234911L).nextInt(10) == 0;
-                if (this.random.nextInt(10) == 0 && isSlimeChunk && this.locY < 40.0D) {
-                    return super.bR();
-                }
+    
+        if (this.world.getDifficulty() != EnumDifficulty.PEACEFUL) {
+            BiomeBase biomebase = this.world.getBiome(blockposition);
+    
+            if (biomebase == BiomeBase.SWAMPLAND && this.locY > 50.0D && this.locY < 70.0D && this.random.nextFloat() < 0.5F && this.random.nextFloat() < this.world.y() && this.world.getLightLevel(new BlockPosition(this)) <= this.random.nextInt(8)) {
+                return super.bR();
             }
-
-            return false;
+    
+            // PaperSpigot - Toggle to make all chunks spawn chunks
+            boolean isSlimeChunk = world.paperSpigotConfig.allChunksAreSlimeChunks || chunk.a(987234911L).nextInt(10) == 0;
+            if (this.random.nextInt(10) == 0 && isSlimeChunk && this.locY < 40.0D) {
+                return super.bR();
+            }
         }
+    
+        return false;
     }
 
     protected float bB() {

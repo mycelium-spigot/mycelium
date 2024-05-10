@@ -180,13 +180,6 @@ public interface Server extends PluginMessageRecipient {
     public String getWorldType();
 
     /**
-     * Get generate-structures setting.
-     *
-     * @return true if structure generation is enabled, false otherwise
-     */
-    public boolean getGenerateStructures();
-
-    /**
      * Gets whether this server allows the End or not.
      *
      * @return whether this server allows the End or not

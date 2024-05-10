@@ -14,7 +14,6 @@ public class ChunkProviderGenerate implements IChunkProvider {
     public NoiseGeneratorOctaves b;
     public NoiseGeneratorOctaves c;
     private World m;
-    private final boolean n;
     private WorldType o;
     private final double[] p;
     private final float[] q;
@@ -29,13 +28,12 @@ public class ChunkProviderGenerate implements IChunkProvider {
     double[] f;
     double[] g;
 
-    public ChunkProviderGenerate(World world, long i, boolean flag, String s) {
+    public ChunkProviderGenerate(World world, long i, String s) {
         this.s = Blocks.WATER;
         this.t = new double[256];
         this.u = new WorldGenCaves();
         this.z = new WorldGenCanyon();
         this.m = world;
-        this.n = flag;
         this.o = world.getWorldData().getType();
         this.h = new Random(i);
         this.i = new NoiseGeneratorOctaves(this.h, 16);

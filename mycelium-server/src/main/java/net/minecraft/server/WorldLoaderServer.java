@@ -65,11 +65,13 @@ public class WorldLoaderServer extends WorldLoader {
         WorldData worlddata = this.c(s);
         Object object = null;
 
-        if (worlddata.getType() == WorldType.FLAT) {
+        /*if (worlddata.getType() == WorldType.FLAT) {
             object = new WorldChunkManagerHell(BiomeBase.PLAINS, 0.5F);
         } else {
             object = new WorldChunkManager(worlddata.getSeed(), worlddata.getType(), worlddata.getGeneratorOptions());
-        }
+        }*/
+
+        new UnsupportedOperationException("Converting worlds is not avaliable in Mycelium.");
 
         this.a(new File(file, "region"), (Iterable) arraylist, (WorldChunkManager) object, 0, i, iprogressupdate);
         this.a(new File(file1, "region"), (Iterable) arraylist1, new WorldChunkManagerHell(BiomeBase.HELL, 0.0F), arraylist.size(), i, iprogressupdate);

@@ -23,7 +23,7 @@ public class WorldProviderHell extends WorldProvider {
     }
 
     public IChunkProvider getChunkProvider() {
-        return new ChunkProviderHell(this.b, this.b.getWorldData().shouldGenerateMapFeatures(), this.b.getSeed());
+        return new ChunkProviderHell(this.b, this.b.getSeed());
     }
 
     public boolean d() {

@@ -952,12 +952,6 @@ public interface World extends PluginMessageRecipient, Metadatable {
      */
     public WorldType getWorldType();
 
-    /**
-     * Gets whether or not structures are being generated.
-     *
-     * @return True if structures are being generated.
-     */
-    public boolean canGenerateStructures();
 
     /**
      * Gets the world's ticks per animal spawns value

@@ -46,7 +46,6 @@ public class WorldServer extends World implements IAsyncTaskHandler {
     private final SpawnerCreature R = new SpawnerCreature();
     private WorldServer.BlockActionDataList[] S = new WorldServer.BlockActionDataList[] { new WorldServer.BlockActionDataList(null), new WorldServer.BlockActionDataList(null)};
     private int T;
-    private static final List<StructurePieceTreasure> U = Lists.newArrayList(new StructurePieceTreasure[] { new StructurePieceTreasure(Items.STICK, 0, 1, 3, 10), new StructurePieceTreasure(Item.getItemOf(Blocks.PLANKS), 0, 1, 3, 10), new StructurePieceTreasure(Item.getItemOf(Blocks.LOG), 0, 1, 3, 10), new StructurePieceTreasure(Items.STONE_AXE, 0, 1, 1, 3), new StructurePieceTreasure(Items.WOODEN_AXE, 0, 1, 1, 5), new StructurePieceTreasure(Items.STONE_PICKAXE, 0, 1, 1, 3), new StructurePieceTreasure(Items.WOODEN_PICKAXE, 0, 1, 1, 5), new StructurePieceTreasure(Items.APPLE, 0, 2, 3, 5), new StructurePieceTreasure(Items.BREAD, 0, 2, 3, 3), new StructurePieceTreasure(Item.getItemOf(Blocks.LOG2), 0, 1, 3, 10)});
     private List<NextTickListEntry> V = Lists.newArrayList();
 
     // CraftBukkit start
@@ -591,50 +590,6 @@ public class WorldServer extends World implements IAsyncTaskHandler {
         }
     }
 
-    public List<NextTickListEntry> a(Chunk chunk, boolean flag) {
-        ChunkCoordIntPair chunkcoordintpair = chunk.j();
-        int i = (chunkcoordintpair.x << 4) - 2;
-        int j = i + 16 + 2;
-        int k = (chunkcoordintpair.z << 4) - 2;
-        int l = k + 16 + 2;
-
-        return this.a(new StructureBoundingBox(i, 0, k, j, 256, l), flag);
-    }
-
-    public List<NextTickListEntry> a(StructureBoundingBox structureboundingbox, boolean flag) {
-        ArrayList arraylist = null;
-
-        for (int i = 0; i < 2; ++i) {
-            Iterator iterator;
-
-            if (i == 0) {
-                iterator = this.M.iterator();
-            } else {
-                iterator = this.V.iterator();
-            }
-
-            while (iterator.hasNext()) {
-                NextTickListEntry nextticklistentry = (NextTickListEntry) iterator.next();
-                BlockPosition blockposition = nextticklistentry.a;
-
-                if (blockposition.getX() >= structureboundingbox.a && blockposition.getX() < structureboundingbox.d && blockposition.getZ() >= structureboundingbox.c && blockposition.getZ() < structureboundingbox.f) {
-                    if (flag) {
-                        // CraftBukkit - use M
-                        iterator.remove();
-                    }
-
-                    if (arraylist == null) {
-                        arraylist = Lists.newArrayList();
-                    }
-
-                    arraylist.add(nextticklistentry);
-                }
-            }
-        }
-
-        return arraylist;
-    }
-
     /* CraftBukkit start - We prevent spawning in general, so this butchering is not needed
     public void entityJoinedWorld(Entity entity, boolean flag) {
         if (!this.getSpawnAnimals() && (entity instanceof EntityAnimal || entity instanceof EntityWaterAnimal)) {
@@ -742,7 +697,6 @@ public class WorldServer extends World implements IAsyncTaskHandler {
     }
 
     private void aj() {
-        this.worldData.f(false);
         this.worldData.c(true);
         this.worldData.setStorm(false);
         this.worldData.setThundering(false);
@@ -806,26 +760,7 @@ public class WorldServer extends World implements IAsyncTaskHandler {
 
             this.worldData.setSpawn(new BlockPosition(i, j, k));
             this.isLoading = false;
-            if (worldsettings.c()) {
-                this.l();
-            }
-
         }
-    }
-
-    protected void l() {
-        WorldGenBonusChest worldgenbonuschest = new WorldGenBonusChest(WorldServer.U, 10);
-
-        for (int i = 0; i < 10; ++i) {
-            int j = this.worldData.c() + this.random.nextInt(6) - this.random.nextInt(6);
-            int k = this.worldData.e() + this.random.nextInt(6) - this.random.nextInt(6);
-            BlockPosition blockposition = this.r(new BlockPosition(j, 0, k)).up();
-
-            if (worldgenbonuschest.generate(this, this.random, blockposition)) {
-                break;
-            }
-        }
-
     }
 
     public BlockPosition getDimensionSpawn() {

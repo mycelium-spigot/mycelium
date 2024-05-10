@@ -90,10 +90,6 @@ public class SecondaryWorldData extends WorldData {
 
     public void setWeatherDuration(int i) {}
 
-    public boolean shouldGenerateMapFeatures() {
-        return this.b.shouldGenerateMapFeatures();
-    }
-
     public WorldType getType() {
         return this.b.getType();
     }

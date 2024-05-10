@@ -1258,10 +1258,6 @@ public class CraftWorld implements World {
         return org.bukkit.WorldType.getByName(world.getWorldData().getType().name());
     }
 
-    public boolean canGenerateStructures() {
-        return world.getWorldData().shouldGenerateMapFeatures();
-    }
-
     public long getTicksPerAnimalSpawns() {
         return world.ticksPerAnimalSpawns;
     }

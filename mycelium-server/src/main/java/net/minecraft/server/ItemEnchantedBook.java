@@ -1,7 +1,5 @@
 package net.minecraft.server;
 
-import java.util.Random;
-
 public class ItemEnchantedBook extends Item {
 
     public ItemEnchantedBook() {}
@@ -57,16 +55,5 @@ public class ItemEnchantedBook extends Item {
 
         this.a(itemstack, weightedrandomenchant);
         return itemstack;
-    }
-
-    public StructurePieceTreasure b(Random random) {
-        return this.a(random, 1, 1, 1);
-    }
-
-    public StructurePieceTreasure a(Random random, int i, int j, int k) {
-        ItemStack itemstack = new ItemStack(Items.BOOK, 1, 0);
-
-        EnchantmentManager.a(random, itemstack, 30);
-        return new StructurePieceTreasure(itemstack, i, j, k);
     }
 }

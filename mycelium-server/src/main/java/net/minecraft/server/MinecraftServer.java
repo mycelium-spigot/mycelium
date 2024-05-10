@@ -245,7 +245,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
             String name = (dimension == 0) ? s : s + "_" + worldType;
 
             org.bukkit.generator.ChunkGenerator gen = this.server.getGenerator(name);
-            WorldSettings worldsettings = new WorldSettings(i, this.getGamemode(), this.getGenerateStructures(), worldtype);
+            WorldSettings worldsettings = new WorldSettings(i, this.getGamemode(), worldtype);
             worldsettings.setGeneratorSettings(s2);
 
             if (j == 0) {

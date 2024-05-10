@@ -218,15 +218,6 @@ public final class Bukkit {
     }
 
     /**
-     * Get generate-structures setting.
-     *
-     * @return true if structure generation is enabled, false otherwise
-     */
-    public static boolean getGenerateStructures() {
-        return server.getGenerateStructures();
-    }
-
-    /**
      * Gets whether this server allows the End or not.
      *
      * @return whether this server allows the End or not

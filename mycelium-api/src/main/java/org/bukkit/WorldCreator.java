@@ -14,7 +14,6 @@ public class WorldCreator {
     private World.Environment environment = World.Environment.NORMAL;
     private ChunkGenerator generator = null;
     private WorldType type = WorldType.NORMAL;
-    private boolean generateStructures = true;
     private String generatorSettings = "";
 
     /**
@@ -225,28 +224,6 @@ public class WorldCreator {
      */
     public String generatorSettings() {
         return generatorSettings;
-    }
-
-    /**
-     * Sets whether or not worlds created or loaded with this creator will
-     * have structures.
-     *
-     * @param generate Whether to generate structures
-     * @return This object, for chaining
-     */
-    public WorldCreator generateStructures(boolean generate) {
-        this.generateStructures = generate;
-
-        return this;
-    }
-
-    /**
-     * Gets whether or not structures will be generated in the world.
-     *
-     * @return True if structures will be generated
-     */
-    public boolean generateStructures() {
-        return generateStructures;
     }
 
     /**
