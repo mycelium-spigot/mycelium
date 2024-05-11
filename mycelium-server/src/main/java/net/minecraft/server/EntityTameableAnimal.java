@@ -30,18 +30,9 @@ public abstract class EntityTameableAnimal extends EntityAnimal implements Entit
 
     public void a(NBTTagCompound nbttagcompound) {
         super.a(nbttagcompound);
-        String s = "";
 
         if (nbttagcompound.hasKeyOfType("OwnerUUID", 8)) {
-            s = nbttagcompound.getString("OwnerUUID");
-        } else {
-            String s1 = nbttagcompound.getString("Owner");
-
-            s = NameReferencingFileConverter.a(s1);
-        }
-
-        if (s.length() > 0) {
-            this.setOwnerUUID(s);
+            this.setOwnerUUID(nbttagcompound.getString("OwnerUUID"));
             this.setTamed(true);
         }
 

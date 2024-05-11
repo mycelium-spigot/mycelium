@@ -1015,30 +1015,10 @@ public class EntityHorse extends EntityAnimal implements IInventoryListener {
         this.setVariant(nbttagcompound.getInt("Variant"));
         this.setTemper(nbttagcompound.getInt("Temper"));
         this.setTame(nbttagcompound.getBoolean("Tame"));
-        String s = "";
 
         if (nbttagcompound.hasKeyOfType("OwnerUUID", 8)) {
-            s = nbttagcompound.getString("OwnerUUID");
-        } else {
-            String s1 = nbttagcompound.getString("Owner");
-            // Spigot start
-            if ( s1 == null || s1.isEmpty() )
-            {
-                if (nbttagcompound.hasKey("OwnerName")) {
-                String owner = nbttagcompound.getString("OwnerName");
-                    if (owner != null && !owner.isEmpty()) {
-                        s1 = owner;
-                    }
-                }
-            }
-            // Spigot end
-
-            s = NameReferencingFileConverter.a(s1);
-        }
-
-        if (s.length() > 0) {
-            this.setOwnerUUID(s);
-        }
+            this.setOwnerUUID(nbttagcompound.getString("OwnerUUID"));
+        } 
 
         // CraftBukkit start
         if (nbttagcompound.hasKey("Bukkit.MaxDomestication")) {

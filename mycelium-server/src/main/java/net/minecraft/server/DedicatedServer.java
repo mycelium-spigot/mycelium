@@ -212,89 +212,73 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                 // Spigot end
                 DedicatedServer.LOGGER.warn("To change this, set \"online-mode\" to \"true\" in the server.properties file.");
             }
+            
+            this.convertable = new WorldLoaderServer(server.getWorldContainer()); // CraftBukkit - moved from MinecraftServer constructor
+            long j = System.nanoTime();
 
-            if (this.aR()) {
-                this.getUserCache().c();
+            if (this.U() == null) {
+                this.setWorld(this.propertyManager.getString("level-name", "world"));
             }
 
-            if (!NameReferencingFileConverter.a(this.propertyManager)) {
-                return false;
-            } else {
-                this.convertable = new WorldLoaderServer(server.getWorldContainer()); // CraftBukkit - moved from MinecraftServer constructor
-                long j = System.nanoTime();
+            String s = this.propertyManager.getString("level-seed", "");
+            String s1 = this.propertyManager.getString("level-type", "DEFAULT");
+            String s2 = this.propertyManager.getString("generator-settings", "");
+            long k = (new Random()).nextLong();
 
-                if (this.U() == null) {
-                    this.setWorld(this.propertyManager.getString("level-name", "world"));
-                }
+            if (s.length() > 0) {
+                try {
+                    long l = Long.parseLong(s);
 
-                String s = this.propertyManager.getString("level-seed", "");
-                String s1 = this.propertyManager.getString("level-type", "DEFAULT");
-                String s2 = this.propertyManager.getString("generator-settings", "");
-                long k = (new Random()).nextLong();
-
-                if (s.length() > 0) {
-                    try {
-                        long l = Long.parseLong(s);
-
-                        if (l != 0L) {
-                            k = l;
-                        }
-                    } catch (NumberFormatException numberformatexception) {
-                        k = (long) s.hashCode();
+                    if (l != 0L) {
+                        k = l;
                     }
+                } catch (NumberFormatException numberformatexception) {
+                    k = (long) s.hashCode();
                 }
-
-                WorldType worldtype = WorldType.getType(s1);
-
-                if (worldtype == null) {
-                    worldtype = WorldType.NORMAL;
-                }
-
-                this.getEnableCommandBlock();
-                this.p();
-                this.aK();
-                this.c(this.propertyManager.getInt("max-build-height", 256));
-                this.c((this.getMaxBuildHeight() + 8) / 16 * 16);
-                this.c(MathHelper.clamp(this.getMaxBuildHeight(), 64, 256));
-                this.propertyManager.setProperty("max-build-height", Integer.valueOf(this.getMaxBuildHeight()));
-                DedicatedServer.LOGGER.info("Preparing level \"" + this.U() + "\"");
-                this.a(this.U(), this.U(), k, worldtype, s2);
-                long i1 = System.nanoTime() - j;
-                String s3 = String.format("%.3fs", new Object[] { Double.valueOf((double) i1 / 1.0E9D)});
-
-                DedicatedServer.LOGGER.info("Done (" + s3 + ")! For help, type \"help\" or \"?\"");
-
-                // CraftBukkit start
-                if (this.server.getBukkitSpawnRadius() > -1) {
-                    DedicatedServer.LOGGER.info("'settings.spawn-radius' in bukkit.yml has been moved to 'spawn-protection' in server.properties. I will move your config for you.");
-                    this.propertyManager.properties.remove("spawn-protection");
-                    this.propertyManager.getInt("spawn-protection", this.server.getBukkitSpawnRadius());
-                    this.server.removeBukkitSpawnRadius();
-                    this.propertyManager.savePropertiesFile();
-                }
-                // CraftBukkit end
-
-        if (org.spigotmc.SpigotConfig.lateBind) {
-            try {
-                this.aq().a(inetaddress, this.R());
-            } catch (IOException ioexception) {
-                DedicatedServer.LOGGER.warn("**** FAILED TO BIND TO PORT!");
-                DedicatedServer.LOGGER.warn("The exception was: {}", new Object[] { ioexception.toString()});
-                DedicatedServer.LOGGER.warn("Perhaps a server is already running on that port?");
-                return false;
             }
-        }
 
-                if (false && this.aS() > 0L) {  // Spigot - disable
-                    Thread thread1 = new Thread(new ThreadWatchdog(this));
+            WorldType worldtype = WorldType.getType(s1);
 
-                    thread1.setName("Server Watchdog");
-                    thread1.setDaemon(true);
-                    thread1.start();
-                }
-
-                return true;
+            if (worldtype == null) {
+                worldtype = WorldType.NORMAL;
             }
+
+            this.getEnableCommandBlock();
+            this.p();
+            this.aK();
+            this.c(this.propertyManager.getInt("max-build-height", 256));
+            this.c((this.getMaxBuildHeight() + 8) / 16 * 16);
+            this.c(MathHelper.clamp(this.getMaxBuildHeight(), 64, 256));
+            this.propertyManager.setProperty("max-build-height", Integer.valueOf(this.getMaxBuildHeight()));
+            DedicatedServer.LOGGER.info("Preparing level \"" + this.U() + "\"");
+            this.a(this.U(), this.U(), k, worldtype, s2);
+            long i1 = System.nanoTime() - j;
+            String s3 = String.format("%.3fs", new Object[] { Double.valueOf((double) i1 / 1.0E9D)});
+
+            DedicatedServer.LOGGER.info("Done (" + s3 + ")! For help, type \"help\" or \"?\"");
+
+            // CraftBukkit start
+            if (this.server.getBukkitSpawnRadius() > -1) {
+                DedicatedServer.LOGGER.info("'settings.spawn-radius' in bukkit.yml has been moved to 'spawn-protection' in server.properties. I will move your config for you.");
+                this.propertyManager.properties.remove("spawn-protection");
+                this.propertyManager.getInt("spawn-protection", this.server.getBukkitSpawnRadius());
+                this.server.removeBukkitSpawnRadius();
+                this.propertyManager.savePropertiesFile();
+            }
+            // CraftBukkit end
+
+            if (org.spigotmc.SpigotConfig.lateBind) {
+                try {
+                    this.aq().a(inetaddress, this.R());
+                } catch (IOException ioexception) {
+                    DedicatedServer.LOGGER.warn("**** FAILED TO BIND TO PORT!");
+                    DedicatedServer.LOGGER.warn("The exception was: {}", new Object[] { ioexception.toString()});
+                    DedicatedServer.LOGGER.warn("Perhaps a server is already running on that port?");
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 
@@ -483,43 +467,6 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
 
     public int aK() {
         return this.propertyManager.getInt("network-compression-threshold", super.aK());
-    }
-
-    protected boolean aR() {
-        server.getLogger().info( "**** Beginning UUID conversion, this may take A LONG time ****"); // Spigot, let the user know whats up!
-
-        int i;
-        boolean flag2 = false;
-
-        for (i = 0; !flag2 && i <= 2; ++i) {
-            if (i > 0) {
-                DedicatedServer.LOGGER.warn("Encountered a problem while converting the op list, retrying in a few seconds");
-                this.aU();
-            }
-
-            flag2 = NameReferencingFileConverter.c((MinecraftServer) this);
-        }
-
-        boolean flag4 = false;
-
-        for (i = 0; !flag4 && i <= 2; ++i) {
-            if (i > 0) {
-                DedicatedServer.LOGGER.warn("Encountered a problem while converting the player save files, retrying in a few seconds");
-                this.aU();
-            }
-
-            flag4 = NameReferencingFileConverter.a(this, this.propertyManager);
-        }
-
-        return flag2 || flag4;
-    }
-
-    private void aU() {
-        try {
-            Thread.sleep(5000L);
-        } catch (InterruptedException interruptedexception) {
-            ;
-        }
     }
 
     public long aS() {

@@ -125,6 +125,7 @@ public class WorldLoaderServer extends WorldLoader {
     }
 
     private void a(File file, File file1, WorldChunkManager worldchunkmanager, int i, int j, IProgressUpdate iprogressupdate) {
+        System.out.println("CALLED OLDREGIONLOADER");
         try {
             String s = file1.getName();
             RegionFile regionfile = new RegionFile(file1);
