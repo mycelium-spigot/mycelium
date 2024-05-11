@@ -291,15 +291,6 @@ public final class Bukkit {
     }
 
     /**
-     * Gets the value of the connection throttle setting.
-     *
-     * @return the value of the connection throttle setting
-     */
-    public static long getConnectionThrottle() {
-        return server.getConnectionThrottle();
-    }
-
-    /**
      * Gets default ticks per animal spawns value.
      * <p>
      * <b>Example Usage:</b>

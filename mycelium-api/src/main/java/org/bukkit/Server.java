@@ -239,13 +239,6 @@ public interface Server extends PluginMessageRecipient {
     public File getUpdateFolderFile();
 
     /**
-     * Gets the value of the connection throttle setting.
-     *
-     * @return the value of the connection throttle setting
-     */
-    public long getConnectionThrottle();
-
-    /**
      * Gets default ticks per animal spawns value.
      * <p>
      * <b>Example Usage:</b>

@@ -552,18 +552,7 @@ public final class CraftServer implements Server {
     public File getUpdateFolderFile() {
         return new File((File) console.options.valueOf("plugins"), this.configuration.getString("settings.update-folder", "update"));
     }
-
-    @Override
-    public long getConnectionThrottle() {
-        // Spigot Start - Automatically set connection throttle for bungee configurations
-        if (org.spigotmc.SpigotConfig.bungee) {
-            return -1;
-        } else {
-            return this.configuration.getInt("settings.connection-throttle");
-        }
-        // Spigot End
-    }
-
+    
     @Override
     public int getTicksPerAnimalSpawns() {
         return this.configuration.getInt("ticks-per.animal-spawns");
