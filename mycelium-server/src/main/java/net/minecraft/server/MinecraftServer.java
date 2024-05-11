@@ -53,7 +53,6 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
     public static final Logger LOGGER = LogManager.getLogger();
     public static final File a = new File("usercache.json");
     private static MinecraftServer l;
-    public Convertable convertable;
     public File universe;
     private final List<IUpdatePlayerListBox> p = Lists.newArrayList();
     protected final ICommandHandler b;
@@ -163,35 +162,11 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
 
     protected abstract boolean init() throws IOException;
 
-    protected void a(String s) {
-        if (this.getConvertable().isConvertable(s)) {
-            MinecraftServer.LOGGER.info("Converting map!");
-            this.b("menu.convertingLevel");
-            this.getConvertable().convert(s, new IProgressUpdate() {
-                private long b = System.currentTimeMillis();
-
-                public void a(String s) {}
-
-                public void a(int i) {
-                    if (System.currentTimeMillis() - this.b >= 1000L) {
-                        this.b = System.currentTimeMillis();
-                        MinecraftServer.LOGGER.info("Converting... " + i + "%");
-                    }
-
-                }
-
-                public void c(String s) {}
-            });
-        }
-
-    }
-
     protected synchronized void b(String s) {
         this.S = s;
     }
 
     protected void a(String s, String s1, long i, WorldType worldtype, String s2) {
-        this.a(s);
         this.b("menu.loadingLevel");
         this.worldServer = new WorldServer[3];
         /* CraftBukkit start - Remove ticktime arrays and worldsettings
@@ -1221,28 +1196,6 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
 
     public void c(boolean flag) {
         this.M = flag;
-    }
-
-    public Convertable getConvertable() {
-        return this.convertable;
-    }
-
-    public void aa() {
-        this.N = true;
-        this.getConvertable().d();
-
-        // CraftBukkit start
-        for (int i = 0; i < this.worlds.size(); ++i) {
-            WorldServer worldserver = this.worlds.get(i);
-            // CraftBukkit end
-            
-            if (worldserver != null) {
-                worldserver.saveLevel();
-            }
-        }
-
-        this.getConvertable().e(this.worlds.get(0).getDataManager().g()); // CraftBukkit
-        this.safeShutdown();
     }
 
     public String getResourcePack() {
