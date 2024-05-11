@@ -59,19 +59,6 @@ public class CraftArrow extends AbstractProjectile implements Arrow {
         return EntityType.ARROW;
     }
 
-    @Deprecated
-    public LivingEntity _INVALID_getShooter() {
-        if (getHandle().shooter == null) {
-            return null;
-        }
-        return (LivingEntity) getHandle().shooter.getBukkitEntity();
-    }
-
-    @Deprecated
-    public void _INVALID_setShooter(LivingEntity shooter) {
-        getHandle().shooter = ((CraftLivingEntity) shooter).getHandle();
-    }
-
     // Spigot start
     private final Arrow.Spigot spigot = new Arrow.Spigot()
     {

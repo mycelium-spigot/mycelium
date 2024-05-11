@@ -64,16 +64,6 @@ public abstract class CraftMinecart extends CraftVehicle implements Minecart {
         return (EntityMinecartAbstract) entity;
     }
 
-    @Deprecated
-    public void _INVALID_setDamage(int damage) {
-        setDamage(damage);
-    }
-
-    @Deprecated
-    public int _INVALID_getDamage() {
-        return NumberConversions.ceil(getDamage());
-    }
-
     public void setDisplayBlock(MaterialData material) {
         if(material != null) {
             IBlockData block = CraftMagicNumbers.getBlock(material.getItemTypeId()).fromLegacyData(material.getData());

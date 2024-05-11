@@ -382,13 +382,6 @@ public final class CraftServer implements Server {
     }
 
     @Override
-    @Deprecated
-    @SuppressWarnings("unchecked")
-    public Player[] _INVALID_getOnlinePlayers() {
-        return getOnlinePlayers().toArray(EMPTY_PLAYER_ARRAY);
-    }
-
-    @Override
     public List<CraftPlayer> getOnlinePlayers() {
         return this.playerView;
     }

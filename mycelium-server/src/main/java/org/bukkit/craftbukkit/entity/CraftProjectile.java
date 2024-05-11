@@ -39,24 +39,4 @@ public abstract class CraftProjectile extends AbstractProjectile implements Proj
     public String toString() {
         return "CraftProjectile";
     }
-
-
-    @Deprecated
-    public LivingEntity _INVALID_getShooter() {
-        if (getHandle().shooter == null) {
-            return null;
-        }
-        return (LivingEntity) getHandle().shooter.getBukkitEntity();
-    }
-
-    @Deprecated
-    public void _INVALID_setShooter(LivingEntity shooter) {
-        if (shooter == null) {
-            return;
-        }
-        getHandle().shooter = ((CraftLivingEntity) shooter).getHandle();
-        if (shooter instanceof CraftHumanEntity) {
-            getHandle().shooterName = ((CraftHumanEntity) shooter).getName();
-        }
-    }
 }

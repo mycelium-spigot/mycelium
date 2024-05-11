@@ -73,17 +73,4 @@ public class CraftFireball extends AbstractProjectile implements Fireball {
     public EntityType getType() {
         return EntityType.UNKNOWN;
     }
-
-    @Deprecated
-    public void _INVALID_setShooter(LivingEntity shooter) {
-        setShooter(shooter);
-    }
-
-    @Deprecated
-    public LivingEntity _INVALID_getShooter() {
-        if (getHandle().shooter != null) {
-            return (LivingEntity) getHandle().shooter.getBukkitEntity();
-        }
-        return null;
-    }
 }

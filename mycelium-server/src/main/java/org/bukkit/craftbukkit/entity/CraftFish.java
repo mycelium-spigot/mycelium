@@ -63,14 +63,4 @@ public class CraftFish extends AbstractProjectile implements Fish {
         Validate.isTrue(chance >= 0 && chance <= 1, "The bite chance must be between 0 and 1.");
         this.biteChance = chance;
     }
-
-    @Deprecated
-    public LivingEntity _INVALID_getShooter() {
-        return (LivingEntity) getShooter();
-    }
-
-    @Deprecated
-    public void _INVALID_setShooter(LivingEntity shooter) {
-        setShooter(shooter);
-    }
 }
