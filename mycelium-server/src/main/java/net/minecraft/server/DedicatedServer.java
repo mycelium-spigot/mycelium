@@ -31,7 +31,6 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
     private final List<ServerCommand> l = Collections.synchronizedList(Lists.<ServerCommand>newArrayList()); // CraftBukkit - fix decompile error
     public PropertyManager propertyManager;
     private EULA p;
-    private boolean generateStructures;
     private WorldSettings.EnumGamemode r;
 
     // CraftBukkit start - Signature changed
@@ -153,8 +152,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
             } else if (this.propertyManager.getInt("difficulty", 1) > 3) {
                 this.propertyManager.setProperty("difficulty", Integer.valueOf(3));
             }
-
-            this.generateStructures = this.propertyManager.getBoolean("generate-structures", true);
+            
             int i = this.propertyManager.getInt("gamemode", WorldSettings.EnumGamemode.SURVIVAL.getId());
 
             this.r = WorldSettings.a(i);
@@ -290,10 +288,6 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
     public void setGamemode(WorldSettings.EnumGamemode worldsettings_enumgamemode) {
         super.setGamemode(worldsettings_enumgamemode);
         this.r = worldsettings_enumgamemode;
-    }
-
-    public boolean getGenerateStructures() {
-        return this.generateStructures;
     }
 
     public WorldSettings.EnumGamemode getGamemode() {
