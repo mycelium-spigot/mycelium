@@ -31,19 +31,16 @@ public abstract class WorldProvider {
 
             this.f[i] = (1.0F - f1) / (f1 * 3.0F + 1.0F) * (1.0F - f) + f;
         }
-
     }
 
     protected void b() {
-        this.c = new WorldChunkManager(this.b);
+        WorldGenFlatInfo worldgenflatinfo = WorldGenFlatInfo.a(this.b.getWorldData().getGeneratorOptions());
+        
+        this.c = new WorldChunkManagerHell(BiomeBase.getBiome(worldgenflatinfo.a(), BiomeBase.ad), 0.5F);
     }
 
     public IChunkProvider getChunkProvider() {
-        return new ChunkProviderGenerate(
-            this.b, 
-            this.b.getSeed(),
-            this.i
-        );
+        return new ChunkProviderFlat(this.b, this.b.getSeed(), false, this.i);
     }
 
     public boolean canSpawn(int i, int j) {
