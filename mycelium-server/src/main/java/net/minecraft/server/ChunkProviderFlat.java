@@ -1,77 +1,53 @@
 package net.minecraft.server;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
 public class ChunkProviderFlat implements IChunkProvider {
 
-    private World a;
-    private Random b;
+    private World world;
+    private Random random;
     private final IBlockData[] c = new IBlockData[256];
-    private final WorldGenFlatInfo d;
-    private final boolean f;
 
     public ChunkProviderFlat(World world, long i, boolean flag, String s) {
-        this.a = world;
-        this.b = new Random(i);
-        this.d = WorldGenFlatInfo.a(s);
+        this.world = world;
+        this.random = new Random(i);
 
-        int j = 0;
-        int k = 0;
-        boolean flag1 = true;
-        Iterator iterator = this.d.c().iterator();
-
-        while (iterator.hasNext()) {
-            WorldGenFlatLayerInfo worldgenflatlayerinfo = (WorldGenFlatLayerInfo) iterator.next();
-
-            for (int l = worldgenflatlayerinfo.d(); l < worldgenflatlayerinfo.d() + worldgenflatlayerinfo.b(); ++l) {
-                IBlockData iblockdata = worldgenflatlayerinfo.c();
-
-                if (iblockdata.getBlock() != Blocks.AIR) {
-                    flag1 = false;
-                    this.c[l] = iblockdata;
-                }
-            }
-
-            if (worldgenflatlayerinfo.c().getBlock() == Blocks.AIR) {
-                k += worldgenflatlayerinfo.b();
-            } else {
-                j += worldgenflatlayerinfo.b() + k;
-                k = 0;
-            }
-        }
-
-        world.b(j);
-        this.f = flag1 ? false : this.d.b().containsKey("decoration");
+        c[0] = Blocks.BEDROCK.getBlockData();
+        c[1] = Blocks.DIRT.getBlockData();
+        c[2] = Blocks.DIRT.getBlockData();
+        c[3] = Blocks.GRASS.getBlockData();
     }
 
     public Chunk getOrCreateChunk(int i, int j) {
-        ChunkSnapshot chunksnapshot = new ChunkSnapshot();
-
-        int k;
-
-        for (int l = 0; l < this.c.length; ++l) {
-            IBlockData iblockdata = this.c[l];
-
-            if (iblockdata != null) {
-                for (int i1 = 0; i1 < 16; ++i1) {
-                    for (k = 0; k < 16; ++k) {
-                        chunksnapshot.a(i1, l, k, iblockdata);
+        ChunkSnapshot chunkSnapshot = new ChunkSnapshot();
+        int chunkLengthCache = this.c.length;
+        
+        // Iterate over the chunk data
+        for (int y = 0; y < chunkLengthCache; ++y) {
+            IBlockData blockData = this.c[y];
+        
+            if (blockData != null) {
+                for (int x = 0; x < 16; ++x) {
+                    for (int z = 0; z < 16; ++z) {
+                        chunkSnapshot.a(x, y, z, blockData);
                     }
                 }
             }
         }
-
-        Chunk chunk = new Chunk(this.a, chunksnapshot, i, j);
-        BiomeBase[] abiomebase = this.a.getWorldChunkManager().getBiomeBlock((BiomeBase[]) null, i * 16, j * 16, 16, 16);
-        byte[] abyte = chunk.getBiomeIndex();
-
-        for (k = 0; k < abyte.length; ++k) {
-            abyte[k] = (byte) abiomebase[k].id;
+        
+        // Initialize the chunk
+        Chunk chunk = new Chunk(this.world, chunkSnapshot, i, j);
+        BiomeBase[] biomes = this.world.getWorldChunkManager().getBiomeBlock(null, i * 16, j * 16, 16, 16);
+        byte[] biomeIndices = chunk.getBiomeIndex();
+        
+        // Assign biome indices
+        for (int index = 0; index < biomeIndices.length; ++index) {
+            biomeIndices[index] = (byte) biomes[index].id;
         }
-
+        
         chunk.initLighting();
+
         return chunk;
     }
 
@@ -80,21 +56,15 @@ public class ChunkProviderFlat implements IChunkProvider {
     }
 
     public void getChunkAt(IChunkProvider ichunkprovider, int i, int j) {
-        int k = i * 16;
-        int l = j * 16;
-        BlockPosition blockposition = new BlockPosition(k, 0, l);
-        BiomeBase biomebase = this.a.getBiome(new BlockPosition(k + 16, 0, l + 16));
-
-        this.b.setSeed(this.a.getSeed());
-        long i1 = this.b.nextLong() / 2L * 2L + 1L;
-        long j1 = this.b.nextLong() / 2L * 2L + 1L;
-
-        this.b.setSeed((long) i * i1 + (long) j * j1 ^ this.a.getSeed());
-
-        if (this.f) {
-            biomebase.a(this.a, this.b, blockposition);
-        }
-
+        int chunkX = i * 16;
+        int chunkZ = j * 16;
+        
+        this.random.setSeed(this.world.getSeed());
+        
+        long offsetX = this.random.nextLong() / 2L * 2L + 1L;
+        long offsetZ = this.random.nextLong() / 2L * 2L + 1L;
+        
+        this.random.setSeed((long) chunkX * offsetX + (long) chunkZ * offsetZ ^ this.world.getSeed());        
     }
 
     public boolean a(IChunkProvider ichunkprovider, Chunk chunk, int i, int j) {
@@ -120,7 +90,7 @@ public class ChunkProviderFlat implements IChunkProvider {
     }
 
     public List<BiomeBase.BiomeMeta> getMobsFor(EnumCreatureType enumcreaturetype, BlockPosition blockposition) {
-        BiomeBase biomebase = this.a.getBiome(blockposition);
+        BiomeBase biomebase = this.world.getBiome(blockposition);
 
         return biomebase.getMobs(enumcreaturetype);
     }

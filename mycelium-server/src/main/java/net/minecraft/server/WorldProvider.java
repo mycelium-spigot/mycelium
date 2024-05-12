@@ -34,9 +34,7 @@ public abstract class WorldProvider {
     }
 
     protected void b() {
-        WorldGenFlatInfo worldgenflatinfo = WorldGenFlatInfo.a(this.b.getWorldData().getGeneratorOptions());
-        
-        this.c = new WorldChunkManagerHell(BiomeBase.getBiome(worldgenflatinfo.a(), BiomeBase.ad), 0.5F);
+        this.c = new WorldChunkManagerHell(BiomeBase.getBiome(1, BiomeBase.ad), 0.5F);
     }
 
     public IChunkProvider getChunkProvider() {
