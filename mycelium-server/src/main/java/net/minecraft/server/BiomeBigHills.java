@@ -4,7 +4,6 @@ import java.util.Random;
 
 public class BiomeBigHills extends BiomeBase {
 
-    private WorldGenerator aD;
     private WorldGenTaiga2 aE;
     private int aF;
     private int aG;
@@ -13,7 +12,6 @@ public class BiomeBigHills extends BiomeBase {
 
     protected BiomeBigHills(int i, boolean flag) {
         super(i);
-        this.aD = new WorldGenMinable(Blocks.MONSTER_EGG.getBlockData().set(BlockMonsterEggs.VARIANT, BlockMonsterEggs.EnumMonsterEggVarient.STONE), 9);
         this.aE = new WorldGenTaiga2(false);
         this.aF = 0;
         this.aG = 1;
@@ -48,14 +46,6 @@ public class BiomeBigHills extends BiomeBase {
                 world.setTypeAndData(blockposition1, Blocks.EMERALD_ORE.getBlockData(), 2);
             }
         }
-
-        for (i = 0; i < 7; ++i) {
-            j = random.nextInt(16);
-            k = random.nextInt(64);
-            l = random.nextInt(16);
-            this.aD.generate(world, random, blockposition.a(j, k, l));
-        }
-
     }
 
     public void a(World world, Random random, ChunkSnapshot chunksnapshot, int i, int j, double d0) {

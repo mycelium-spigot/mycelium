@@ -8,7 +8,6 @@ public class BiomeTaiga extends BiomeBase {
     private static final WorldGenTaiga2 aE = new WorldGenTaiga2(false);
     private static final WorldGenMegaTree aF = new WorldGenMegaTree(false, false);
     private static final WorldGenMegaTree aG = new WorldGenMegaTree(false, true);
-    private static final WorldGenTaigaStructure aH = new WorldGenTaigaStructure(Blocks.MOSSY_COBBLESTONE, 0);
     private int aI;
 
     public BiomeTaiga(int i, int j) {
@@ -30,38 +29,8 @@ public class BiomeTaiga extends BiomeBase {
     public WorldGenTreeAbstract a(Random random) {
         return (WorldGenTreeAbstract) ((this.aI == 1 || this.aI == 2) && random.nextInt(3) == 0 ? (this.aI != 2 && random.nextInt(13) != 0 ? BiomeTaiga.aF : BiomeTaiga.aG) : (random.nextInt(3) == 0 ? BiomeTaiga.aD : BiomeTaiga.aE));
     }
-
-    public WorldGenerator b(Random random) {
-        return random.nextInt(5) > 0 ? new WorldGenGrass(BlockLongGrass.EnumTallGrassType.FERN) : new WorldGenGrass(BlockLongGrass.EnumTallGrassType.GRASS);
-    }
-
+    
     public void a(World world, Random random, BlockPosition blockposition) {
-        int i;
-        int j;
-        int k;
-        int l;
-
-        if (this.aI == 1 || this.aI == 2) {
-            i = random.nextInt(3);
-
-            for (j = 0; j < i; ++j) {
-                k = random.nextInt(16) + 8;
-                l = random.nextInt(16) + 8;
-                BlockPosition blockposition1 = world.getHighestBlockYAt(blockposition.a(k, 0, l));
-
-                BiomeTaiga.aH.generate(world, random, blockposition1);
-            }
-        }
-
-        BiomeTaiga.ag.a(BlockTallPlant.EnumTallFlowerVariants.FERN);
-
-        for (i = 0; i < 7; ++i) {
-            j = random.nextInt(16) + 8;
-            k = random.nextInt(16) + 8;
-            l = random.nextInt(world.getHighestBlockYAt(blockposition.a(j, 0, k)).getY() + 32);
-            BiomeTaiga.ag.generate(world, random, blockposition.a(j, l, k));
-        }
-
         super.a(world, random, blockposition);
     }
 

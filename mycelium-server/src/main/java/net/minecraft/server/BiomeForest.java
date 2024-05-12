@@ -80,58 +80,16 @@ public class BiomeForest extends BiomeBase {
                     l = j * 4 + 1 + 8 + random.nextInt(3);
                     BlockPosition blockposition1 = world.getHighestBlockYAt(blockposition.a(k, 0, l));
 
-                    if (random.nextInt(20) == 0) {
-                        WorldGenHugeMushroom worldgenhugemushroom = new WorldGenHugeMushroom();
+                    WorldGenTreeAbstract worldgentreeabstract = this.a(random);
 
-                        worldgenhugemushroom.generate(world, random, blockposition1);
-                    } else {
-                        WorldGenTreeAbstract worldgentreeabstract = this.a(random);
-
-                        worldgentreeabstract.e();
-                        if (worldgentreeabstract.generate(world, random, blockposition1)) {
-                            worldgentreeabstract.a(world, random, blockposition1);
-                        }
+                    worldgentreeabstract.e();
+                    if (worldgentreeabstract.generate(world, random, blockposition1)) {
+                        worldgentreeabstract.a(world, random, blockposition1);
                     }
                 }
             }
         }
-
-        i = random.nextInt(5) - 3;
-        if (this.aG == 1) {
-            i += 2;
-        }
-
-        j = 0;
-
-        while (j < i) {
-            k = random.nextInt(3);
-            if (k == 0) {
-                BiomeForest.ag.a(BlockTallPlant.EnumTallFlowerVariants.SYRINGA);
-            } else if (k == 1) {
-                BiomeForest.ag.a(BlockTallPlant.EnumTallFlowerVariants.ROSE);
-            } else if (k == 2) {
-                BiomeForest.ag.a(BlockTallPlant.EnumTallFlowerVariants.PAEONIA);
-            }
-
-            l = 0;
-
-            while (true) {
-                if (l < 5) {
-                    int i1 = random.nextInt(16) + 8;
-                    int j1 = random.nextInt(16) + 8;
-                    int k1 = random.nextInt(world.getHighestBlockYAt(blockposition.a(i1, 0, j1)).getY() + 32);
-
-                    if (!BiomeForest.ag.generate(world, random, new BlockPosition(blockposition.getX() + i1, k1, blockposition.getZ() + j1))) {
-                        ++l;
-                        continue;
-                    }
-                }
-
-                ++j;
-                break;
-            }
-        }
-
+        
         super.a(world, random, blockposition);
     }
 

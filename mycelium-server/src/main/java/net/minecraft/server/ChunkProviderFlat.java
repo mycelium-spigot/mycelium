@@ -11,21 +11,11 @@ public class ChunkProviderFlat implements IChunkProvider {
     private final IBlockData[] c = new IBlockData[256];
     private final WorldGenFlatInfo d;
     private final boolean f;
-    private WorldGenLakes h;
-    private WorldGenLakes i;
 
     public ChunkProviderFlat(World world, long i, boolean flag, String s) {
         this.a = world;
         this.b = new Random(i);
         this.d = WorldGenFlatInfo.a(s);
-
-        if (this.d.b().containsKey("lake")) {
-            this.h = new WorldGenLakes(Blocks.WATER);
-        }
-
-        if (this.d.b().containsKey("lava_lake")) {
-            this.i = new WorldGenLakes(Blocks.LAVA);
-        }
 
         int j = 0;
         int k = 0;
@@ -94,25 +84,12 @@ public class ChunkProviderFlat implements IChunkProvider {
         int l = j * 16;
         BlockPosition blockposition = new BlockPosition(k, 0, l);
         BiomeBase biomebase = this.a.getBiome(new BlockPosition(k + 16, 0, l + 16));
-        boolean flag = false;
 
         this.b.setSeed(this.a.getSeed());
         long i1 = this.b.nextLong() / 2L * 2L + 1L;
         long j1 = this.b.nextLong() / 2L * 2L + 1L;
 
         this.b.setSeed((long) i * i1 + (long) j * j1 ^ this.a.getSeed());
-
-        if (this.h != null && !flag && this.b.nextInt(4) == 0) {
-            this.h.generate(this.a, this.b, blockposition.a(this.b.nextInt(16) + 8, this.b.nextInt(256), this.b.nextInt(16) + 8));
-        }
-
-        if (this.i != null && !flag && this.b.nextInt(8) == 0) {
-            BlockPosition blockposition1 = blockposition.a(this.b.nextInt(16) + 8, this.b.nextInt(this.b.nextInt(248) + 8), this.b.nextInt(16) + 8);
-
-            if (blockposition1.getY() < this.a.F() || this.b.nextInt(10) == 0) {
-                this.i.generate(this.a, this.b, blockposition1);
-            }
-        }
 
         if (this.f) {
             biomebase.a(this.a, this.b, blockposition);

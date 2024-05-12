@@ -18,15 +18,6 @@ public class ChunkProviderHell implements IChunkProvider {
     private final NoiseGeneratorOctaves s;
     public final NoiseGeneratorOctaves a;
     public final NoiseGeneratorOctaves b;
-    private final WorldGenFire t = new WorldGenFire();
-    private final WorldGenLightStone1 u = new WorldGenLightStone1();
-    private final WorldGenLightStone2 v = new WorldGenLightStone2();
-    private final WorldGenerator w;
-    private final WorldGenHellLava x;
-    private final WorldGenHellLava y;
-    private final WorldGenMushrooms z;
-    private final WorldGenMushrooms A;
-    private final WorldGenBase C;
     double[] c;
     double[] d;
     double[] e;
@@ -34,12 +25,6 @@ public class ChunkProviderHell implements IChunkProvider {
     double[] g;
 
     public ChunkProviderHell(World world, long i) {
-        this.w = new WorldGenMinable(Blocks.QUARTZ_ORE.getBlockData(), 14, BlockPredicate.a(Blocks.NETHERRACK));
-        this.x = new WorldGenHellLava(Blocks.FLOWING_LAVA, true);
-        this.y = new WorldGenHellLava(Blocks.FLOWING_LAVA, false);
-        this.z = new WorldGenMushrooms(Blocks.BROWN_MUSHROOM);
-        this.A = new WorldGenMushrooms(Blocks.RED_MUSHROOM);
-        this.C = new WorldGenCavesHell();
         this.h = world;
         this.j = new Random(i);
         this.o = new NoiseGeneratorOctaves(this.j, 16);
@@ -197,7 +182,6 @@ public class ChunkProviderHell implements IChunkProvider {
 
         this.a(i, j, chunksnapshot);
         this.b(i, j, chunksnapshot);
-        if (this.h.paperSpigotConfig.generateCaves) this.C.a(this, this.h, i, j, chunksnapshot); // PaperSpigot
 
         Chunk chunk = new Chunk(this.h, chunksnapshot, i, j);
         BiomeBase[] abiomebase = this.h.getWorldChunkManager().getBiomeBlock((BiomeBase[]) null, i * 16, j * 16, 16, 16);
@@ -289,45 +273,7 @@ public class ChunkProviderHell implements IChunkProvider {
         return true;
     }
 
-    public void getChunkAt(IChunkProvider ichunkprovider, int i, int j) {
-        BlockFalling.instaFall = true;
-        BlockPosition blockposition = new BlockPosition(i * 16, 0, j * 16);
-        int k;
-
-        for (k = 0; k < 8; ++k) {
-            this.y.generate(this.h, this.j, blockposition.a(this.j.nextInt(16) + 8, this.j.nextInt(120) + 4, this.j.nextInt(16) + 8));
-        }
-
-        for (k = 0; k < this.j.nextInt(this.j.nextInt(10) + 1) + 1; ++k) {
-            this.t.generate(this.h, this.j, blockposition.a(this.j.nextInt(16) + 8, this.j.nextInt(120) + 4, this.j.nextInt(16) + 8));
-        }
-
-        for (k = 0; k < this.j.nextInt(this.j.nextInt(10) + 1); ++k) {
-            this.u.generate(this.h, this.j, blockposition.a(this.j.nextInt(16) + 8, this.j.nextInt(120) + 4, this.j.nextInt(16) + 8));
-        }
-
-        for (k = 0; k < 10; ++k) {
-            this.v.generate(this.h, this.j, blockposition.a(this.j.nextInt(16) + 8, this.j.nextInt(128), this.j.nextInt(16) + 8));
-        }
-
-        if (this.j.nextBoolean()) {
-            this.z.generate(this.h, this.j, blockposition.a(this.j.nextInt(16) + 8, this.j.nextInt(128), this.j.nextInt(16) + 8));
-        }
-
-        if (this.j.nextBoolean()) {
-            this.A.generate(this.h, this.j, blockposition.a(this.j.nextInt(16) + 8, this.j.nextInt(128), this.j.nextInt(16) + 8));
-        }
-
-        for (k = 0; k < 16; ++k) {
-            this.w.generate(this.h, this.j, blockposition.a(this.j.nextInt(16), this.j.nextInt(108) + 10, this.j.nextInt(16)));
-        }
-
-        for (k = 0; k < 16; ++k) {
-            this.x.generate(this.h, this.j, blockposition.a(this.j.nextInt(16), this.j.nextInt(108) + 10, this.j.nextInt(16)));
-        }
-
-        BlockFalling.instaFall = false;
-    }
+    public void getChunkAt(IChunkProvider ichunkprovider, int i, int j) {}
 
     public boolean a(IChunkProvider ichunkprovider, Chunk chunk, int i, int j) {
         return false;

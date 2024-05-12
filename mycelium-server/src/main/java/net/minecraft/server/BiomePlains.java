@@ -45,39 +45,6 @@ public class BiomePlains extends BiomeBase {
     }
 
     public void a(World world, Random random, BlockPosition blockposition) {
-        double d0 = BiomePlains.af.a((double) (blockposition.getX() + 8) / 200.0D, (double) (blockposition.getZ() + 8) / 200.0D);
-        int i;
-        int j;
-        int k;
-        int l;
-
-        if (d0 < -0.8D) {
-            this.as.B = 15;
-            this.as.C = 5;
-        } else {
-            this.as.B = 4;
-            this.as.C = 10;
-            BiomePlains.ag.a(BlockTallPlant.EnumTallFlowerVariants.GRASS);
-
-            for (i = 0; i < 7; ++i) {
-                j = random.nextInt(16) + 8;
-                k = random.nextInt(16) + 8;
-                l = random.nextInt(world.getHighestBlockYAt(blockposition.a(j, 0, k)).getY() + 32);
-                BiomePlains.ag.generate(world, random, blockposition.a(j, l, k));
-            }
-        }
-
-        if (this.aD) {
-            BiomePlains.ag.a(BlockTallPlant.EnumTallFlowerVariants.SUNFLOWER);
-
-            for (i = 0; i < 10; ++i) {
-                j = random.nextInt(16) + 8;
-                k = random.nextInt(16) + 8;
-                l = random.nextInt(world.getHighestBlockYAt(blockposition.a(j, 0, k)).getY() + 32);
-                BiomePlains.ag.generate(world, random, blockposition.a(j, l, k));
-            }
-        }
-
         super.a(world, random, blockposition);
     }
 

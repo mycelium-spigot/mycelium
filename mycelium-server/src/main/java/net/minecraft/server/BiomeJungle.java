@@ -28,29 +28,18 @@ public class BiomeJungle extends BiomeBase {
     }
 
     public WorldGenTreeAbstract a(Random random) {
-        return (WorldGenTreeAbstract) (random.nextInt(10) == 0 ? this.aB : (random.nextInt(2) == 0 ? new WorldGenGroundBush(BiomeJungle.aE, BiomeJungle.aG) : (!this.aD && random.nextInt(3) == 0 ? new WorldGenJungleTree(false, 10, 20, BiomeJungle.aE, BiomeJungle.aF) : new WorldGenTrees(false, 4 + random.nextInt(7), BiomeJungle.aE, BiomeJungle.aF, true))));
-    }
-
-    public WorldGenerator b(Random random) {
-        return random.nextInt(4) == 0 ? new WorldGenGrass(BlockLongGrass.EnumTallGrassType.FERN) : new WorldGenGrass(BlockLongGrass.EnumTallGrassType.GRASS);
+        if (random.nextInt(10) == 0) {
+            return (WorldGenTreeAbstract) this.aB;
+        } else {
+            if (!this.aD && random.nextInt(3) == 0) {
+                return new WorldGenJungleTree(false, 10, 20, BiomeJungle.aE, BiomeJungle.aF);
+            } else {
+                return new WorldGenTrees(false, 4 + random.nextInt(7), BiomeJungle.aE, BiomeJungle.aF, true);
+            }
+        }
     }
 
     public void a(World world, Random random, BlockPosition blockposition) {
         super.a(world, random, blockposition);
-        int i = random.nextInt(16) + 8;
-        int j = random.nextInt(16) + 8;
-        int k = random.nextInt(world.getHighestBlockYAt(blockposition.a(i, 0, j)).getY() * 2);
-
-        (new WorldGenMelon()).generate(world, random, blockposition.a(i, k, j));
-        WorldGenVines worldgenvines = new WorldGenVines();
-
-        for (j = 0; j < 50; ++j) {
-            k = random.nextInt(16) + 8;
-            boolean flag = true;
-            int l = random.nextInt(16) + 8;
-
-            worldgenvines.generate(world, random, blockposition.a(k, 128, l));
-        }
-
     }
 }

@@ -83,26 +83,6 @@ public class BlockMushroom extends BlockPlant implements IBlockFragilePlantEleme
         }
     }
 
-    public boolean d(World world, BlockPosition blockposition, IBlockData iblockdata, Random random) {
-        world.setAir(blockposition);
-        WorldGenHugeMushroom worldgenhugemushroom = null;
-
-        if (this == Blocks.BROWN_MUSHROOM) {
-            BlockSapling.treeType = TreeType.BROWN_MUSHROOM; // CraftBukkit
-            worldgenhugemushroom = new WorldGenHugeMushroom(Blocks.BROWN_MUSHROOM_BLOCK);
-        } else if (this == Blocks.RED_MUSHROOM) {
-            BlockSapling.treeType = TreeType.RED_MUSHROOM; // CraftBukkit
-            worldgenhugemushroom = new WorldGenHugeMushroom(Blocks.RED_MUSHROOM_BLOCK);
-        }
-
-        if (worldgenhugemushroom != null && worldgenhugemushroom.generate(world, random, blockposition)) {
-            return true;
-        } else {
-            world.setTypeAndData(blockposition, iblockdata, 3);
-            return false;
-        }
-    }
-
     public boolean a(World world, BlockPosition blockposition, IBlockData iblockdata, boolean flag) {
         return true;
     }
@@ -111,7 +91,5 @@ public class BlockMushroom extends BlockPlant implements IBlockFragilePlantEleme
         return (double) random.nextFloat() < 0.4D;
     }
 
-    public void b(World world, Random random, BlockPosition blockposition, IBlockData iblockdata) {
-        this.d(world, blockposition, iblockdata, random);
-    }
+    public void b(World world, Random random, BlockPosition blockposition, IBlockData iblockdata) {}
 }

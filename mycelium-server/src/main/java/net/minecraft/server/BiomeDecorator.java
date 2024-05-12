@@ -8,27 +8,10 @@ public class BiomeDecorator {
     protected Random b;
     protected BlockPosition c;
     protected CustomWorldSettingsFinal d;
-    protected WorldGenerator e = new WorldGenClay(4);
     protected WorldGenerator f;
     protected WorldGenerator g;
-    protected WorldGenerator h;
-    protected WorldGenerator i;
-    protected WorldGenerator j;
-    protected WorldGenerator k;
-    protected WorldGenerator l;
-    protected WorldGenerator m;
-    protected WorldGenerator n;
-    protected WorldGenerator o;
-    protected WorldGenerator p;
-    protected WorldGenerator q;
-    protected WorldGenerator r;
-    protected WorldGenFlowers s;
-    protected WorldGenerator t;
-    protected WorldGenerator u;
-    protected WorldGenerator v;
     protected WorldGenerator w;
     protected WorldGenerator x;
-    protected WorldGenerator y;
     protected int z;
     protected int A;
     protected int B;
@@ -46,13 +29,6 @@ public class BiomeDecorator {
     public BiomeDecorator() {
         this.f = new WorldGenSand(Blocks.SAND, 7);
         this.g = new WorldGenSand(Blocks.GRAVEL, 6);
-        this.s = new WorldGenFlowers(Blocks.YELLOW_FLOWER, BlockFlowers.EnumFlowerVarient.DANDELION);
-        this.t = new WorldGenMushrooms(Blocks.BROWN_MUSHROOM);
-        this.u = new WorldGenMushrooms(Blocks.RED_MUSHROOM);
-        this.v = new WorldGenHugeMushroom();
-        this.w = new WorldGenReed();
-        this.x = new WorldGenCactus();
-        this.y = new WorldGenWaterLily();
         this.B = 2;
         this.C = 1;
         this.H = 1;
@@ -76,17 +52,6 @@ public class BiomeDecorator {
 
             this.b = random;
             this.c = blockposition;
-            this.h = new WorldGenMinable(Blocks.DIRT.getBlockData(), this.d.I);
-            this.i = new WorldGenMinable(Blocks.GRAVEL.getBlockData(), this.d.M);
-            this.j = new WorldGenMinable(Blocks.STONE.getBlockData().set(BlockStone.VARIANT, BlockStone.EnumStoneVariant.GRANITE), this.d.Q);
-            this.k = new WorldGenMinable(Blocks.STONE.getBlockData().set(BlockStone.VARIANT, BlockStone.EnumStoneVariant.DIORITE), this.d.U);
-            this.l = new WorldGenMinable(Blocks.STONE.getBlockData().set(BlockStone.VARIANT, BlockStone.EnumStoneVariant.ANDESITE), this.d.Y);
-            this.m = new WorldGenMinable(Blocks.COAL_ORE.getBlockData(), this.d.ac);
-            this.n = new WorldGenMinable(Blocks.IRON_ORE.getBlockData(), this.d.ag);
-            this.o = new WorldGenMinable(Blocks.GOLD_ORE.getBlockData(), this.d.ak);
-            this.p = new WorldGenMinable(Blocks.REDSTONE_ORE.getBlockData(), this.d.ao);
-            this.q = new WorldGenMinable(Blocks.DIAMOND_ORE.getBlockData(), this.d.as);
-            this.r = new WorldGenMinable(Blocks.LAPIS_ORE.getBlockData(), this.d.aw);
             this.a(biomebase);
             this.a = null;
             this.b = null;
@@ -94,8 +59,6 @@ public class BiomeDecorator {
     }
 
     protected void a(BiomeBase biomebase) {
-        this.a();
-
         int i;
         int j;
         int k;
@@ -104,12 +67,6 @@ public class BiomeDecorator {
             j = this.b.nextInt(16) + 8;
             k = this.b.nextInt(16) + 8;
             this.f.generate(this.a, this.b, this.a.r(this.c.a(j, 0, k)));
-        }
-
-        for (i = 0; i < this.J; ++i) {
-            j = this.b.nextInt(16) + 8;
-            k = this.b.nextInt(16) + 8;
-            this.e.generate(this.a, this.b, this.a.r(this.c.a(j, 0, k)));
         }
 
         for (i = 0; i < this.H; ++i) {
@@ -137,114 +94,10 @@ public class BiomeDecorator {
                 worldgentreeabstract.a(this.a, this.b, blockposition);
             }
         }
-
-        for (j = 0; j < this.K; ++j) {
-            k = this.b.nextInt(16) + 8;
-            l = this.b.nextInt(16) + 8;
-            this.v.generate(this.a, this.b, this.a.getHighestBlockYAt(this.c.a(k, 0, l)));
-        }
-
+        
         BlockPosition blockposition1;
         int i1;
         int j1;
-
-        for (j = 0; j < this.B; ++j) {
-            k = this.b.nextInt(16) + 8;
-            l = this.b.nextInt(16) + 8;
-            i1 = this.a.getHighestBlockYAt(this.c.a(k, 0, l)).getY() + 32;
-            if (i1 > 0) {
-                j1 = this.b.nextInt(i1);
-                blockposition1 = this.c.a(k, j1, l);
-                BlockFlowers.EnumFlowerVarient blockflowers_enumflowervarient = biomebase.a(this.b, blockposition1);
-                BlockFlowers blockflowers = blockflowers_enumflowervarient.a().a();
-
-                if (blockflowers.getMaterial() != Material.AIR) {
-                    this.s.a(blockflowers, blockflowers_enumflowervarient);
-                    this.s.generate(this.a, this.b, blockposition1);
-                }
-            }
-        }
-
-        for (j = 0; j < this.C; ++j) {
-            k = this.b.nextInt(16) + 8;
-            l = this.b.nextInt(16) + 8;
-            i1 = this.a.getHighestBlockYAt(this.c.a(k, 0, l)).getY() * 2;
-            if (i1 > 0) {
-                j1 = this.b.nextInt(i1);
-                biomebase.b(this.b).generate(this.a, this.b, this.c.a(k, j1, l));
-            }
-        }
-
-        for (j = 0; j < this.D; ++j) {
-            k = this.b.nextInt(16) + 8;
-            l = this.b.nextInt(16) + 8;
-            i1 = this.a.getHighestBlockYAt(this.c.a(k, 0, l)).getY() * 2;
-            if (i1 > 0) {
-                j1 = this.b.nextInt(i1);
-                (new WorldGenDeadBush()).generate(this.a, this.b, this.c.a(k, j1, l));
-            }
-        }
-
-        for (j = 0; j < this.z; ++j) {
-            k = this.b.nextInt(16) + 8;
-            l = this.b.nextInt(16) + 8;
-            i1 = this.a.getHighestBlockYAt(this.c.a(k, 0, l)).getY() * 2;
-            if (i1 > 0) {
-                j1 = this.b.nextInt(i1);
-
-                BlockPosition blockposition2;
-
-                for (blockposition1 = this.c.a(k, j1, l); blockposition1.getY() > 0; blockposition1 = blockposition2) {
-                    blockposition2 = blockposition1.down();
-                    if (!this.a.isEmpty(blockposition2)) {
-                        break;
-                    }
-                }
-
-                this.y.generate(this.a, this.b, blockposition1);
-            }
-        }
-
-        for (j = 0; j < this.E; ++j) {
-            if (this.b.nextInt(4) == 0) {
-                k = this.b.nextInt(16) + 8;
-                l = this.b.nextInt(16) + 8;
-                BlockPosition blockposition3 = this.a.getHighestBlockYAt(this.c.a(k, 0, l));
-
-                this.t.generate(this.a, this.b, blockposition3);
-            }
-
-            if (this.b.nextInt(8) == 0) {
-                k = this.b.nextInt(16) + 8;
-                l = this.b.nextInt(16) + 8;
-                i1 = this.a.getHighestBlockYAt(this.c.a(k, 0, l)).getY() * 2;
-                if (i1 > 0) {
-                    j1 = this.b.nextInt(i1);
-                    blockposition1 = this.c.a(k, j1, l);
-                    this.u.generate(this.a, this.b, blockposition1);
-                }
-            }
-        }
-
-        if (this.b.nextInt(4) == 0) {
-            j = this.b.nextInt(16) + 8;
-            k = this.b.nextInt(16) + 8;
-            l = this.a.getHighestBlockYAt(this.c.a(j, 0, k)).getY() * 2;
-            if (l > 0) {
-                i1 = this.b.nextInt(l);
-                this.t.generate(this.a, this.b, this.c.a(j, i1, k));
-            }
-        }
-
-        if (this.b.nextInt(8) == 0) {
-            j = this.b.nextInt(16) + 8;
-            k = this.b.nextInt(16) + 8;
-            l = this.a.getHighestBlockYAt(this.c.a(j, 0, k)).getY() * 2;
-            if (l > 0) {
-                i1 = this.b.nextInt(l);
-                this.u.generate(this.a, this.b, this.c.a(j, i1, k));
-            }
-        }
 
         for (j = 0; j < this.F; ++j) {
             k = this.b.nextInt(16) + 8;
@@ -263,16 +116,6 @@ public class BiomeDecorator {
             if (i1 > 0) {
                 j1 = this.b.nextInt(i1);
                 this.w.generate(this.a, this.b, this.c.a(k, j1, l));
-            }
-        }
-
-        if (this.b.nextInt(32) == 0) {
-            j = this.b.nextInt(16) + 8;
-            k = this.b.nextInt(16) + 8;
-            l = this.a.getHighestBlockYAt(this.c.a(j, 0, k)).getY() * 2;
-            if (l > 0) {
-                i1 = this.b.nextInt(l);
-                (new WorldGenPumpkin()).generate(this.a, this.b, this.c.a(j, i1, k));
             }
         }
 
@@ -339,19 +182,5 @@ public class BiomeDecorator {
             worldgenerator.generate(this.a, this.b, blockposition);
         }
 
-    }
-
-    protected void a() {
-        this.a(this.d.J, this.h, this.d.K, this.d.L);
-        this.a(this.d.N, this.i, this.d.O, this.d.P);
-        this.a(this.d.V, this.k, this.d.W, this.d.X);
-        this.a(this.d.R, this.j, this.d.S, this.d.T);
-        this.a(this.d.Z, this.l, this.d.aa, this.d.ab);
-        this.a(this.d.ad, this.m, this.d.ae, this.d.af);
-        this.a(this.d.ah, this.n, this.d.ai, this.d.aj);
-        this.a(this.d.al, this.o, this.d.am, this.d.an);
-        this.a(this.d.ap, this.p, this.d.aq, this.d.ar);
-        this.a(this.d.at, this.q, this.d.au, this.d.av);
-        this.b(this.d.ax, this.r, this.d.ay, this.d.az);
     }
 }

@@ -73,7 +73,6 @@ public abstract class BiomeBase {
     public static final BiomeBase ad = BiomeBase.OCEAN;
     protected static final NoiseGenerator3 ae;
     protected static final NoiseGenerator3 af;
-    protected static final WorldGenTallPlant ag;
     public String ah;
     public int ai;
     public int aj;
@@ -159,10 +158,6 @@ public abstract class BiomeBase {
 
     public WorldGenTreeAbstract a(Random random) {
         return (WorldGenTreeAbstract) (random.nextInt(10) == 0 ? this.aB : this.aA);
-    }
-
-    public WorldGenerator b(Random random) {
-        return new WorldGenGrass(BlockLongGrass.EnumTallGrassType.GRASS);
     }
 
     public BlockFlowers.EnumFlowerVarient a(Random random, BlockPosition blockposition) {
@@ -411,7 +406,6 @@ public abstract class BiomeBase {
         BiomeBase.n.remove(BiomeBase.SMALL_MOUNTAINS);
         ae = new NoiseGenerator3(new Random(1234L), 1);
         af = new NoiseGenerator3(new Random(2345L), 1);
-        ag = new WorldGenTallPlant();
     }
 
     static class SyntheticClass_1 {

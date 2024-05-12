@@ -240,13 +240,9 @@ public class PaperSpigotWorldConfig
         loadUnloadedFallingBlocks = getBoolean( "load-chunks.falling-blocks", false );
     }
 
-    public boolean generateCanyon;
-    public boolean generateCaves;
     public boolean generateFlatBedrock;
     private void generatorSettings()
     {
-        generateCanyon = getBoolean( "generator-settings.canyon", true );
-        generateCaves = getBoolean( "generator-settings.caves", true );
         generateFlatBedrock = getBoolean( "generator-settings.flat-bedrock", false );
     }
 
