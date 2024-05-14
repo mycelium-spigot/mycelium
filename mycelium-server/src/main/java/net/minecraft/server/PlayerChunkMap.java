@@ -67,7 +67,7 @@ public class PlayerChunkMap {
             if (!wasNotEmpty) return; // CraftBukkit - Only do unload when we go from non-empty to empty
             WorldProvider worldprovider = this.world.worldProvider;
 
-            if (!worldprovider.e()) {
+            if (!worldprovider.e() && !this.world.savingDisabled) {
                 this.world.chunkProviderServer.b();
             }
             // CraftBukkit start
