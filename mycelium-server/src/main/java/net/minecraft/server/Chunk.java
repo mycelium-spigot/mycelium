@@ -58,6 +58,8 @@ public class Chunk {
     public long lightUpdateTime;
     // PaperSpigot end
 
+    private final ChunkCoordIntPair chunkCoordinates;
+
     // PaperSpigot start - ChunkMap caching
     private PacketPlayOutMapChunk.ChunkMap chunkMap;
     private int emptySectionBits;
@@ -154,6 +156,8 @@ public class Chunk {
         if (!(this instanceof EmptyChunk)) {
             this.bukkitChunk = new org.bukkit.craftbukkit.CraftChunk(this);
         }
+
+        this.chunkCoordinates = new ChunkCoordIntPair(this.locX, this.locZ);
     }
 
     public org.bukkit.Chunk bukkitChunk;
@@ -1187,7 +1191,7 @@ public class Chunk {
     }
 
     public ChunkCoordIntPair j() {
-        return new ChunkCoordIntPair(this.locX, this.locZ);
+        return this.chunkCoordinates;
     }
 
     public boolean c(int i, int j) {
