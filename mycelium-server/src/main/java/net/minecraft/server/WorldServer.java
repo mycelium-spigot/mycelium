@@ -200,7 +200,11 @@ public class WorldServer extends World implements IAsyncTaskHandler {
         // CraftBukkit end
         timings.doChunkUnload.startTiming(); // Spigot
         this.methodProfiler.c("chunkSource");
-        this.chunkProvider.unloadChunks();
+
+        if (this.chunkProvider != null) {
+            this.chunkProvider.unloadChunks();
+        }
+
         int j = this.a(1.0F);
 
         if (j != this.ab()) {

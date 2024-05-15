@@ -624,7 +624,9 @@ public abstract class World implements IBlockAccess {
 
     public void d(BlockPosition blockposition, final Block block) {
         if (!this.isClientSide) {
-            IBlockData iblockdata = this.getType(blockposition);
+            IBlockData iblockdata = this.getTypeIfLoaded(blockposition);
+
+            if (iblockdata == null) return;
 
             try {
                 // CraftBukkit start
