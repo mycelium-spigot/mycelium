@@ -5,14 +5,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.common.util.concurrent.ListenableFuture;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.UUID;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -287,7 +280,7 @@ public class WorldServer extends World implements IAsyncTaskHandler {
                 int chunkX = World.keyToX( chunkCoord );
                 int chunkZ = World.keyToZ( chunkCoord );
                 // If unloaded, or in procedd of being unloaded, drop it
-                if ( ( !this.chunkProvider.isChunkLoaded( chunkX, chunkZ ) ) || ( this.chunkProviderServer.unloadQueue.contains( chunkX, chunkZ ) ) )
+                if ( ( !this.chunkProvider.isChunkLoaded( chunkX, chunkZ ) ) || ( this.chunkProviderServer.unloadQueue.contains(LongHash.toLong(chunkX, chunkZ)) ) )
                 {
                     iter.remove();
                     continue;

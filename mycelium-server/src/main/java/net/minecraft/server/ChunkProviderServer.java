@@ -1,25 +1,21 @@
 package net.minecraft.server;
 
-import com.google.common.collect.Lists;
+import it.unimi.dsi.fastutil.longs.LongIterator;
+import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
+
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 // CraftBukkit start
 import java.util.Random;
-import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.craftbukkit.chunkio.ChunkIOExecutor;
 import org.bukkit.craftbukkit.util.LongHash;
-import org.bukkit.craftbukkit.util.LongHashSet;
 import org.bukkit.craftbukkit.util.LongObjectHashMap;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.github.paperspigot.event.ServerExceptionEvent;
@@ -29,7 +25,7 @@ import org.github.paperspigot.exception.ServerInternalException;
 public class ChunkProviderServer implements IChunkProvider {
 
     private static final Logger b = LogManager.getLogger();
-    public LongHashSet unloadQueue = new LongHashSet(); // CraftBukkit - LongHashSet
+    public LongOpenHashSet unloadQueue = new LongOpenHashSet();
     public Chunk emptyChunk;
     public IChunkProvider chunkProvider;
     private IChunkLoader chunkLoader;
@@ -78,7 +74,7 @@ public class ChunkProviderServer implements IChunkProvider {
         if (this.world.worldProvider.e()) {
             if (!this.world.c(i, j)) {
                 // CraftBukkit start
-                this.unloadQueue.add(i, j);
+                this.unloadQueue.add(chunkHash);
 
                 Chunk c = chunks.get(chunkHash);
                 if (c != null) {
@@ -88,7 +84,7 @@ public class ChunkProviderServer implements IChunkProvider {
             }
         } else {
             // CraftBukkit start
-            this.unloadQueue.add(i, j);
+            this.unloadQueue.add(chunkHash);
 
             Chunk c = chunks.get(chunkHash);
             if (c != null) {
@@ -120,8 +116,10 @@ public class ChunkProviderServer implements IChunkProvider {
     }
 
     public Chunk getChunkAt(int i, int j, Runnable runnable) {
-        unloadQueue.remove(i, j);
-        Chunk chunk = chunks.get(LongHash.toLong(i, j));
+        long chunkHash = LongHash.toLong(i, j);
+
+        unloadQueue.remove(chunkHash);
+        Chunk chunk = chunks.get(chunkHash);
         ChunkRegionLoader loader = null;
 
         if (this.chunkLoader instanceof ChunkRegionLoader) {
@@ -150,7 +148,7 @@ public class ChunkProviderServer implements IChunkProvider {
     public Chunk originalGetChunkAt(int i, int j) {
         long chunkHash = LongHash.toLong(i, j);
 
-        this.unloadQueue.remove(i, j);
+        this.unloadQueue.remove(chunkHash);
         Chunk chunk = (Chunk) this.chunks.get(chunkHash);
         boolean newChunk = false;
         // CraftBukkit end
@@ -369,8 +367,13 @@ public class ChunkProviderServer implements IChunkProvider {
         if (!this.world.savingDisabled) {
             // CraftBukkit start
             Server server = this.world.getServer();
+            LongIterator iterator = unloadQueue.iterator();
+
             for (int i = 0; i < 100 && !this.unloadQueue.isEmpty(); ++i) {
-                long chunkcoordinates = this.unloadQueue.popFirst();
+                long chunkcoordinates = iterator.nextLong();
+
+                iterator.remove();
+
                 Chunk chunk = this.chunks.get(chunkcoordinates);
                 if (chunk == null) continue;
 
@@ -380,8 +383,12 @@ public class ChunkProviderServer implements IChunkProvider {
 
                     if (chunk != null) {
                         chunk.removeEntities();
-                        this.saveChunk(chunk);
-                        this.saveChunkNOP(chunk);
+
+                        if (!this.world.savingDisabled) {
+                            this.saveChunk(chunk);
+                            this.saveChunkNOP(chunk);
+                        }
+
                         this.chunks.remove(chunkcoordinates); // CraftBukkit
                     }
 
