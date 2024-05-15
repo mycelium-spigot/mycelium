@@ -132,9 +132,9 @@ public final class SpawnerCreature {
                             int i2 = blockposition1.getX();
                             int j2 = blockposition1.getY();
                             int k2 = blockposition1.getZ();
-                            Block block = worldserver.getType(blockposition1).getBlock();
+                            IBlockData blockData = worldserver.getTypeIfLoaded(blockposition1);
 
-                            if (!block.isOccluding()) {
+                            if (blockData != null && !blockData.getBlock().isOccluding()) {
                                 int l2 = 0;
                                 int i3 = 0;
 
@@ -151,13 +151,12 @@ public final class SpawnerCreature {
                                         if (i4 < 4) {
                                             label108: {
                                                 j3 += worldserver.random.nextInt(b1) - worldserver.random.nextInt(b1);
-                                                k3 += worldserver.random.nextInt(1) - worldserver.random.nextInt(1);
                                                 l3 += worldserver.random.nextInt(b1) - worldserver.random.nextInt(b1);
                                                 BlockPosition blockposition2 = new BlockPosition(j3, k3, l3);
                                                 float f = (float) j3 + 0.5F;
                                                 float f1 = (float) l3 + 0.5F;
 
-                                                if (!worldserver.isPlayerNearbyWhoAffectsSpawning((double) f, (double) k3, (double) f1, 24.0D) && blockposition.c((double) f, (double) k3, (double) f1) >= 576.0D) { // PaperSpigot - Affects Spawning API
+                                                if (worldserver.getChunkIfLoaded(blockposition2) != null && !worldserver.isPlayerNearbyWhoAffectsSpawning((double) f, (double) k3, (double) f1, 24.0D) && blockposition.c((double) f, (double) k3, (double) f1) >= 576.0D) { // PaperSpigot - Affects Spawning API
                                                     if (biomebase_biomemeta == null) {
                                                         biomebase_biomemeta = worldserver.a(enumcreaturetype, blockposition2);
                                                         if (biomebase_biomemeta == null) {

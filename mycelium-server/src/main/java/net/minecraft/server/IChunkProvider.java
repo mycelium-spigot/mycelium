@@ -12,6 +12,13 @@ public interface IChunkProvider {
 
     void getChunkAt(IChunkProvider ichunkprovider, int i, int j);
 
+    default Chunk getChunkIfLoaded(int i, int j) {
+        if (!this.isChunkLoaded(i, j)) {
+            return null;
+        }
+        return this.getOrCreateChunk(i, j);
+    }
+
     boolean a(IChunkProvider ichunkprovider, Chunk chunk, int i, int j);
 
     boolean saveChunks(boolean flag, IProgressUpdate iprogressupdate);

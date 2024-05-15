@@ -176,6 +176,9 @@ public class BlockFire extends Block {
                                 }
 
                                 BlockPosition blockposition1 = blockposition.a(j, l, k);
+
+                                if (!world.isLoaded(blockposition1)) continue;
+
                                 int j1 = this.m(world, blockposition1);
 
                                 if (j1 > 0) {
@@ -244,11 +247,13 @@ public class BlockFire extends Block {
     }
 
     private void a(World world, BlockPosition blockposition, int i, Random random, int j) {
+        IBlockData iblockdata = world.getTypeIfLoaded(blockposition);
+
+        if (iblockdata == null) return;
+
         int k = this.c(world.getType(blockposition).getBlock());
 
         if (random.nextInt(i) < k) {
-            IBlockData iblockdata = world.getType(blockposition);
-
             // CraftBukkit start
             org.bukkit.block.Block theBlock = world.getWorld().getBlockAt(blockposition.getX(), blockposition.getY(), blockposition.getZ());
 
@@ -304,6 +309,9 @@ public class BlockFire extends Block {
 
             for (int k = 0; k < j; ++k) {
                 EnumDirection enumdirection = aenumdirection[k];
+                IBlockData type = world.getTypeIfLoaded(blockposition.shift(enumdirection));
+
+                if (type == null) continue;
 
                 i = Math.max(this.d(world.getType(blockposition.shift(enumdirection)).getBlock()), i);
             }

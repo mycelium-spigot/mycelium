@@ -50,7 +50,9 @@ public class BlockChest extends BlockContainer {
         while (iterator.hasNext()) {
             EnumDirection enumdirection = (EnumDirection) iterator.next();
             BlockPosition blockposition1 = blockposition.shift(enumdirection);
-            IBlockData iblockdata1 = world.getType(blockposition1);
+            IBlockData iblockdata1 = world.getTypeIfLoaded(blockposition1);
+
+            if (iblockdata1 == null) continue;
 
             if (iblockdata1.getBlock() == this) {
                 this.e(world, blockposition1, iblockdata1);

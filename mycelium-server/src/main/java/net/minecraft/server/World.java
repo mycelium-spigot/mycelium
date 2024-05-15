@@ -176,6 +176,10 @@ public abstract class World implements IBlockAccess {
         return ((ChunkProviderServer) this.chunkProvider).getChunkIfLoaded(x, z);
     }
 
+    public Chunk getChunkIfLoaded(BlockPosition blockposition) {
+        return ((ChunkProviderServer) this.chunkProvider).getChunkIfLoaded(blockposition.getX() >> 4, blockposition.getZ() >> 4);
+    }
+
     protected World(IDataManager idatamanager, WorldData worlddata, WorldProvider worldprovider, MethodProfiler methodprofiler, boolean flag, ChunkGenerator gen, org.bukkit.World.Environment env) {
         this.spigotConfig = new org.spigotmc.SpigotWorldConfig( worlddata.getName() ); // Spigot
         this.paperSpigotConfig = new org.github.paperspigot.PaperSpigotWorldConfig( worlddata.getName() ); // PaperSpigot
@@ -286,7 +290,11 @@ public abstract class World implements IBlockAccess {
     }
 
     private boolean isValidLocation(BlockPosition blockposition) {
-        return blockposition.getX() >= -30000000 && blockposition.getZ() >= -30000000 && blockposition.getX() < 30000000 && blockposition.getZ() < 30000000 && blockposition.getY() >= 0 && blockposition.getY() < 256;
+        return this.isValidLocation(blockposition.getX(), blockposition.getY(), blockposition.getZ());
+    }
+
+    private boolean isValidLocation(int x, int y, int z) {
+        return isInWorldBounds(x, z) && y >= 0 && y < 256;
     }
 
     public boolean isEmpty(BlockPosition blockposition) {
@@ -295,6 +303,10 @@ public abstract class World implements IBlockAccess {
 
     public boolean isLoaded(BlockPosition blockposition) {
         return this.a(blockposition, true);
+    }
+
+    public boolean isLoaded(int x, int y, int z) {
+        return this.getChunkIfLoaded(x >> 4, z >> 4) != null;
     }
 
     public boolean a(BlockPosition blockposition, boolean flag) {
@@ -350,25 +362,90 @@ public abstract class World implements IBlockAccess {
         return this.chunkProvider.getOrCreateChunk(i, j);
     }
 
+    private void setCapturedBlockType(BlockPosition blockposition, IBlockData iblockdata, int i) {
+        BlockState blockstate = null;
+        Iterator<BlockState> it = capturedBlockStates.iterator();
+        while (it.hasNext()) {
+            BlockState previous = it.next();
+            if (previous.getX() == blockposition.getX() && previous.getY() == blockposition.getY() && previous.getZ() == blockposition.getZ()) {
+                blockstate = previous;
+                it.remove();
+                break;
+            }
+        }
+        if (blockstate == null) {
+            blockstate = org.bukkit.craftbukkit.block.CraftBlockState.getBlockState(this, blockposition.getX(), blockposition.getY(), blockposition.getZ(), i);
+        }
+        blockstate.setTypeId(CraftMagicNumbers.getId(iblockdata.getBlock()));
+        blockstate.setRawData((byte) iblockdata.getBlock().toLegacyData(iblockdata));
+        this.capturedBlockStates.add(blockstate);
+    }
+
+    public boolean setTypeAndDataIfLoaded(BlockPosition blockposition, IBlockData iblockdata, int i) {
+        // CraftBukkit start - tree generation
+        if (this.captureTreeGeneration) {
+            this.setCapturedBlockType(blockposition, iblockdata, i);
+            return true;
+        }
+        // CraftBukkit end
+        int x = blockposition.getX();
+        int y = blockposition.getY();
+        int z = blockposition.getZ();
+        Chunk chunk = this.getChunkIfLoaded(x >> 4, z >> 4);
+        if (chunk == null) {
+            return false;
+        }
+
+        if (!this.isValidLocation(x, y, z)) {
+            return false;
+        }
+
+        if (!this.isClientSide && this.worldData.getType() == WorldType.DEBUG_ALL_BLOCK_STATES) {
+            return false;
+        }
+
+        Block block = iblockdata.getBlock();
+
+        // CraftBukkit start - capture blockstates
+        BlockState blockstate = null;
+        if (this.captureBlockStates) {
+            blockstate = org.bukkit.craftbukkit.block.CraftBlockState.getBlockState(this, x, y, z, i);
+            this.capturedBlockStates.add(blockstate);
+        }
+        // CraftBukkit end
+
+        IBlockData iblockdata1 = chunk.a(blockposition, iblockdata);
+
+        if (iblockdata1 == null) {
+            // CraftBukkit start - remove blockstate if failed
+            if (this.captureBlockStates) {
+                this.capturedBlockStates.remove(blockstate);
+            }
+            // CraftBukkit end
+            return false;
+        }
+        Block block1 = iblockdata1.getBlock();
+
+        if (block.p() != block1.p() || block.r() != block1.r()) {
+            this.methodProfiler.a("checkLight");
+            this.x(blockposition);
+            this.methodProfiler.b();
+        }
+
+        // CraftBukkit start
+        if (!this.captureBlockStates) { // Don't notify clients or update physics while capturing blockstates
+            // Modularize client and physic updates
+            notifyAndUpdatePhysics(blockposition, chunk, block1, block, i);
+        }
+        // CraftBukkit end
+
+        return true;
+    }
+
     public boolean setTypeAndData(BlockPosition blockposition, IBlockData iblockdata, int i) {
         // CraftBukkit start - tree generation
         if (this.captureTreeGeneration) {
-            BlockState blockstate = null;
-            Iterator<BlockState> it = capturedBlockStates.iterator();
-            while (it.hasNext()) {
-                BlockState previous = it.next();
-                if (previous.getX() == blockposition.getX() && previous.getY() == blockposition.getY() && previous.getZ() == blockposition.getZ()) {
-                    blockstate = previous;
-                    it.remove();
-                    break;
-                }
-            }
-            if (blockstate == null) {
-                blockstate = org.bukkit.craftbukkit.block.CraftBlockState.getBlockState(this, blockposition.getX(), blockposition.getY(), blockposition.getZ(), i);
-            }
-            blockstate.setTypeId(CraftMagicNumbers.getId(iblockdata.getBlock()));
-            blockstate.setRawData((byte) iblockdata.getBlock().toLegacyData(iblockdata));
-            this.capturedBlockStates.add(blockstate);
+            this.setCapturedBlockType(blockposition, iblockdata, i);
             return true;
         }
         // CraftBukkit end
@@ -406,21 +483,8 @@ public abstract class World implements IBlockAccess {
                     this.methodProfiler.b();
                 }
 
-                /*
-                if ((i & 2) != 0 && (!this.isClientSide || (i & 4) == 0) && chunk.isReady()) {
-                    this.notify(blockposition);
-                }
-
-                if (!this.isClientSide && (i & 1) != 0) {
-                    this.update(blockposition, iblockdata1.getBlock());
-                    if (block.isComplexRedstone()) {
-                        this.updateAdjacentComparators(blockposition, block);
-                    }
-                }
-                */
-
                 // CraftBukkit start
-                if (!this.captureBlockStates) { // Don't notify clients or update physics while capturing blockstates
+                if (!this.captureBlockStates) {
                     // Modularize client and physic updates
                     notifyAndUpdatePhysics(blockposition, chunk, block1, block, i);
                 }
@@ -464,6 +528,10 @@ public abstract class World implements IBlockAccess {
 
             return this.setTypeAndData(blockposition, Blocks.AIR.getBlockData(), 3);
         }
+    }
+
+    public boolean setTypeUpdateIfLoaded(BlockPosition blockPosition, IBlockData iblockdata) {
+        return this.setTypeAndDataIfLoaded(blockPosition, iblockdata, 3);
     }
 
     public boolean setTypeUpdate(BlockPosition blockposition, IBlockData iblockdata) {
@@ -644,7 +712,7 @@ public abstract class World implements IBlockAccess {
     }
 
     public int c(BlockPosition blockposition, boolean flag) {
-        if (blockposition.getX() >= -30000000 && blockposition.getZ() >= -30000000 && blockposition.getX() < 30000000 && blockposition.getZ() < 30000000) {
+        if (isInWorldBounds(blockposition.getX(), blockposition.getZ())) {
             if (flag && this.getType(blockposition).getBlock().s()) {
                 int i = this.c(blockposition.up(), false);
                 int j = this.c(blockposition.east(), false);
@@ -690,9 +758,11 @@ public abstract class World implements IBlockAccess {
     public BlockPosition getHighestBlockYAt(BlockPosition blockposition) {
         int i;
 
-        if (blockposition.getX() >= -30000000 && blockposition.getZ() >= -30000000 && blockposition.getX() < 30000000 && blockposition.getZ() < 30000000) {
-            if (this.isChunkLoaded(blockposition.getX() >> 4, blockposition.getZ() >> 4, true)) {
-                i = this.getChunkAt(blockposition.getX() >> 4, blockposition.getZ() >> 4).b(blockposition.getX() & 15, blockposition.getZ() & 15);
+        if (isInWorldBounds(blockposition.getX(), blockposition.getZ())) {
+            Chunk chunk = this.getChunkIfLoaded(blockposition.getX() >> 4, blockposition.getZ() >> 4);
+
+            if (chunk != null) {
+                i = chunk.b(blockposition.getX() & 15, blockposition.getZ() & 15);
             } else {
                 i = 0;
             }
@@ -704,7 +774,7 @@ public abstract class World implements IBlockAccess {
     }
 
     public int b(int i, int j) {
-        if (i >= -30000000 && j >= -30000000 && i < 30000000 && j < 30000000) {
+        if (isInWorldBounds(i, j)) {
             if (!this.isChunkLoaded(i >> 4, j >> 4, true)) {
                 return 0;
             } else {
@@ -755,6 +825,38 @@ public abstract class World implements IBlockAccess {
         return this.worldProvider.p()[this.getLightLevel(blockposition)];
     }
 
+    private IBlockData getCapturedBlockType(int x, int y, int z) {
+        Iterator<BlockState> it = this.capturedBlockStates.iterator();
+
+        while (it.hasNext()) {
+            BlockState previous = it.next();
+            if (previous.getX() == x && previous.getY() == y && previous.getZ() == z) {
+                return CraftMagicNumbers.getBlock(previous.getTypeId()).fromLegacyData(previous.getRawData());
+            }
+        }
+
+        return null;
+    }
+
+    public IBlockData getTypeIfLoaded(BlockPosition blockposition) {
+        // CraftBukkit start - tree generation
+        final int x = blockposition.getX();
+        final int y = blockposition.getY();
+        final int z = blockposition.getZ();
+        if (captureTreeGeneration) {
+        IBlockData previous = this.getCapturedBlockType(x, y, z);
+            if (previous != null) return previous;
+        }
+        // CraftBukkit end
+
+        Chunk chunk = this.getChunkIfLoaded(x >> 4, z >> 4);
+        if (chunk != null) {
+            return this.isValidLocation(x, y, z) ? chunk.getBlockData(x, y, z) : Blocks.AIR.getBlockData();
+        }
+
+        return null;
+    }
+
     // Spigot start
     public IBlockData getType(BlockPosition blockposition)
     {
@@ -762,24 +864,23 @@ public abstract class World implements IBlockAccess {
     }
     
     public IBlockData getType(BlockPosition blockposition, boolean useCaptured) {
+        final int x = blockposition.getX();
+        final int y = blockposition.getY();
+        final int z = blockposition.getZ();
+        
         // CraftBukkit start - tree generation
         if (captureTreeGeneration && useCaptured) {
-    // Spigot end
-            Iterator<BlockState> it = capturedBlockStates.iterator();
-            while (it.hasNext()) {
-                BlockState previous = it.next();
-                if (previous.getX() == blockposition.getX() && previous.getY() == blockposition.getY() && previous.getZ() == blockposition.getZ()) {
-                    return CraftMagicNumbers.getBlock(previous.getTypeId()).fromLegacyData(previous.getRawData());
-                }
-            }
+            IBlockData previous = this.getCapturedBlockType(x, y, z);
+
+            if (previous != null) return previous;
         }
         // CraftBukkit end
-        if (!this.isValidLocation(blockposition)) {
+         if (!this.isValidLocation(x, y, z)) {
             return Blocks.AIR.getBlockData();
         } else {
             Chunk chunk = this.getChunkAtWorldCoords(blockposition);
 
-            return chunk.getBlockData(blockposition);
+            return chunk.getBlockData(x, y, z);
         }
     }
 
@@ -805,7 +906,10 @@ public abstract class World implements IBlockAccess {
                 int i1 = MathHelper.floor(vec3d.b);
                 int j1 = MathHelper.floor(vec3d.c);
                 BlockPosition blockposition = new BlockPosition(l, i1, j1);
-                IBlockData iblockdata = this.getType(blockposition);
+                IBlockData iblockdata = this.getTypeIfLoaded(blockposition);
+
+                if (iblockdata == null) return null;
+
                 Block block = iblockdata.getBlock();
 
                 if ((!flag1 || block.a(this, blockposition, iblockdata) != null) && block.a(iblockdata, flag)) {
@@ -907,7 +1011,10 @@ public abstract class World implements IBlockAccess {
                     i1 = MathHelper.floor(vec3d.b) - (enumdirection == EnumDirection.UP ? 1 : 0);
                     j1 = MathHelper.floor(vec3d.c) - (enumdirection == EnumDirection.SOUTH ? 1 : 0);
                     blockposition = new BlockPosition(l, i1, j1);
-                    IBlockData iblockdata1 = this.getType(blockposition);
+                    IBlockData iblockdata1 = this.getTypeIfLoaded(blockposition);
+
+                    if (iblockdata1 == null) return null;
+
                     Block block1 = iblockdata1.getBlock();
 
                     if (!flag1 || block1.a(this, blockposition, iblockdata1) != null) {
@@ -1279,7 +1386,7 @@ public abstract class World implements IBlockAccess {
                         blockposition_mutableblockposition.c(k1, i2, l1);
                         IBlockData iblockdata;
 
-                        if (k1 >= -30000000 && k1 < 30000000 && l1 >= -30000000 && l1 < 30000000) {
+                        if (isInWorldBounds(k1, l1)) {
                             iblockdata = this.getType(blockposition_mutableblockposition);
                         } else {
                             iblockdata = Blocks.BEDROCK.getBlockData();
@@ -3235,5 +3342,9 @@ public abstract class World implements IBlockAccess {
         short short0 = 128;
 
         return k >= -short0 && k <= short0 && l >= -short0 && l <= short0 && this.keepSpawnInMemory; // CraftBukkit - Added 'this.keepSpawnInMemory'
+    }
+
+    private static boolean isInWorldBounds(int x, int z) {
+        return x >= -30000000 && z >= -30000000 && x < 30000000 && z < 30000000;
     }
 }

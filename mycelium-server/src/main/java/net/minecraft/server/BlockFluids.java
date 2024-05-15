@@ -85,7 +85,11 @@ public abstract class BlockFluids extends Block {
             int k;
 
             if (j < 0) {
-                if (!iblockaccess.getType(blockposition1).getBlock().getMaterial().isSolid()) {
+                IBlockData iblockdata = iblockaccess.getTypeIfLoaded(blockposition1);
+
+                if (iblockdata == null) continue;
+
+                if (!iblockdata.getBlock().getMaterial().isSolid()) {
                     j = this.f(iblockaccess, blockposition1.down());
                     if (j >= 0) {
                         k = j - (i - 8);
@@ -138,8 +142,11 @@ public abstract class BlockFluids extends Block {
 
             for (int j = 0; j < i; ++j) {
                 EnumDirection enumdirection = aenumdirection[j];
+                IBlockData iblockdata1 = world.getTypeIfLoaded(blockposition.shift(enumdirection));
 
-                if (enumdirection != EnumDirection.DOWN && world.getType(blockposition.shift(enumdirection)).getBlock().getMaterial() == Material.WATER) {
+                if (iblockdata1 == null) continue;
+
+                if (enumdirection != EnumDirection.DOWN && iblockdata1.getBlock().getMaterial() == Material.WATER) {
                     flag = true;
                     break;
                 }
@@ -148,14 +155,14 @@ public abstract class BlockFluids extends Block {
             if (flag) {
                 Integer integer = (Integer) iblockdata.get(BlockFluids.LEVEL);
 
-                if (integer.intValue() == 0) {
-                    world.setTypeUpdate(blockposition, Blocks.OBSIDIAN.getBlockData());
+                if (integer == 0) {
+                    if (world.setTypeUpdateIfLoaded(blockposition, Blocks.OBSIDIAN.getBlockData()))
                     this.fizz(world, blockposition);
                     return true;
                 }
 
-                if (integer.intValue() > 0) { // PaperSpigot
-                    world.setTypeUpdate(blockposition, Blocks.COBBLESTONE.getBlockData());
+                if (integer > 0) {
+                    if (world.setTypeUpdateIfLoaded(blockposition, Blocks.COBBLESTONE.getBlockData()))
                     this.fizz(world, blockposition);
                     return true;
                 }

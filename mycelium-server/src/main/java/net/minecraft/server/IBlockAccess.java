@@ -9,4 +9,8 @@ public interface IBlockAccess {
     boolean isEmpty(BlockPosition blockposition);
 
     int getBlockPower(BlockPosition blockposition, EnumDirection enumdirection);
+
+    default IBlockData getTypeIfLoaded(BlockPosition blockposition) {
+        return getType(blockposition);
+    }
 }

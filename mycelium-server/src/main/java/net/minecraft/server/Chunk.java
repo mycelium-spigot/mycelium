@@ -503,12 +503,18 @@ public class Chunk {
 
     // PaperSpigot start - Optimize getBlockData
     public IBlockData getBlockData(final BlockPosition blockposition) {
-        if (blockposition.getY() >= 0 && blockposition.getY() >> 4 < this.sections.length) {
-            ChunkSection chunksection = this.sections[blockposition.getY() >> 4];
+        return this.getBlockData(blockposition.getX(), blockposition.getY(), blockposition.getZ());
+    }
+
+    public IBlockData getBlockData(final int x, final int y, final int z) {
+        if (y >= 0 && y >> 4 < this.sections.length) {
+            ChunkSection chunksection = this.sections[y >> 4];
+
             if (chunksection != null) {
-                return chunksection.getType(blockposition.getX() & 15, blockposition.getY() & 15, blockposition.getZ() & 15);
+                return chunksection.getType(x & 15, y & 15, z & 15);
             }
         }
+
         return Blocks.AIR.getBlockData();
     }
     
