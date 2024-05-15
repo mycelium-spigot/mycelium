@@ -676,6 +676,8 @@ public abstract class World implements IBlockAccess {
                     blockposition = new BlockPosition(blockposition.getX(), 255, blockposition.getZ());
                 }
 
+                if (!this.isLoaded(blockposition)) return 0;
+
                 Chunk chunk = this.getChunkAtWorldCoords(blockposition);
 
                 return chunk.a(blockposition, this.I);
