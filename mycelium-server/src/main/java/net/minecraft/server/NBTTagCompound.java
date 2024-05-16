@@ -1,6 +1,7 @@
 package net.minecraft.server;
 
-import com.google.common.collect.Maps;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
@@ -12,7 +13,7 @@ import java.util.concurrent.Callable;
 
 public class NBTTagCompound extends NBTBase {
 
-    private Map<String, NBTBase> map = Maps.newHashMap();
+    private Map<String, NBTBase> map = new Object2ObjectOpenHashMap<>(8, 0.8f);
 
     public NBTTagCompound() {}
 
