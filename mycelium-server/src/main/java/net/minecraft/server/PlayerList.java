@@ -5,6 +5,8 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.mojang.authlib.GameProfile;
 import io.netty.buffer.Unpooled;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+
 import java.io.File;
 import java.net.SocketAddress;
 import java.text.SimpleDateFormat;
@@ -46,7 +48,7 @@ public abstract class PlayerList {
     private static final SimpleDateFormat g = new SimpleDateFormat("yyyy-MM-dd \'at\' HH:mm:ss z");
     private final MinecraftServer server;
     public final List<EntityPlayer> players = new java.util.concurrent.CopyOnWriteArrayList(); // CraftBukkit - ArrayList -> CopyOnWriteArrayList: Iterator safety
-    private final Map<UUID, EntityPlayer> j = Maps.newHashMap();
+    private final Map<UUID, EntityPlayer> j = new Object2ObjectOpenHashMap<>();
     private final OpList operators;
     public IPlayerFileData playerFileData;
     protected int maxPlayers;

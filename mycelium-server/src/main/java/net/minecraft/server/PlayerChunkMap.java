@@ -1,9 +1,15 @@
 package net.minecraft.server;
 
 import com.google.common.collect.Lists;
+
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,7 +25,7 @@ public class PlayerChunkMap {
 
     private static final Logger a = LogManager.getLogger();
     private final WorldServer world;
-    private final List<EntityPlayer> managedPlayers = Lists.newArrayList();
+    private final List<EntityPlayer> managedPlayers = new ObjectArrayList<>(); 
     private final LongHashMap<PlayerChunkMap.PlayerChunk> d = new LongHashMap();
     private final Queue<PlayerChunkMap.PlayerChunk> e = new java.util.concurrent.ConcurrentLinkedQueue<PlayerChunkMap.PlayerChunk>(); // CraftBukkit ArrayList -> ConcurrentLinkedQueue
     private final Queue<PlayerChunkMap.PlayerChunk> f = new java.util.concurrent.ConcurrentLinkedQueue<PlayerChunkMap.PlayerChunk>(); // CraftBukkit ArrayList -> ConcurrentLinkedQueue
@@ -351,7 +357,7 @@ public class PlayerChunkMap {
 
     class PlayerChunk {
 
-        private final List<EntityPlayer> b = Lists.newArrayList();
+        private final List<EntityPlayer> b = new ObjectArrayList<>();
         private final ChunkCoordIntPair location;
         private short[] dirtyBlocks = new short[64];
         private int dirtyCount;
@@ -359,13 +365,9 @@ public class PlayerChunkMap {
         private long g;
 
         // CraftBukkit start - add fields
-        private final HashMap<EntityPlayer, Runnable> players = new HashMap<EntityPlayer, Runnable>();
+        private final Map<EntityPlayer, Runnable> players = new Object2ObjectOpenHashMap<>();
         private boolean loaded = false;
-        private Runnable loadedRunnable = new Runnable() {
-            public void run() {
-                PlayerChunk.this.loaded = true;
-            }
-        };
+        private Runnable loadedRunnable = () -> PlayerChunk.this.loaded = true;
         // CraftBukkit end
 
         public PlayerChunk(int i, int j) {

@@ -16,6 +16,7 @@ import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.generator.ChunkGenerator;
 import co.aikar.timings.SpigotTimings;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
 import java.util.*;
 import java.util.concurrent.Callable;
@@ -36,7 +37,7 @@ public abstract class World implements IBlockAccess {
     private int a = 63;
     protected boolean e;
     // Spigot start - guard entity list from removals
-    public final List<Entity> entityList = new java.util.ArrayList<Entity>()
+    public final List<Entity> entityList = new ObjectArrayList<Entity>()
     {
         @Override
         public Entity remove(int index)
@@ -66,8 +67,8 @@ public abstract class World implements IBlockAccess {
     public final List<TileEntity> tileEntityList = Lists.newArrayList();
     private final List<TileEntity> b = Lists.newArrayList();
     private final Set<TileEntity> c = Sets.newHashSet(); // Paper
-    public final List<EntityHuman> players = Lists.newArrayList();
-    public final List<Entity> k = Lists.newArrayList();
+    public final List<EntityHuman> players = new ObjectArrayList<>();
+    public final List<Entity> k = new ObjectArrayList<>();
     protected final IntHashMap<Entity> entitiesById = new IntHashMap();
     private long d = 16777215L;
     private int I;

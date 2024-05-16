@@ -1,13 +1,13 @@
 package net.minecraft.server;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import com.mojang.authlib.GameProfile;
 import io.netty.buffer.Unpooled;
+import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
@@ -184,6 +184,10 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         this.playerConnection.sendPacket(new PacketPlayOutCombatEvent(this.bs(), PacketPlayOutCombatEvent.EnumCombatEventType.END_COMBAT));
     }
 
+    private long chunkToLong(int chunkX, int chunkZ) {
+        return ((long) chunkX << 32L) + chunkZ - -2147483648L;
+    }
+
     public void t_() {
         // CraftBukkit start
         if (this.joining) {
@@ -222,9 +226,9 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         }
 
         if (!this.chunkCoordIntPairQueue.isEmpty()) {
-            ArrayList arraylist = Lists.newArrayList();
+            ArrayList<Chunk> arraylist = Lists.newArrayList();
             Iterator iterator1 = this.chunkCoordIntPairQueue.iterator();
-            ArrayList arraylist1 = Lists.newArrayList();
+            ArrayList<TileEntity> arraylist1 = Lists.newArrayList();
 
             Chunk chunk;
 
@@ -232,7 +236,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
                 ChunkCoordIntPair chunkcoordintpair = (ChunkCoordIntPair) iterator1.next();
 
                 if (chunkcoordintpair != null) {
-                    if (this.world.isLoaded(new BlockPosition(chunkcoordintpair.x << 4, 0, chunkcoordintpair.z << 4))) {
+                    if (this.world.isLoaded(chunkcoordintpair.x << 4, 0, chunkcoordintpair.z << 4)) {
                         chunk = this.world.getChunkAt(chunkcoordintpair.x, chunkcoordintpair.z);
                         if (chunk.isReady()) {
                             arraylist.add(chunk);
@@ -247,25 +251,35 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
 
             if (!arraylist.isEmpty()) {
                 if (arraylist.size() == 1) {
-                    this.playerConnection.sendPacket(new PacketPlayOutMapChunk((Chunk) arraylist.get(0), true, '\uffff'));
+                    this.playerConnection.sendPacket(new PacketPlayOutMapChunk(arraylist.get(0), true, '\uffff'));
                 } else {
                     this.playerConnection.sendPacket(new PacketPlayOutMapChunkBulk(arraylist));
                 }
 
-                Iterator iterator2 = arraylist1.iterator();
+                Iterator<TileEntity> tileEntitiesIterator = arraylist1.iterator();
 
-                while (iterator2.hasNext()) {
-                    TileEntity tileentity = (TileEntity) iterator2.next();
+                while (tileEntitiesIterator.hasNext()) {
+                    TileEntity tileentity = tileEntitiesIterator.next();
 
                     this.a(tileentity);
                 }
 
-                iterator2 = arraylist.iterator();
+                LongOpenHashSet chunkPosSet = new LongOpenHashSet(arraylist.size());
 
-                while (iterator2.hasNext()) {
-                    chunk = (Chunk) iterator2.next();
-                    this.u().getTracker().a(this, chunk);
+                for (Chunk newChunk : arraylist) {
+                    chunkPosSet.add(this.chunkToLong(newChunk.locX, newChunk.locZ));
                 }
+
+                Iterator<EntityTrackerEntry> trackerEntryIterator = this.u().getTracker().getEntityTrackerEntries();
+
+                while (trackerEntryIterator.hasNext()) {
+                    EntityTrackerEntry entitytrackerentry = trackerEntryIterator.next();
+
+                    if (entitytrackerentry.tracker != this && chunkPosSet.contains(this.chunkToLong(entitytrackerentry.tracker.ae, entitytrackerentry.tracker.ag))) {
+                        entitytrackerentry.updatePlayer(this);
+                    }
+                }
+                // Nacho - end
             }
         }
 

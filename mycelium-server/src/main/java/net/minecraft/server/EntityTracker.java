@@ -195,6 +195,10 @@ public class EntityTracker {
 
     }
 
+    public Iterator<EntityTrackerEntry> getEntityTrackerEntries() {
+        return this.c.iterator();
+    }
+
     public void a(EntityPlayer entityplayer) {
         Iterator iterator = this.c.iterator();
 
